@@ -167,7 +167,7 @@ CSS-animated, `prefers-reduced-motion` respected. Used on Impact and Compare.
   SEO; run locally & verify; env-var + Vercel deploy docs.
 
 ## 11. Success Criteria
-- All 18 routes built with real, accurate Class 8–10 content; no lorem ipsum.
+- All 17 page routes built with real, accurate Class 8–10 content; no lorem ipsum.
 - ONE coherent "Forest & Sky" glassmorphism design system; tokens only (no hardcoded hex).
 - Dark/light toggle persists; smooth transitions; `prefers-reduced-motion` respected.
 - Interactive features work: calculators (real math), quiz (feedback + logging w/ fallback),
