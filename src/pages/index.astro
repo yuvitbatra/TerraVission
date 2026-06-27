@@ -1,524 +1,126 @@
 ---
-// TerraVision — Design System Preview (Task 1.3: Reusable UI Kit)
-// Showcases: GlassCard, SectionHeader, StatCounter, CTAButton, TopicCard
-// plus the original "Forest & Sky" design-system tokens preview.
-import "../styles/global.css";
-import GlassCard    from "../components/ui/GlassCard.astro";
-import SectionHeader from "../components/ui/SectionHeader.astro";
-import StatCounter  from "../components/ui/StatCounter.astro";
-import CTAButton    from "../components/ui/CTAButton.astro";
-import TopicCard    from "../components/ui/TopicCard.astro";
-
-const brandSwatches = [
-  { name: "Green",      var: "--color-green",      hex: "#10B981" },
-  { name: "Green deep", var: "--color-green-deep", hex: "#047857" },
-  { name: "Blue",       var: "--color-blue",       hex: "#0EA5E9" },
-  { name: "Blue deep",  var: "--color-blue-deep",  hex: "#0369A1" },
-];
-
-const baseSwatches = [
-  { name: "BG",       var: "--bg" },
-  { name: "Surface",  var: "--surface" },
-  { name: "Surface 2",var: "--surface-2" },
-  { name: "Text",     var: "--text" },
-  { name: "Muted",    var: "--text-muted" },
-  { name: "Subtle",   var: "--text-subtle" },
-];
-
-const typeScale = [
-  { label: "Display / Sora 800",  cls: "ds-display", weight: 800 },
-  { label: "H1 / Sora 700",       cls: "ds-h1",      weight: 700 },
-  { label: "H2 / Sora 700",       cls: "ds-h2",      weight: 700 },
-  { label: "H3 / Sora 600",       cls: "ds-h3",      weight: 600 },
-  { label: "Body large / Source Sans 3", cls: "ds-body-lg", weight: 400 },
-  { label: "Body / Source Sans 3",       cls: "ds-body",    weight: 400 },
-  { label: "Small / Source Sans 3",      cls: "ds-sm",      weight: 600 },
-];
+// TerraVision — Home (placeholder hero; full page built in a later task)
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { SITE } from "@/data/site";
 ---
 
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TerraVision — UI Kit Preview</title>
-    <meta name="description" content="TerraVision design-system and UI kit preview" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <body>
-    <!-- Ambient backdrop so glass blur is visible -->
-    <div class="page-aura" aria-hidden="true"></div>
+<BaseLayout title={`${SITE.name} — ${SITE.tagline}`} description={SITE.defaultDescription}>
+  <!-- Minimal hero placeholder -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Sustainability Education</p>
+      <h1 class="hero-title">
+        <span class="text-gradient">{SITE.name}</span>
+      </h1>
+      <p class="hero-tagline">{SITE.tagline}</p>
+      <p class="hero-desc">{SITE.defaultDescription}</p>
+      <div class="hero-actions">
+        <a href="/solutions" class="hero-cta-primary">Explore Solutions</a>
+        <a href="/about" class="hero-cta-ghost">Learn More</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
 
-    <main class="wrap">
-      <header class="head">
-        <div>
-          <p class="eyebrow">TerraVision · Design System &amp; UI Kit</p>
-          <h1 class="ds-display text-gradient">Forest &amp; Sky</h1>
-          <p class="ds-body-lg lede">
-            A calm, glassmorphic system for sustainability education — forest
-            green meets sky blue, layered over frosted surfaces.
-          </p>
-        </div>
-        <button id="theme-toggle" class="toggle glass" type="button" aria-pressed="false">
-          <span data-theme-label>Dark mode</span>
-        </button>
-      </header>
+<style>
+  .hero {
+    min-height: calc(100svh - 3.75rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 2.5rem);
+    text-align: center;
+  }
 
-      <!-- ================================================================
-           UI KIT PREVIEW — Task 1.3 components
-           ================================================================ -->
+  .hero-inner {
+    max-width: 44rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
 
-      <!-- 1. SectionHeader ------------------------------------------------ -->
-      <section class="block">
-        <div class="kit-label">Component: SectionHeader</div>
+  .hero-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-green);
+    margin: 0;
+  }
 
-        <SectionHeader
-          eyebrow="Our Mission"
-          title="Education for a Sustainable Planet"
-          subtitle="Empowering students with the science, data, and solutions needed to understand and address climate change."
-          align="center"
-        />
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin: 0;
+  }
 
-        <SectionHeader
-          eyebrow="Key Topics"
-          title="Explore the Science"
-          subtitle="Dive into the major themes of environmental science, from carbon cycles to ocean acidification."
-          align="left"
-        />
-      </section>
+  .hero-tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0;
+  }
 
-      <!-- 2. GlassCard ---------------------------------------------------- -->
-      <section class="block">
-        <div class="kit-label">Component: GlassCard</div>
-        <div class="card-grid">
-          <GlassCard>
-            <h3 class="ds-h3">Default Glass</h3>
-            <p class="muted">
-              A translucent frosted-glass container. Uses <code>.glass</code> — the
-              standard surface for most content blocks.
-            </p>
-          </GlassCard>
+  .hero-desc {
+    font-size: var(--text-body-lg);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 38rem;
+    margin: 0;
+    text-wrap: pretty;
+  }
 
-          <GlassCard strong>
-            <h3 class="ds-h3">Strong Glass</h3>
-            <p class="muted">
-              More opaque frosting via <code>.glass-strong</code> — ideal for
-              navigation bars and overlays where text legibility is critical.
-            </p>
-          </GlassCard>
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
 
-          <GlassCard as="article" class="highlight-card">
-            <h3 class="ds-h3">Custom Element</h3>
-            <p class="muted">
-              Rendered as <code>&lt;article&gt;</code> via the <code>as</code>
-              prop. Accepts any extra classes via the <code>class</code> prop.
-            </p>
-          </GlassCard>
-        </div>
-      </section>
+  .hero-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--radius-full);
+    background-image: var(--gradient-brand);
+    color: #ffffff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--color-green) 35%, transparent);
+  }
 
-      <!-- 3. StatCounter -------------------------------------------------- -->
-      <section class="block">
-        <div class="kit-label">Component: StatCounter (scroll down to trigger)</div>
-        <GlassCard class="stat-row-card">
-          <div class="stat-row">
-            <StatCounter value={420} suffix="B+" label="Tonnes CO₂ in Atmosphere" />
-            <StatCounter value={1.1} suffix="°C" label="Global Temp Rise Since 1850" decimals={1} />
-            <StatCounter value={8} suffix="M km²" label="Forest Lost Since 2000" />
-          </div>
-        </GlassCard>
-      </section>
+  .hero-cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--color-green) 45%, transparent);
+  }
 
-      <!-- 4. CTAButton ---------------------------------------------------- -->
-      <section class="block">
-        <div class="kit-label">Component: CTAButton</div>
-        <GlassCard>
-          <div class="btn-showcase">
-            <!-- Primary variant — all sizes -->
-            <div class="btn-row">
-              <span class="btn-row-label">Primary</span>
-              <CTAButton variant="primary" size="sm">Explore Now (sm)</CTAButton>
-              <CTAButton variant="primary" size="md">Learn More (md)</CTAButton>
-              <CTAButton variant="primary" size="lg">Take Action (lg)</CTAButton>
-            </div>
-            <!-- Secondary variant -->
-            <div class="btn-row">
-              <span class="btn-row-label">Secondary</span>
-              <CTAButton variant="secondary" size="sm">View Data (sm)</CTAButton>
-              <CTAButton variant="secondary" size="md">Read Report (md)</CTAButton>
-              <CTAButton variant="secondary" size="lg">Download (lg)</CTAButton>
-            </div>
-            <!-- Ghost variant -->
-            <div class="btn-row">
-              <span class="btn-row-label">Ghost</span>
-              <CTAButton variant="ghost" size="sm">Cancel (sm)</CTAButton>
-              <CTAButton variant="ghost" size="md">Learn more (md)</CTAButton>
-              <CTAButton variant="ghost" size="lg">Skip (lg)</CTAButton>
-            </div>
-            <!-- As link -->
-            <div class="btn-row">
-              <span class="btn-row-label">As &lt;a&gt; link</span>
-              <CTAButton href="#" variant="primary" size="md">Link → Primary</CTAButton>
-              <CTAButton href="#" variant="secondary" size="md">Link → Secondary</CTAButton>
-              <CTAButton href="#" variant="ghost" size="md">Link → Ghost</CTAButton>
-            </div>
-          </div>
-        </GlassCard>
-      </section>
+  .hero-cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
 
-      <!-- 5. TopicCard ---------------------------------------------------- -->
-      <section class="block">
-        <div class="kit-label">Component: TopicCard</div>
-        <div class="topic-grid">
-          <TopicCard
-            title="Carbon Cycle"
-            blurb="How carbon moves between the atmosphere, oceans, and land — and how human activity has disrupted this balance."
-            href="/topics/carbon-cycle"
-            icon="🌿"
-            accent="green"
-          />
-          <TopicCard
-            title="Ocean Acidification"
-            blurb="Rising CO₂ dissolves into seawater forming carbonic acid, threatening coral reefs and marine food chains."
-            href="/topics/ocean-acidification"
-            icon="🌊"
-            accent="blue"
-          />
-          <TopicCard
-            title="Renewable Energy"
-            blurb="Solar, wind, and hydro power are scaling rapidly — learn the science behind each technology."
-            href="/topics/renewable-energy"
-            icon="⚡"
-            accent="green"
-          >
-            <!-- Optional SVG slot example -->
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
-              <path d="M20 8v8M20 24v8M8 20h8M24 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </TopicCard>
-        </div>
-      </section>
-
-      <!-- ================================================================
-           ORIGINAL DESIGN-SYSTEM PREVIEW (preserved below)
-           ================================================================ -->
-
-      <!-- Brand palette -->
-      <section class="block">
-        <h2 class="ds-h2">Brand palette</h2>
-        <div class="swatch-grid">
-          {brandSwatches.map((s) => (
-            <figure class="swatch glass">
-              <div class="swatch-chip" style={`background:${s.hex}`}></div>
-              <figcaption>
-                <span class="ds-sm">{s.name}</span>
-                <code>{s.hex}</code>
-                <code class="muted">{s.var}</code>
-              </figcaption>
-            </figure>
-          ))}
-          <figure class="swatch glass">
-            <div class="swatch-chip gradient-brand"></div>
-            <figcaption>
-              <span class="ds-sm">Signature gradient</span>
-              <code>green → blue</code>
-              <code class="muted">--gradient-brand</code>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <!-- Base / semantic tokens -->
-      <section class="block">
-        <h2 class="ds-h2">Base &amp; semantic tokens</h2>
-        <p class="muted">These shift between light and dark — toggle to compare.</p>
-        <div class="swatch-grid">
-          {baseSwatches.map((s) => (
-            <figure class="swatch glass">
-              <div class="swatch-chip bordered" style={`background:var(${s.var})`}></div>
-              <figcaption>
-                <span class="ds-sm">{s.name}</span>
-                <code class="muted">{s.var}</code>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      <!-- Type scale -->
-      <section class="block">
-        <h2 class="ds-h2">Type scale</h2>
-        <div class="type-list glass">
-          {typeScale.map((t) => (
-            <div class="type-row">
-              <span class={t.cls} style={`font-weight:${t.weight}`}>
-                The forest breathes — Aa Bb 0123
-              </span>
-              <code class="muted type-meta">{t.label}</code>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <!-- Glass cards (original) -->
-      <section class="block">
-        <h2 class="ds-h2">Glass surfaces (tokens)</h2>
-        <div class="card-grid">
-          <article class="glass card">
-            <h3 class="ds-h3">.glass</h3>
-            <p>
-              Translucent surface with backdrop blur, a 1px hairline border, and
-              a soft ambient shadow.
-            </p>
-            <button class="btn-ghost border-hairline" type="button">Learn more</button>
-          </article>
-
-          <article class="glass-strong card">
-            <h3 class="ds-h3">.glass-strong</h3>
-            <p>
-              A more opaque frosting for navigation and overlays where text must
-              stay legible over busy backgrounds.
-            </p>
-            <button class="btn-ghost border-hairline" type="button">Learn more</button>
-          </article>
-
-          <article class="card gradient-brand on-gradient">
-            <h3 class="ds-h3">.gradient-brand</h3>
-            <p>
-              The signature green→blue gradient — reserved for the hero and
-              primary calls to action.
-            </p>
-            <button class="btn-solid" type="button">Take action</button>
-          </article>
-        </div>
-      </section>
-
-      <footer class="foot muted">
-        <p>Fonts: Sora (display) · Source Sans 3 (body) · self-hosted, no CDN.</p>
-      </footer>
-    </main>
-
-    <script is:inline>
-      (function () {
-        const root = document.documentElement;
-        const btn = document.getElementById("theme-toggle");
-        const label = btn.querySelector("[data-theme-label]");
-        function sync() {
-          const dark = root.getAttribute("data-theme") === "dark";
-          btn.setAttribute("aria-pressed", String(dark));
-          label.textContent = dark ? "Light mode" : "Dark mode";
-        }
-        btn.addEventListener("click", function () {
-          const dark = root.getAttribute("data-theme") === "dark";
-          root.setAttribute("data-theme", dark ? "light" : "dark");
-          sync();
-        });
-        sync();
-      })();
-    </script>
-
-    <style>
-      .wrap {
-        max-width: 72rem;
-        margin: 0 auto;
-        padding: clamp(1.5rem, 4vw, 4rem) clamp(1rem, 4vw, 2.5rem) 4rem;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Ambient atmospheric backdrop */
-      .page-aura {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        background:
-          radial-gradient(40rem 28rem at 12% -8%, color-mix(in srgb, var(--color-green) 32%, transparent), transparent 70%),
-          radial-gradient(44rem 30rem at 92% 6%, color-mix(in srgb, var(--color-blue) 32%, transparent), transparent 70%),
-          radial-gradient(36rem 24rem at 60% 100%, color-mix(in srgb, var(--color-green-deep) 22%, transparent), transparent 70%);
-        pointer-events: none;
-      }
-
-      .head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 1.5rem;
-        flex-wrap: wrap;
-        margin-bottom: 3rem;
-      }
-      .eyebrow {
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
-        font-size: var(--text-xs);
-        font-weight: 700;
-        color: var(--text-muted);
-        margin: 0 0 0.5rem;
-      }
-      .lede { color: var(--text-muted); max-width: 36rem; margin-top: 1rem; }
-
-      .toggle {
-        padding: 0.65rem 1.1rem;
-        font-family: var(--font-display);
-        font-weight: 600;
-        font-size: var(--text-sm);
-        color: var(--text);
-        cursor: pointer;
-        transition: transform var(--dur-fast) var(--ease-out);
-        border: none;
-      }
-      .toggle:hover { transform: translateY(-1px); }
-
-      .block { margin-block: 2.75rem; }
-      .block > .ds-h2 { margin-bottom: 0.75rem; }
-      .muted { color: var(--text-muted); }
-
-      /* Kit section label */
-      .kit-label {
-        font-family: var(--font-display);
-        font-size: var(--text-xs);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: var(--text-subtle);
-        margin-bottom: 1rem;
-        padding: 0.35rem 0.75rem;
-        border-left: 2px solid var(--accent);
-      }
-
-      /* Swatches */
-      .swatch-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-        gap: 1rem;
-        margin-top: 1.25rem;
-      }
-      .swatch { padding: 0.75rem; }
-      .swatch-chip {
-        height: 4.5rem;
-        border-radius: var(--radius-md);
-        margin-bottom: 0.75rem;
-      }
-      .swatch-chip.bordered { border: 1px solid var(--border-hairline); }
-      .swatch figcaption { display: flex; flex-direction: column; gap: 0.2rem; }
-      .swatch code {
-        font-size: var(--text-xs);
-        font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      }
-
-      /* Type list */
-      .type-list { padding: clamp(1.25rem, 3vw, 2rem); margin-top: 1.25rem; }
-      .type-row {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 1.5rem;
-        padding-block: 0.75rem;
-        border-bottom: 1px solid var(--border-hairline);
-        flex-wrap: wrap;
-      }
-      .type-row:last-child { border-bottom: 0; }
-      .type-meta { white-space: nowrap; font-family: ui-monospace, Menlo, monospace; font-size: var(--text-xs); }
-
-      .ds-display { font-family: var(--font-display); font-size: var(--text-display); line-height: 1.04; letter-spacing: -0.03em; margin: 0; }
-      .ds-h1 { font-family: var(--font-display); font-size: var(--text-h1); }
-      .ds-h2 { font-family: var(--font-display); font-size: var(--text-h2); }
-      .ds-h3 { font-family: var(--font-display); font-size: var(--text-h3); margin: 0 0 0.5rem; }
-      .ds-body-lg { font-family: var(--font-body); font-size: var(--text-body-lg); }
-      .ds-body { font-family: var(--font-body); font-size: var(--text-body); }
-      .ds-sm { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; }
-
-      /* Card grids */
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-        gap: 1.25rem;
-        margin-top: 1.25rem;
-      }
-      .card { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-      .card p { color: var(--text-muted); margin: 0; }
-      .card.on-gradient, .card.on-gradient h3, .card.on-gradient p { color: var(--text-on-gradient); }
-      .card.on-gradient p { color: var(--text-on-gradient-muted); }
-
-      /* Topic card grid */
-      .topic-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-        gap: 1.25rem;
-        margin-top: 1.25rem;
-      }
-
-      /* Stat counter row */
-      .stat-row-card {
-        margin-top: 1.25rem;
-      }
-      .stat-row {
-        display: flex;
-        gap: 2rem;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        padding: 0.5rem 0;
-      }
-
-      /* Button showcase */
-      .btn-showcase {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-      .btn-row {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
-      .btn-row-label {
-        font-family: var(--font-display);
-        font-size: var(--text-xs);
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--text-subtle);
-        min-width: 5.5rem;
-      }
-
-      /* Highlight card extra class example */
-      .highlight-card {
-        border-top: 3px solid var(--accent);
-      }
-
-      /* Legacy token-preview buttons */
-      .btn-ghost {
-        align-self: flex-start;
-        margin-top: auto;
-        padding: 0.5rem 1rem;
-        border-radius: var(--radius-full);
-        background: transparent;
-        color: var(--text);
-        font-family: var(--font-display);
-        font-weight: 600;
-        font-size: var(--text-sm);
-        cursor: pointer;
-        transition: background var(--dur-fast) var(--ease-out);
-      }
-      .btn-ghost:hover { background: var(--surface-2); }
-      .btn-solid {
-        align-self: flex-start;
-        margin-top: auto;
-        padding: 0.55rem 1.15rem;
-        border: 0;
-        border-radius: var(--radius-full);
-        background: var(--text-on-gradient);
-        color: var(--color-blue-deep);
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: var(--text-sm);
-        cursor: pointer;
-        transition: transform var(--dur-fast) var(--ease-out);
-      }
-      .btn-solid:hover { transform: translateY(-1px); }
-
-      .foot { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-hairline); font-size: var(--text-sm); }
-    </style>
-  </body>
-</html>
+  .hero-cta-ghost:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+</style>

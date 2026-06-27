@@ -1,0 +1,70 @@
+---
+// BaseLayout.astro — root layout for every TerraVision page
+import type { SeoProps } from "@/lib/seo";
+import Head from "@/components/Head.astro";
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/components/Footer.astro";
+import ScrollProgress from "@/components/ScrollProgress.astro";
+import LoadingScreen from "@/components/LoadingScreen.astro";
+import EcoBotButton from "@/components/EcoBotButton.astro";
+
+type Props = SeoProps;
+
+const seoProps = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head {...seoProps} />
+  </head>
+  <body>
+    <!-- Scroll progress indicator (fixed top, z-index 9999) -->
+    <ScrollProgress />
+
+    <!-- First-session loading overlay -->
+    <LoadingScreen />
+
+    <!-- Ambient atmospheric backdrop (decorative) -->
+    <div class="page-aura" aria-hidden="true"></div>
+
+    <!-- Sticky navigation shell -->
+    <Navbar />
+
+    <!-- Page content -->
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+
+    <!-- Floating EcoBot assistant button -->
+    <EcoBotButton />
+  </body>
+</html>
+
+<style>
+  /* Skip-to-content link (screen-reader / keyboard users) */
+  :global(body) {
+    position: relative;
+  }
+
+  /* Ambient atmospheric backdrop visible through glass elements */
+  .page-aura {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(50rem 36rem at 10% -10%, color-mix(in srgb, var(--color-green) 20%, transparent), transparent 70%),
+      radial-gradient(54rem 38rem at 95% 5%, color-mix(in srgb, var(--color-blue) 20%, transparent), transparent 70%),
+      radial-gradient(40rem 28rem at 55% 100%, color-mix(in srgb, var(--color-green-deep) 14%, transparent), transparent 70%);
+  }
+
+  /* Ensure main content sits above the aura */
+  #main-content {
+    position: relative;
+    z-index: 1;
+  }
+</style>
