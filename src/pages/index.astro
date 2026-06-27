@@ -1,39 +1,226 @@
 ---
-// TerraVision — Home (placeholder hero; full page built in a later task)
+/**
+ * index.astro — TerraVision Home Page
+ *
+ * Sections:
+ *  1. Hero        – full-viewport intro with animated EarthHero background
+ *  2. Solutions   – five TopicCards from TOPICS data
+ *  3. Stats       – animated StatCounter strip with real sustainability figures
+ *  4. Closing CTA – links to /calculators and /quiz
+ */
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { SITE } from "@/data/site";
+import EarthHero from "@/components/diagrams/EarthHero.astro";
+import TopicCard from "@/components/ui/TopicCard.astro";
+import StatCounter from "@/components/ui/StatCounter.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import CTAButton from "@/components/ui/CTAButton.astro";
+import { TOPICS } from "@/data/topics";
+
+const ICONS: Record<string, string> = {
+  solar: "☀️",
+  wind: "💨",
+  rainwater: "🌧️",
+  waste: "♻️",
+  water: "💧",
+};
 ---
 
-<BaseLayout title={`${SITE.name} — ${SITE.tagline}`} description={SITE.defaultDescription}>
-  <!-- Minimal hero placeholder -->
-  <section class="hero">
+<BaseLayout
+  title="TerraVision — Sustainable Planet: Eco-Friendly Solutions"
+  description="Explore solar energy, wind power, rainwater harvesting, waste reduction, and water conservation — with interactive calculators, impact data, and learning resources built by students for students."
+>
+
+  <!-- ── HERO ──────────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-heading">
+
+    <!-- Decorative animated background -->
+    <EarthHero />
+
+    <!-- Foreground content -->
     <div class="hero-inner">
       <p class="hero-eyebrow">Sustainability Education</p>
-      <h1 class="hero-title">
-        <span class="text-gradient">{SITE.name}</span>
+
+      <h1 id="hero-heading" class="hero-title">
+        <span class="text-gradient">Sustainable Planet:</span><br/>
+        Eco-Friendly Solutions
       </h1>
-      <p class="hero-tagline">{SITE.tagline}</p>
-      <p class="hero-desc">{SITE.defaultDescription}</p>
+
+      <p class="hero-subtitle">
+        Innovative Ideas for a Cleaner, Greener, and Sustainable Future
+      </p>
+
+      <p class="hero-desc">
+        TerraVision is a student-built platform that breaks down five
+        real-world sustainability solutions — from solar rooftops to
+        rainwater tanks — with science, data, and actionable tips.
+      </p>
+
       <div class="hero-actions">
-        <a href="/solutions" class="hero-cta-primary">Explore Solutions</a>
-        <a href="/about" class="hero-cta-ghost">Learn More</a>
+        <CTAButton href="#solutions" variant="primary" size="lg">
+          Explore Solutions
+        </CTAButton>
+        <CTAButton href="/about" variant="ghost" size="lg">
+          Learn More
+        </CTAButton>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="scroll-line"></span>
+        <span class="scroll-label">scroll</span>
       </div>
     </div>
   </section>
+
+  <!-- ── SOLUTIONS GRID ─────────────────────────────────────────────── -->
+  <section id="solutions" class="solutions-section" aria-labelledby="solutions-heading">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Five Pillars of Change"
+        title="Our Sustainability Solutions"
+        subtitle="Each topic explores a proven eco-friendly technology — how it works, why it matters, and how you can apply it in your own life and community."
+        align="center"
+      />
+
+      <ul class="solutions-grid" role="list">
+        {TOPICS.map((topic) => (
+          <li>
+            <TopicCard
+              title={topic.title}
+              blurb={topic.blurb}
+              href={topic.href}
+              icon={ICONS[topic.slug]}
+              accent={topic.accent}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── STATS STRIP ────────────────────────────────────────────────── -->
+  <section class="stats-section" aria-labelledby="stats-heading">
+    <div class="container">
+      <h2 id="stats-heading" class="sr-only">Sustainability by the Numbers</h2>
+
+      <div class="stats-header">
+        <p class="stats-eyebrow">The Numbers That Matter</p>
+        <p class="stats-intro">
+          Real data behind the sustainability crisis — and why action matters now.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-item glass">
+          <StatCounter
+            value={90}
+            suffix="%"
+            label="Drop in solar panel costs since 2010"
+          />
+          <p class="stat-source">Source: IRENA Renewable Power Generation Costs 2023</p>
+        </div>
+
+        <div class="stat-item glass">
+          <StatCounter
+            value={2.2}
+            suffix="B"
+            decimals={1}
+            label="People lacking access to safe drinking water"
+          />
+          <p class="stat-source">Source: WHO/UNICEF Joint Monitoring Programme 2023</p>
+        </div>
+
+        <div class="stat-item glass">
+          <StatCounter
+            value={37}
+            suffix=" Gt"
+            label="Global CO₂ emissions per year (2023)"
+          />
+          <p class="stat-source">Source: IEA Global Energy Review 2023</p>
+        </div>
+
+        <div class="stat-item glass">
+          <StatCounter
+            value={7}
+            suffix="M+"
+            label="Deaths linked to air pollution annually"
+          />
+          <p class="stat-source">Source: World Health Organization 2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLOSING CTA ────────────────────────────────────────────────── -->
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-card glass-strong">
+
+        <p class="cta-eyebrow">Ready to Go Deeper?</p>
+        <h2 id="cta-heading" class="cta-title">
+          Calculate Your Impact.<br/>
+          <span class="text-gradient">Test Your Knowledge.</span>
+        </h2>
+        <p class="cta-body">
+          Use our interactive calculators to see exactly how much energy, water,
+          and money your household can save. Then challenge yourself — or your
+          class — with our sustainability quiz.
+        </p>
+
+        <div class="cta-actions">
+          <CTAButton href="/calculators" variant="primary" size="lg">
+            Open Calculators
+          </CTAButton>
+          <CTAButton href="/quiz" variant="secondary" size="lg">
+            Take the Quiz
+          </CTAButton>
+        </div>
+
+        <!-- Decorative rings -->
+        <div class="cta-deco" aria-hidden="true">
+          <span class="deco-ring deco-ring--1"></span>
+          <span class="deco-ring deco-ring--2"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
 
 <style>
+  /* ── Shared layout helpers ──────────────────────────────────────── */
+  .container {
+    width: min(100%, 72rem);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 5vw, 3rem);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────── */
   .hero {
+    position: relative;
     min-height: calc(100svh - 3.75rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 2.5rem);
+    padding: clamp(5rem, 12vw, 9rem) clamp(1rem, 5vw, 3rem) clamp(4rem, 8vw, 7rem);
+    overflow: hidden;
     text-align: center;
   }
 
   .hero-inner {
-    max-width: 44rem;
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,38 +228,45 @@ import { SITE } from "@/data/site";
   }
 
   .hero-eyebrow {
+    margin: 0;
     font-family: var(--font-display);
     font-size: var(--text-xs);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     color: var(--color-green);
-    margin: 0;
+    background: color-mix(in srgb, var(--color-green) 12%, transparent);
+    padding: 0.3rem 0.9rem;
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in srgb, var(--color-green) 25%, transparent);
   }
 
   .hero-title {
+    margin: 0;
     font-family: var(--font-display);
-    font-size: var(--text-display);
+    font-size: clamp(2.25rem, 6.5vw, 4.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1.02;
-    margin: 0;
+    line-height: 1.06;
+    color: var(--text);
   }
 
-  .hero-tagline {
+  .hero-subtitle {
+    margin: 0;
     font-family: var(--font-display);
-    font-size: var(--text-h3);
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
     font-weight: 600;
     color: var(--text-muted);
-    margin: 0;
+    max-width: 42rem;
+    text-wrap: pretty;
   }
 
   .hero-desc {
+    margin: 0;
     font-size: var(--text-body-lg);
     color: var(--text-muted);
-    line-height: 1.7;
+    line-height: 1.75;
     max-width: 38rem;
-    margin: 0;
     text-wrap: pretty;
   }
 
@@ -81,46 +275,206 @@ import { SITE } from "@/data/site";
     gap: 0.75rem;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
   }
 
-  .hero-cta-primary {
-    display: inline-flex;
+  /* Scroll hint */
+  .hero-scroll-hint {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 0.75rem 1.75rem;
-    border-radius: var(--radius-full);
-    background-image: var(--gradient-brand);
-    color: var(--text-on-gradient);
+    gap: 0.4rem;
+    margin-top: 1rem;
+    opacity: 0.45;
+    animation: hint-fade 2.5s ease-in-out infinite;
+  }
+
+  .scroll-line {
+    display: block;
+    width: 1.5px;
+    height: 2rem;
+    background: linear-gradient(to bottom, var(--color-green), transparent);
+    border-radius: 1px;
+    animation: hint-extend 2.5s ease-in-out infinite;
+  }
+
+  .scroll-label {
     font-family: var(--font-display);
+    font-size: 0.6rem;
     font-weight: 700;
-    font-size: var(--text-sm);
-    text-decoration: none;
-    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--color-green) 35%, transparent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
   }
 
-  .hero-cta-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px color-mix(in srgb, var(--color-green) 45%, transparent);
+  @keyframes hint-fade {
+    0%, 100% { opacity: 0.35; }
+    50%       { opacity: 0.7;  }
   }
 
-  .hero-cta-ghost {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 1.75rem;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border-strong);
-    background: transparent;
-    color: var(--text-muted);
+  @keyframes hint-extend {
+    0%, 100% { transform: scaleY(0.6); }
+    50%       { transform: scaleY(1);   }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-scroll-hint,
+    .scroll-line { animation: none; }
+  }
+
+  /* ── Solutions section ──────────────────────────────────────────── */
+  .solutions-section {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .solutions-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ── Stats section ──────────────────────────────────────────────── */
+  .stats-section {
+    padding-block: clamp(4rem, 8vw, 7rem);
+    background: color-mix(in srgb, var(--surface-2) 50%, transparent);
+    border-top: 1px solid var(--border-hairline);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .stats-header {
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .stats-eyebrow {
+    margin: 0 0 0.5rem;
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: var(--text-sm);
-    text-decoration: none;
-    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--color-green);
   }
 
-  .hero-cta-ghost:hover {
-    background: var(--surface-2);
+  .stats-intro {
+    margin: 0;
+    font-size: var(--text-body-lg);
+    color: var(--text-muted);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 3vw, 2rem) 1.25rem;
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+
+  .stat-source {
+    margin: 0;
+    font-size: 0.65rem;
+    color: var(--text-subtle);
+    line-height: 1.4;
+    max-width: 16rem;
+    font-style: italic;
+  }
+
+  /* ── Closing CTA ────────────────────────────────────────────────── */
+  .cta-section {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .cta-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .cta-eyebrow {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-green);
+  }
+
+  .cta-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
     color: var(--text);
+  }
+
+  .cta-body {
+    margin: 0;
+    font-size: var(--text-body-lg);
+    color: var(--text-muted);
+    max-width: 40rem;
+    line-height: 1.75;
+    text-wrap: pretty;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  /* Decorative background rings on CTA card */
+  .cta-deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .deco-ring {
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--color-green) 15%, transparent);
+  }
+
+  .deco-ring--1 {
+    width: 28rem; height: 28rem;
+    top: 50%; left: -8rem;
+    transform: translateY(-50%);
+  }
+
+  .deco-ring--2 {
+    width: 22rem; height: 22rem;
+    top: 50%; right: -6rem;
+    transform: translateY(-50%);
+    border-color: color-mix(in srgb, var(--color-blue) 12%, transparent);
+  }
+
+  /* Ensure content sits above deco rings */
+  .cta-card > *:not(.cta-deco) {
+    position: relative;
+    z-index: 1;
   }
 </style>

@@ -1,0 +1,310 @@
+---
+/**
+ * EarthHero.astro — Decorative animated CSS/SVG Earth and nature background.
+ *
+ * Purely visual; aria-hidden so assistive technology ignores it entirely.
+ * All keyframe animations are suppressed under prefers-reduced-motion.
+ * No JavaScript; no external assets. Uses only design-token CSS variables.
+ */
+---
+
+<div class="eh" aria-hidden="true">
+
+  <!-- Soft radial halos behind the globe -->
+  <div class="eh-halo eh-halo--outer"></div>
+  <div class="eh-halo eh-halo--inner"></div>
+
+  <!-- SVG Earth globe -->
+  <svg
+    class="eh-globe"
+    viewBox="0 0 400 400"
+    xmlns="http://www.w3.org/2000/svg"
+    focusable="false"
+  >
+    <defs>
+      <!-- Ocean gradient -->
+      <radialGradient id="eh-ocean" cx="38%" cy="36%" r="70%">
+        <stop offset="0%"   stop-color="var(--color-blue)"      stop-opacity="0.85"/>
+        <stop offset="55%"  stop-color="var(--color-blue-deep)" stop-opacity="0.90"/>
+        <stop offset="100%" stop-color="#05101f"               stop-opacity="0.96"/>
+      </radialGradient>
+      <!-- Land gradient -->
+      <radialGradient id="eh-land" cx="42%" cy="34%" r="70%">
+        <stop offset="0%"   stop-color="var(--color-green)"      stop-opacity="0.90"/>
+        <stop offset="100%" stop-color="var(--color-green-deep)" stop-opacity="0.95"/>
+      </radialGradient>
+      <!-- Atmosphere glow -->
+      <radialGradient id="eh-atmo" cx="50%" cy="50%" r="50%">
+        <stop offset="70%" stop-color="transparent"/>
+        <stop offset="100%" stop-color="var(--color-blue)" stop-opacity="0.25"/>
+      </radialGradient>
+      <!-- Clip to globe circle -->
+      <clipPath id="eh-clip">
+        <circle cx="200" cy="200" r="138"/>
+      </clipPath>
+    </defs>
+
+    <!-- Atmosphere ring -->
+    <circle cx="200" cy="200" r="150" fill="url(#eh-atmo)"/>
+
+    <!-- Globe base (ocean) -->
+    <circle cx="200" cy="200" r="138" fill="url(#eh-ocean)"/>
+
+    <!-- Stylised land masses clipped to globe -->
+    <g clip-path="url(#eh-clip)" fill="url(#eh-land)" opacity="0.88">
+      <!-- North America -->
+      <path d="M102 118 C122 103 162 108 178 130 C192 150 180 188 158 194
+               C138 199 115 182 106 158 C98 136 97 128 102 118Z"/>
+      <!-- South America -->
+      <path d="M152 207 C168 200 186 214 189 240 C191 264 178 292 160 296
+               C144 299 130 278 133 252 C136 226 142 212 152 207Z"/>
+      <!-- Europe -->
+      <path d="M210 108 C224 104 242 116 245 132 C248 150 236 166 220 167
+               C205 168 194 152 196 134 C198 118 204 111 210 108Z"/>
+      <!-- Africa -->
+      <path d="M214 178 C232 172 254 186 257 214 C260 240 244 272 224 276
+               C205 279 190 258 192 230 C194 202 208 182 214 178Z"/>
+      <!-- Asia -->
+      <path d="M250 100 C278 93 316 108 322 134 C328 158 310 178 284 180
+               C258 182 238 162 240 138 C242 116 250 103 250 100Z"/>
+      <!-- Australia -->
+      <path d="M286 248 C304 243 324 256 326 274 C328 292 312 308 294 308
+               C277 308 264 292 266 274 C268 258 276 251 286 248Z"/>
+    </g>
+
+    <!-- Atmosphere shimmer ring -->
+    <circle cx="200" cy="200" r="138" fill="none" stroke="white" stroke-width="2.5" stroke-opacity="0.12"/>
+
+    <!-- Specular highlight -->
+    <ellipse cx="158" cy="148" rx="38" ry="26" fill="white" fill-opacity="0.07" transform="rotate(-20 158 148)"/>
+  </svg>
+
+  <!-- Orbital rings + travelling dots -->
+  <div class="eh-orbit eh-orbit--1">
+    <span class="eh-dot eh-dot--green"></span>
+  </div>
+  <div class="eh-orbit eh-orbit--2">
+    <span class="eh-dot eh-dot--blue"></span>
+  </div>
+  <div class="eh-orbit eh-orbit--3">
+    <span class="eh-dot eh-dot--green eh-dot--sm"></span>
+  </div>
+
+  <!-- Floating ambient particles -->
+  <span class="eh-particle eh-p1"></span>
+  <span class="eh-particle eh-p2"></span>
+  <span class="eh-particle eh-p3"></span>
+  <span class="eh-particle eh-p4"></span>
+  <span class="eh-particle eh-p5"></span>
+  <span class="eh-particle eh-p6"></span>
+
+</div>
+
+<style>
+  /* ── Container ──────────────────────────────────────────────────── */
+  .eh {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Halos ──────────────────────────────────────────────────────── */
+  .eh-halo {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .eh-halo--outer {
+    width: clamp(500px, 80vw, 900px);
+    height: clamp(500px, 80vw, 900px);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-green) 8%, transparent) 0%,
+      color-mix(in srgb, var(--color-blue)  6%, transparent) 50%,
+      transparent 70%
+    );
+    animation: halo-pulse 12s ease-in-out infinite;
+  }
+
+  .eh-halo--inner {
+    width: clamp(300px, 50vw, 560px);
+    height: clamp(300px, 50vw, 560px);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-blue) 12%, transparent) 0%,
+      transparent 65%
+    );
+    animation: halo-pulse 9s ease-in-out infinite reverse;
+  }
+
+  @keyframes halo-pulse {
+    0%, 100% { transform: scale(1);    opacity: 0.7; }
+    50%       { transform: scale(1.08); opacity: 1;   }
+  }
+
+  /* ── Globe ──────────────────────────────────────────────────────── */
+  .eh-globe {
+    position: relative;
+    z-index: 2;
+    width: clamp(240px, 36vw, 460px);
+    height: auto;
+    filter:
+      drop-shadow(0 0 36px color-mix(in srgb, var(--color-blue)       28%, transparent))
+      drop-shadow(0 0 72px color-mix(in srgb, var(--color-green)      12%, transparent))
+      drop-shadow(0 2px 8px color-mix(in srgb, var(--color-blue-deep) 30%, transparent));
+    opacity: 0.72;
+    animation: globe-float 9s ease-in-out infinite;
+    transform-origin: center center;
+  }
+
+  @keyframes globe-float {
+    0%, 100% { transform: translateY(0px)   rotate(0deg); }
+    33%       { transform: translateY(-14px) rotate(0.6deg); }
+    66%       { transform: translateY(-8px)  rotate(-0.4deg); }
+  }
+
+  /* ── Orbital rings ──────────────────────────────────────────────── */
+  .eh-orbit {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .eh-orbit--1 {
+    width:  clamp(300px, 44vw, 560px);
+    height: clamp(300px, 44vw, 560px);
+    border: 1px solid color-mix(in srgb, var(--color-green) 22%, transparent);
+    transform: rotate(-15deg);
+    animation: orbit-spin 22s linear infinite;
+  }
+
+  .eh-orbit--2 {
+    width:  clamp(390px, 58vw, 700px);
+    height: clamp(390px, 58vw, 700px);
+    border: 1px solid color-mix(in srgb, var(--color-blue) 18%, transparent);
+    transform: rotate(30deg);
+    animation: orbit-spin 38s linear infinite reverse;
+  }
+
+  .eh-orbit--3 {
+    width:  clamp(470px, 70vw, 840px);
+    height: clamp(470px, 70vw, 840px);
+    border: 1px solid color-mix(in srgb, var(--color-green) 12%, transparent);
+    transform: rotate(70deg);
+    animation: orbit-spin 55s linear infinite;
+  }
+
+  @keyframes orbit-spin {
+    from { transform: rotate(var(--start, 0deg)); }
+    to   { transform: rotate(calc(var(--start, 0deg) + 360deg)); }
+  }
+
+  /* Simpler override — just rotate from current computed angle */
+  .eh-orbit--1 { animation: orbit-spin1 22s linear infinite; }
+  .eh-orbit--2 { animation: orbit-spin2 38s linear infinite reverse; }
+  .eh-orbit--3 { animation: orbit-spin3 55s linear infinite; }
+
+  @keyframes orbit-spin1 { from { transform: rotate(-15deg); } to { transform: rotate(345deg); } }
+  @keyframes orbit-spin2 { from { transform: rotate(30deg);  } to { transform: rotate(390deg); } }
+  @keyframes orbit-spin3 { from { transform: rotate(70deg);  } to { transform: rotate(430deg); } }
+
+  /* ── Orbital dots ───────────────────────────────────────────────── */
+  .eh-dot {
+    display: block;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: -5px;
+  }
+
+  .eh-dot--green {
+    width: 10px;
+    height: 10px;
+    background: var(--color-green);
+    box-shadow: 0 0 10px var(--color-green), 0 0 20px color-mix(in srgb, var(--color-green) 40%, transparent);
+  }
+
+  .eh-dot--blue {
+    width: 10px;
+    height: 10px;
+    background: var(--color-blue);
+    box-shadow: 0 0 10px var(--color-blue), 0 0 20px color-mix(in srgb, var(--color-blue) 40%, transparent);
+  }
+
+  .eh-dot--sm {
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+  }
+
+  /* ── Floating particles ─────────────────────────────────────────── */
+  .eh-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: particle-drift 7s ease-in-out infinite;
+  }
+
+  .eh-p1 {
+    width: 8px; height: 8px;
+    background: color-mix(in srgb, var(--color-green) 55%, transparent);
+    top: 14%; left: 18%;
+    animation-duration: 8s; animation-delay: 0s;
+  }
+  .eh-p2 {
+    width: 5px; height: 5px;
+    background: color-mix(in srgb, var(--color-blue) 50%, transparent);
+    top: 68%; left: 13%;
+    animation-duration: 10s; animation-delay: 1.2s;
+  }
+  .eh-p3 {
+    width: 9px; height: 9px;
+    background: color-mix(in srgb, var(--color-green) 45%, transparent);
+    top: 22%; right: 16%;
+    animation-duration: 9s; animation-delay: 3.1s;
+  }
+  .eh-p4 {
+    width: 6px; height: 6px;
+    background: color-mix(in srgb, var(--color-blue) 45%, transparent);
+    top: 62%; right: 20%;
+    animation-duration: 7.5s; animation-delay: 0.6s;
+  }
+  .eh-p5 {
+    width: 7px; height: 7px;
+    background: color-mix(in srgb, var(--color-green-deep) 55%, transparent);
+    bottom: 18%; left: 42%;
+    animation-duration: 11s; animation-delay: 2.4s;
+  }
+  .eh-p6 {
+    width: 5px; height: 5px;
+    background: color-mix(in srgb, var(--color-blue-deep) 50%, transparent);
+    top: 38%; left: 8%;
+    animation-duration: 8.5s; animation-delay: 4.5s;
+  }
+
+  @keyframes particle-drift {
+    0%, 100% { transform: translateY(0px)   scale(1);   opacity: 0.55; }
+    40%       { transform: translateY(-18px) scale(1.3); opacity: 0.90; }
+    70%       { transform: translateY(-10px) scale(0.9); opacity: 0.70; }
+  }
+
+  /* ── Reduced motion — kill everything ──────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .eh-halo--outer,
+    .eh-halo--inner,
+    .eh-globe,
+    .eh-orbit--1,
+    .eh-orbit--2,
+    .eh-orbit--3,
+    .eh-particle {
+      animation: none;
+    }
+  }
+</style>
