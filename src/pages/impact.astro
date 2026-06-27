@@ -1,0 +1,531 @@
+---
+/**
+ * /impact — Global Impact page
+ *
+ * Sections:
+ *   1. Hero — headline stats (StatCounters)
+ *   2. Renewable electricity growth — LineChart
+ *   3. Electricity mix + CO₂ by sector — DonutChart & BarChart (side-by-side)
+ *   4. Climate change facts
+ *   5. Future goals (net-zero targets)
+ *   6. Data sources
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GlassCard from "@/components/ui/GlassCard.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import StatCounter from "@/components/ui/StatCounter.astro";
+import {
+  LineChart,
+  BarChart,
+  DonutChart,
+} from "@/components/islands/charts/Charts";
+import {
+  impactStats,
+  renewableGrowthData,
+  electricityMixData,
+  emissionsBySectorData,
+  DATA_SOURCES,
+} from "@/data/impact";
+---
+
+<BaseLayout
+  title="Global Impact — TerraVision"
+  description="Explore the real numbers behind climate change: renewable electricity growth, global CO₂ emissions by sector, energy mix trends, and the path to net-zero. Accurate data visualised for students and educators."
+>
+  <!-- ======================================================================
+       HERO
+  ====================================================================== -->
+  <section class="ip-hero">
+    <div class="ip-container">
+      <SectionHeader
+        eyebrow="Global Impact"
+        title="The State of Our Planet"
+        subtitle="Climate change is the defining challenge of our generation. These are the real numbers — where we are, how fast things are changing, and what it takes to turn the tide."
+        align="center"
+      />
+
+      <div class="stat-grid">
+        {
+          impactStats.map((s) => (
+            <GlassCard class="stat-card">
+              <StatCounter
+                value={s.value}
+                suffix={s.suffix}
+                prefix={s.prefix}
+                label={s.label}
+                decimals={s.decimals ?? 0}
+              />
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECTION 1 — Renewable electricity growth
+  ====================================================================== -->
+  <section class="ip-section">
+    <div class="ip-container">
+      <SectionHeader
+        eyebrow="Renewables on the Rise"
+        title="Renewable Electricity is Growing"
+        subtitle="The share of global electricity generated from renewable sources has grown from 19% in 2000 to over 30% in 2023 — driven by massive scale-up in solar and wind."
+      />
+
+      <GlassCard class="chart-card">
+        <LineChart
+          client:visible
+          data={renewableGrowthData}
+          title="Global Renewable Electricity Share 2000–2023"
+          summary="Line chart showing renewable electricity share rising from 19% in 2000 to 30.6% in 2023. The trend accelerates after 2015, reflecting solar and wind cost reductions."
+          yLabel="Share of global electricity from renewables (%)"
+          yUnit="%"
+        />
+      </GlassCard>
+
+      <div class="insight-row">
+        <GlassCard class="insight-card">
+          <p class="insight-eyebrow">Key milestone</p>
+          <p class="insight-text">
+            Solar PV costs fell <strong>over 90%</strong> between 2010 and 2023
+            (IRENA), making it the cheapest electricity source in history and
+            the main driver of the renewable surge.
+          </p>
+        </GlassCard>
+        <GlassCard class="insight-card">
+          <p class="insight-eyebrow">What's next</p>
+          <p class="insight-text">
+            The IEA estimates renewables must reach <strong>over 60%</strong> of
+            the global electricity mix by 2030 to keep warming below 1.5 °C —
+            requiring triple the current installation rate.
+          </p>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECTION 2 — Electricity mix + Emissions by sector
+  ====================================================================== -->
+  <section class="ip-section ip-section--alt">
+    <div class="ip-container">
+      <div class="dual-chart-grid">
+        <!-- Donut -->
+        <div>
+          <SectionHeader
+            eyebrow="Energy Mix"
+            title="Where Does Our Electricity Come From?"
+            subtitle="Coal and gas still dominate global generation — but renewables are closing fast."
+          />
+          <GlassCard class="chart-card">
+            <DonutChart
+              client:visible
+              data={electricityMixData}
+              title="Global Electricity Generation Mix 2023"
+              summary="Donut chart: Coal 36%, Natural Gas 22%, Hydro 14%, Nuclear 10%, Wind 8%, Solar PV 5%, Other Renewables 5%. Fossil fuels account for 58% of total generation."
+            />
+          </GlassCard>
+        </div>
+
+        <!-- Bar -->
+        <div>
+          <SectionHeader
+            eyebrow="Where Emissions Come From"
+            title="CO₂ Emissions by Sector (2022)"
+            subtitle="Energy production and transport together account for over 60% of global CO₂ emissions."
+          />
+          <GlassCard class="chart-card">
+            <BarChart
+              client:visible
+              data={emissionsBySectorData}
+              title="Global CO₂ Emissions by Sector, 2022"
+              summary="Bar chart: Energy & Power 15.6 Gt, Transport 7.7 Gt, Industry 6.1 Gt, Agriculture 5.8 Gt, Buildings 2.9 Gt, Waste 0.9 Gt. Total approximately 39 Gt CO₂."
+              yLabel="Gigatonnes CO₂ (Gt)"
+              unit=" Gt"
+            />
+          </GlassCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECTION 3 — Climate change facts
+  ====================================================================== -->
+  <section class="ip-section">
+    <div class="ip-container">
+      <SectionHeader
+        eyebrow="Why It Matters"
+        title="The Science of Climate Change"
+        subtitle="The atmosphere is warming faster than at any point in recorded human history. Here is what we know."
+        align="center"
+      />
+
+      <div class="facts-grid">
+        <GlassCard class="fact-card">
+          <div class="fact-icon" aria-hidden="true">🌡️</div>
+          <h3 class="fact-title">+1.2 °C Already</h3>
+          <p class="fact-body">
+            Earth's average surface temperature has risen approximately
+            <strong>1.2 °C</strong> since the pre-industrial era (1850–1900),
+            driven almost entirely by human greenhouse gas emissions (IPCC AR6,
+            2021).
+          </p>
+        </GlassCard>
+
+        <GlassCard class="fact-card">
+          <div class="fact-icon" aria-hidden="true">🌊</div>
+          <h3 class="fact-title">Sea Levels Rising</h3>
+          <p class="fact-body">
+            Global mean sea level has risen by around <strong>20 cm</strong>{" "}
+            since 1900 and is now rising at <strong>3.7 mm/year</strong> —
+            threatening 1 billion coastal inhabitants (IPCC AR6).
+          </p>
+        </GlassCard>
+
+        <GlassCard class="fact-card">
+          <div class="fact-icon" aria-hidden="true">🔥</div>
+          <h3 class="fact-title">Extreme Events</h3>
+          <p class="fact-body">
+            Heatwaves, floods, and wildfires have increased in frequency and
+            intensity. Each 0.5 °C of additional warming significantly raises
+            the probability of record-breaking extreme weather events.
+          </p>
+        </GlassCard>
+
+        <GlassCard class="fact-card">
+          <div class="fact-icon" aria-hidden="true">🧊</div>
+          <h3 class="fact-title">Ice Is Melting</h3>
+          <p class="fact-body">
+            Arctic sea ice extent has declined by roughly <strong>13%</strong>{" "}
+            per decade since 1979. Greenland and Antarctic ice sheets are losing
+            mass at an accelerating rate (NASA).
+          </p>
+        </GlassCard>
+
+        <GlassCard class="fact-card">
+          <div class="fact-icon" aria-hidden="true">🌿</div>
+          <h3 class="fact-title">Biodiversity at Risk</h3>
+          <p class="fact-body">
+            Climate change is now the <strong>third-largest driver</strong> of
+            biodiversity loss. Coral reefs, which support 25% of marine species,
+            face near-complete destruction at 2 °C of warming (IPBES 2019).
+          </p>
+        </GlassCard>
+
+        <GlassCard class="fact-card">
+          <div class="fact-icon" aria-hidden="true">🏙️</div>
+          <h3 class="fact-title">Cities Feel It First</h3>
+          <p class="fact-body">
+            Urban areas experience the <em>urban heat island effect</em>,
+            making city centres up to <strong>10 °C hotter</strong> than
+            surrounding countryside. Over 70% of global emissions come from
+            cities (UN-Habitat).
+          </p>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECTION 4 — Future goals
+  ====================================================================== -->
+  <section class="ip-section ip-section--alt">
+    <div class="ip-container">
+      <SectionHeader
+        eyebrow="The Path Forward"
+        title="Race to Net Zero"
+        subtitle="Reaching net-zero emissions means balancing the carbon released with the carbon removed. Here is the global timeline — and what each milestone demands."
+        align="center"
+      />
+
+      <div class="goals-timeline">
+        <div class="goal-item">
+          <div class="goal-marker gradient-brand" aria-hidden="true"></div>
+          <div class="goal-content">
+            <p class="goal-year">2030</p>
+            <h3 class="goal-title">Cut Emissions by 43%</h3>
+            <p class="goal-body">
+              The IPCC says global CO₂ emissions must fall by at least
+              <strong>43% below 2019 levels</strong> by 2030 to keep the 1.5 °C
+              target alive. This requires tripling renewable energy capacity and
+              doubling energy efficiency improvements every year.
+            </p>
+          </div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-marker gradient-brand" aria-hidden="true"></div>
+          <div class="goal-content">
+            <p class="goal-year">2050</p>
+            <h3 class="goal-title">Global Net Zero</h3>
+            <p class="goal-body">
+              The Paris Agreement target: global net-zero CO₂ by 2050. Over
+              <strong>140 countries</strong> — representing 90% of global GDP —
+              have pledged net-zero targets. This requires clean electricity for
+              nearly all power, widespread electrification of transport and
+              industry, and large-scale carbon removal.
+            </p>
+          </div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-marker gradient-brand" aria-hidden="true"></div>
+          <div class="goal-content">
+            <p class="goal-year">2070</p>
+            <h3 class="goal-title">India's Net-Zero Pledge</h3>
+            <p class="goal-body">
+              India — the world's third-largest CO₂ emitter — has pledged
+              net-zero by <strong>2070</strong> and aims for
+              <strong>500 GW of renewable capacity</strong> by 2030 (National
+              Determined Contribution, 2022). India is already the fourth-largest
+              solar market globally and is adding capacity faster than almost
+              any other nation.
+            </p>
+          </div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-marker gradient-brand" aria-hidden="true"></div>
+          <div class="goal-content">
+            <p class="goal-year">What You Can Do</p>
+            <h3 class="goal-title">Individual Action Adds Up</h3>
+            <p class="goal-body">
+              Switching to renewable energy, reducing meat consumption, using
+              public transport, and cutting single-use plastics can collectively
+              reduce a typical household's carbon footprint by
+              <strong>up to 4 tonnes CO₂ per year</strong>. Education and
+              advocacy multiply that impact further.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       DATA SOURCES
+  ====================================================================== -->
+  <section class="ip-sources">
+    <div class="ip-container">
+      <GlassCard>
+        <p class="sources-label">Data Sources</p>
+        <p class="sources-text">{DATA_SOURCES}</p>
+      </GlassCard>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---- Chart-palette CSS vars (impact-page scope; no brand hex redefined) --- */
+  :root {
+    --chart-coal:    #64748B; /* slate-500 — fossil coal */
+    --chart-gas:     #94A3B8; /* slate-400 — natural gas */
+    --chart-nuclear: #818CF8; /* indigo-400 — nuclear */
+    --chart-solar:   #FBBF24; /* amber-400  — solar PV  */
+  }
+  [data-theme="dark"] {
+    --chart-coal:    #475569; /* slate-600 */
+    --chart-gas:     #64748B; /* slate-500 */
+    --chart-nuclear: #6366F1; /* indigo-500 */
+    --chart-solar:   #F59E0B; /* amber-500  */
+  }
+
+  /* ---- Layout helpers --------------------------------------------------- */
+  .ip-container {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
+  }
+
+  .ip-hero {
+    padding-block: clamp(5rem, 10vw, 8rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  .ip-section {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  .ip-section--alt {
+    background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+  }
+
+  /* ---- Stat grid -------------------------------------------------------- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1.25rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .stat-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 7rem;
+  }
+
+  /* ---- Chart cards ------------------------------------------------------ */
+  .chart-card {
+    margin-top: 1.5rem;
+  }
+
+  /* ---- Insight row (below line chart) ----------------------------------- */
+  .insight-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .insight-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0 0 0.5rem;
+  }
+
+  .insight-text {
+    margin: 0;
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ---- Dual chart grid -------------------------------------------------- */
+  .dual-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  /* ---- Facts grid ------------------------------------------------------- */
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .fact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .fact-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .fact-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .fact-body {
+    margin: 0;
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ---- Goals timeline --------------------------------------------------- */
+  .goals-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    position: relative;
+  }
+
+  .goals-timeline::before {
+    content: "";
+    position: absolute;
+    left: 0.625rem;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    width: 2px;
+    background: var(--gradient-brand);
+    opacity: 0.4;
+  }
+
+  .goal-item {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    position: relative;
+  }
+
+  .goal-marker {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: var(--radius-full);
+    margin-top: 0.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .goal-content {
+    flex: 1;
+  }
+
+  .goal-year {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0 0 0.25rem;
+  }
+
+  .goal-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .goal-body {
+    margin: 0;
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 52ch;
+  }
+
+  /* ---- Sources ---------------------------------------------------------- */
+  .ip-sources {
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+
+  .sources-label {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0 0 0.375rem;
+  }
+
+  .sources-text {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+    line-height: 1.7;
+  }
+</style>
