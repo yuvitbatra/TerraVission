@@ -33,7 +33,7 @@ const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
       class="sc-value"
       data-target={value}
       data-decimals={decimals}
-    >{prefix}{value.toFixed(decimals)}{suffix}</span><span class="sc-suffix">{suffix}</span>
+    >{value.toFixed(decimals)}</span><span class="sc-suffix">{suffix}</span>
   </p>
   <p class="sc-label">{label}</p>
 </div>

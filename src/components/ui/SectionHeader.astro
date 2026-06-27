@@ -19,7 +19,7 @@ const { eyebrow, title, subtitle, align = "left" } = Astro.props;
 ---
 
 <header class:list={["sh", `sh--${align}`]}>
-  {eyebrow && <p class="sh-eyebrow" aria-hidden="false">{eyebrow}</p>}
+  {eyebrow && <p class="sh-eyebrow">{eyebrow}</p>}
   <h2 class="sh-title ds-h2">{title}</h2>
   {subtitle && <p class="sh-subtitle">{subtitle}</p>}
 </header>

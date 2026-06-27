@@ -40,18 +40,11 @@ const ogImage = seo.image.startsWith("http") ? seo.image : `${SITE.url}${seo.ima
 <!-- No-flash theme script: runs before paint -->
 <script is:inline>
   (function () {
-    try {
-      var stored = localStorage.getItem("theme");
-      var theme =
-        stored === "dark" || stored === "light"
-          ? stored
-          : window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
-      document.documentElement.dataset.theme = theme;
-    } catch (_) {
-      // localStorage may be unavailable (private browsing, etc.) — default to light
-      document.documentElement.dataset.theme = "light";
-    }
+    var stored;
+    try { stored = localStorage.getItem("theme"); } catch (_) {}
+    var theme = (stored === "dark" || stored === "light")
+      ? stored
+      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.dataset.theme = theme;
   })();
 </script>

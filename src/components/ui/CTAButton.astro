@@ -73,6 +73,13 @@ if (!href) attrs.type = type;
     transform: translateY(0);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .cta-btn:hover,
+    .cta-btn:active {
+      transform: none;
+    }
+  }
+
   /* ---------- Sizes ---------- */
   .cta-btn--sm {
     padding: 0.45rem 1rem;
@@ -99,12 +106,26 @@ if (!href) attrs.type = type;
     /* guarantee bold even if consumer resets weight */
     font-weight: 800;
     box-shadow: 0 2px 12px color-mix(in srgb, var(--color-green) 30%, transparent),
-                0 1px 3px rgba(0, 0, 0, 0.12);
+                0 1px 3px var(--shadow-ambient-xs);
   }
 
   .cta-btn--primary:hover {
     box-shadow: 0 6px 24px color-mix(in srgb, var(--color-green) 40%, transparent),
-                0 2px 6px rgba(0, 0, 0, 0.14);
+                0 2px 6px var(--shadow-ambient);
+  }
+
+  /* primary + sm: bright gradient is ~2.8:1 — only defensible for large/bold text.
+     sm text is small, so use solid deep-green (#047857, ~4.8:1 white) for WCAG AA. */
+  .cta-btn--primary.cta-btn--sm {
+    background-image: none;
+    background-color: var(--color-green-deep);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-green-deep) 30%, transparent),
+                0 1px 3px var(--shadow-ambient-xs);
+  }
+
+  .cta-btn--primary.cta-btn--sm:hover {
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--color-green-deep) 40%, transparent),
+                0 2px 6px var(--shadow-ambient);
   }
 
   /* Override focus ring color for primary so it shows on the gradient */

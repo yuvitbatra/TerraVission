@@ -110,6 +110,12 @@
   --shadow-glass: 0 1px 1px rgba(255, 255, 255, 0.5) inset,
                   0 10px 30px rgba(15, 23, 42, 0.10);
 
+  /* Themeable ambient shadow colors — use as the color arg in box-shadow layers.
+     They reference --text so they flip automatically in dark mode. */
+  --shadow-ambient:      color-mix(in srgb, var(--text) 14%, transparent);
+  --shadow-ambient-soft: color-mix(in srgb, var(--text) 6%, transparent);
+  --shadow-ambient-xs:   color-mix(in srgb, var(--text) 12%, transparent);
+
   /* Focus ring */
   --ring: var(--color-blue);
 

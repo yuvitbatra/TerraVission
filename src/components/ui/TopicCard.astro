@@ -82,8 +82,17 @@ const { title, blurb, href, icon, accent = "green" } = Astro.props;
   .tc:hover {
     transform: translateY(-4px);
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.14),
-      0 2px 8px rgba(0, 0, 0, 0.06);
+      0 8px 32px var(--shadow-ambient),
+      0 2px 8px var(--shadow-ambient-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tc:hover {
+      transform: none;
+    }
+    .tc:hover .tc-arrow {
+      transform: none;
+    }
   }
 
   /* ensure focus ring visible against glass bg */
