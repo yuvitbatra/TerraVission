@@ -1,0 +1,105 @@
+---
+// EcoBotButton.astro — floating bottom-right glass button
+// Toggles #ecobot-root visibility. React island mounts there in a later task.
+---
+
+<button
+  id="ecobot-trigger"
+  type="button"
+  aria-label="Open EcoBot assistant"
+  aria-expanded="false"
+  aria-controls="ecobot-root"
+  class="ecobot-btn glass"
+>
+  <!-- Leaf + chat bubble icon -->
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    class="ecobot-icon-leaf"
+  >
+    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+  </svg>
+  <span class="ecobot-label">EcoBot</span>
+</button>
+
+<!-- Container for the React island (Phase 4). Hidden by default. -->
+<div id="ecobot-root" hidden aria-live="polite"></div>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById("ecobot-trigger");
+    var root = document.getElementById("ecobot-root");
+    if (!btn || !root) return;
+
+    btn.addEventListener("click", function () {
+      var isOpen = !root.hidden;
+      root.hidden = isOpen;
+      btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+    });
+  })();
+</script>
+
+<style>
+  .ecobot-btn {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.1rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+    box-shadow: var(--shadow-glass);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    cursor: pointer;
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      background var(--dur-fast) var(--ease-out);
+  }
+
+  .ecobot-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      var(--shadow-glass),
+      0 0 0 3px color-mix(in srgb, var(--color-green) 20%, transparent);
+  }
+
+  .ecobot-icon-leaf {
+    color: var(--color-green);
+    flex-shrink: 0;
+  }
+
+  .ecobot-label {
+    line-height: 1;
+  }
+
+  /* Small screens: icon only */
+  @media (max-width: 480px) {
+    .ecobot-btn {
+      padding: 0.85rem;
+      bottom: 1.25rem;
+      right: 1.25rem;
+    }
+    .ecobot-label {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,172 @@
+---
+// LoadingScreen.astro — full-screen glass overlay on first session load.
+// Removed by inline script on window load. SessionStorage prevents repeat shows.
+---
+
+<div id="loading-screen" aria-live="polite" aria-label="Loading TerraVision">
+  <div class="loading-inner">
+    <!-- Leaf / brand wordmark -->
+    <div class="loading-logo" aria-hidden="true">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="26" fill="url(#lgrad)" opacity="0.15"/>
+        <path
+          d="M26 10C26 10 14 18 14 28C14 34.627 19.373 40 26 40C32.627 40 38 34.627 38 28C38 18 26 10 26 10Z"
+          fill="url(#lgrad)"
+        />
+        <path
+          d="M26 28L26 40"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.7"
+        />
+        <path
+          d="M26 28C26 28 20 24 18 20"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          opacity="0.5"
+        />
+        <defs>
+          <linearGradient id="lgrad" x1="14" y1="10" x2="38" y2="40" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#10B981"/>
+            <stop offset="1" stop-color="#0EA5E9"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <p class="loading-brand">TerraVision</p>
+    <p class="loading-tagline">See the Planet. Save the Planet.</p>
+
+    <!-- Spinner — hidden under prefers-reduced-motion via CSS -->
+    <div class="loading-spinner" aria-hidden="true">
+      <div class="spinner-ring"></div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById("loading-screen");
+    if (!el) return;
+
+    // Show only on the first visit of the session
+    var shown;
+    try { shown = sessionStorage.getItem("tv_loading_shown"); } catch (_) {}
+
+    if (shown) {
+      // Already shown this session — remove immediately (no flash)
+      el.remove();
+      return;
+    }
+
+    // Mark as shown for this session
+    try { sessionStorage.setItem("tv_loading_shown", "1"); } catch (_) {}
+
+    function dismiss() {
+      el.classList.add("loading-exit");
+      // Remove from DOM after transition
+      el.addEventListener("transitionend", function () { el.remove(); }, { once: true });
+      // Fallback: remove after 600ms
+      setTimeout(function () { if (el.parentNode) el.remove(); }, 700);
+    }
+
+    if (document.readyState === "complete") {
+      dismiss();
+    } else {
+      window.addEventListener("load", dismiss, { once: true });
+      // Fallback: remove after 4s regardless
+      setTimeout(dismiss, 4000);
+    }
+  })();
+</script>
+
+<style>
+  #loading-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
+    transition: opacity 0.4s var(--ease-out), visibility 0.4s;
+  }
+
+  #loading-screen.loading-exit {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .loading-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .loading-logo {
+    animation: loading-pulse 1.6s ease-in-out infinite;
+  }
+
+  .loading-brand {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+  }
+
+  .loading-tagline {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .loading-spinner {
+    margin-top: 0.5rem;
+    width: 36px;
+    height: 36px;
+    position: relative;
+  }
+
+  .spinner-ring {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid var(--border-hairline);
+    border-top-color: var(--color-green);
+    animation: spin 0.9s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes loading-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.95); }
+  }
+
+  /* Reduced motion: no spinner animation, no logo pulse */
+  @media (prefers-reduced-motion: reduce) {
+    .spinner-ring {
+      animation: none;
+      border-top-color: var(--color-green);
+    }
+    .loading-logo {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,607 @@
+---
+// Navbar.astro — sticky top, glass background, desktop nav + mobile hamburger
+import { SITE, NAV } from "@/data/site";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === "/") return currentPath === "/";
+  return currentPath.startsWith(href);
+}
+
+// Separate flat nav items from items with children
+const flatItems = NAV.filter((item) => !item.children);
+const dropdownItems = NAV.filter((item) => item.children);
+---
+
+<header id="site-nav" role="banner">
+  <nav class="nav-inner glass-strong" aria-label="Main navigation">
+    <!-- Brand -->
+    <a href="/" class="nav-brand" aria-label={`${SITE.name} — Home`}>
+      <span class="brand-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M14 4C14 4 6 9.5 6 16C6 20.418 9.582 24 14 24C18.418 24 22 20.418 22 16C22 9.5 14 4 14 4Z"
+            fill="url(#navgrad)"
+          />
+          <path d="M14 16V24" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.75"/>
+          <path d="M14 16C14 16 10 13.5 9 11" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          <defs>
+            <linearGradient id="navgrad" x1="6" y1="4" x2="22" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#10B981"/>
+              <stop offset="1" stop-color="#0EA5E9"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </span>
+      <span class="brand-name">{SITE.name}</span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="nav-links" role="list">
+      {NAV.map((item) => (
+        <li class="nav-item" style={item.children ? "position:relative;" : undefined}>
+          {item.children ? (
+            <>
+              <button
+                type="button"
+                class:list={["nav-link nav-dropdown-trigger", { "nav-active": isActive(item.href) }]}
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls={`dropdown-${item.label.toLowerCase()}`}
+              >
+                {item.label}
+                <svg class="dropdown-caret" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <ul
+                id={`dropdown-${item.label.toLowerCase()}`}
+                class="nav-dropdown glass"
+                role="list"
+                aria-label={`${item.label} submenu`}
+                hidden
+              >
+                <li>
+                  <a
+                    href={item.href}
+                    class:list={["nav-dropdown-link", { "nav-active": currentPath === item.href }]}
+                  >
+                    All {item.label}
+                  </a>
+                </li>
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={["nav-dropdown-link", { "nav-active": currentPath === child.href }]}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <a
+              href={item.href}
+              class:list={["nav-link", { "nav-active": isActive(item.href) }]}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right-side controls -->
+    <div class="nav-controls">
+      <ThemeToggle />
+
+      <!-- Mobile hamburger -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        class="hamburger"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile full-screen overlay menu -->
+<div
+  id="mobile-menu"
+  class="mobile-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Navigation menu"
+  hidden
+>
+  <div class="mobile-menu-inner glass-strong">
+    <div class="mobile-menu-header">
+      <a href="/" class="nav-brand" aria-label={`${SITE.name} — Home`}>
+        <span class="brand-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <path d="M14 4C14 4 6 9.5 6 16C6 20.418 9.582 24 14 24C18.418 24 22 20.418 22 16C22 9.5 14 4 14 4Z" fill="url(#navgrad2)"/>
+            <path d="M14 16V24" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.75"/>
+            <defs>
+              <linearGradient id="navgrad2" x1="6" y1="4" x2="22" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#10B981"/>
+                <stop offset="1" stop-color="#0EA5E9"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="brand-name">{SITE.name}</span>
+      </a>
+      <button
+        id="mobile-menu-close"
+        type="button"
+        class="mobile-close"
+        aria-label="Close navigation menu"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <ul class="mobile-nav-links" role="list">
+      {NAV.map((item) => (
+        <li class:list={["mobile-nav-item", { "mobile-nav-group": item.children }]}>
+          {item.children ? (
+            <>
+              <a
+                href={item.href}
+                class:list={["mobile-nav-link mobile-nav-parent", { "nav-active": isActive(item.href) }]}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+              <ul class="mobile-nav-sub" role="list">
+                {item.children.map((child) => (
+                  <li>
+                    <a
+                      href={child.href}
+                      class:list={["mobile-nav-sub-link", { "nav-active": currentPath === child.href }]}
+                      aria-current={currentPath === child.href ? "page" : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <a
+              href={item.href}
+              class:list={["mobile-nav-link", { "nav-active": isActive(item.href) }]}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    /* ---- Dropdown ---- */
+    var dropdownTriggers = document.querySelectorAll(".nav-dropdown-trigger");
+    dropdownTriggers.forEach(function (trigger) {
+      var controlsId = trigger.getAttribute("aria-controls");
+      var menu = controlsId ? document.getElementById(controlsId) : null;
+      if (!menu) return;
+
+      function openDropdown() {
+        menu.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+      }
+      function closeDropdown() {
+        menu.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
+      }
+
+      trigger.addEventListener("click", function () {
+        var isOpen = trigger.getAttribute("aria-expanded") === "true";
+        if (isOpen) { closeDropdown(); } else { openDropdown(); }
+      });
+
+      trigger.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { closeDropdown(); trigger.focus(); }
+      });
+      menu.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { closeDropdown(); trigger.focus(); }
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+          closeDropdown();
+        }
+      });
+    });
+
+    /* ---- Mobile menu ---- */
+    var menuBtn = document.getElementById("mobile-menu-btn");
+    var closeBtn = document.getElementById("mobile-menu-close");
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (!menuBtn || !mobileMenu) return;
+
+    var focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    var lastFocused = null;
+
+    function openMenu() {
+      mobileMenu.hidden = false;
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "Close navigation menu");
+      document.body.style.overflow = "hidden";
+      lastFocused = document.activeElement;
+      var firstFocusable = mobileMenu.querySelector(focusableSelector);
+      if (firstFocusable) firstFocusable.focus();
+    }
+
+    function closeMenu() {
+      mobileMenu.hidden = true;
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open navigation menu");
+      document.body.style.overflow = "";
+      if (lastFocused) lastFocused.focus();
+    }
+
+    menuBtn.addEventListener("click", function () {
+      var isOpen = menuBtn.getAttribute("aria-expanded") === "true";
+      if (isOpen) { closeMenu(); } else { openMenu(); }
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && mobileMenu && !mobileMenu.hidden) {
+        closeMenu();
+      }
+    });
+
+    mobileMenu.addEventListener("keydown", function (e) {
+      if (e.key !== "Tab") return;
+      var focusables = Array.from(mobileMenu.querySelectorAll(focusableSelector));
+      if (focusables.length === 0) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    mobileMenu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", closeMenu);
+    });
+  })();
+</script>
+
+<style>
+  /* ---- Sticky wrapper ---- */
+  #site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 800;
+    width: 100%;
+  }
+
+  /* ---- Inner bar ---- */
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 3.75rem;
+    padding: 0 clamp(1rem, 4vw, 2.5rem);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+  }
+
+  /* ---- Brand ---- */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .brand-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ---- Desktop nav list ---- */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .nav-item {
+    /* position: relative set inline for dropdown items */
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  .nav-link.nav-active {
+    color: var(--color-green);
+    background: color-mix(in srgb, var(--color-green) 10%, transparent);
+  }
+
+  /* ---- Dropdown caret ---- */
+  .dropdown-caret {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-dropdown-trigger[aria-expanded="true"] .dropdown-caret {
+    transform: rotate(180deg);
+  }
+
+  /* ---- Dropdown panel ---- */
+  .nav-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 11rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    z-index: 850;
+  }
+
+  .nav-dropdown-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      background var(--dur-fast) var(--ease-out);
+  }
+
+  .nav-dropdown-link:hover,
+  .nav-dropdown-link:focus-visible {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  .nav-dropdown-link.nav-active {
+    color: var(--color-green);
+  }
+
+  /* ---- Right controls ---- */
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* ---- Hamburger ---- */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.4rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-hairline);
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .hamburger:hover {
+    background: var(--surface-2);
+  }
+
+  .hamburger-bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+  }
+
+  .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* ---- Mobile menu overlay ---- */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    overflow-y: auto;
+  }
+
+  .mobile-menu-inner {
+    min-height: 100vh;
+    padding: 1.5rem clamp(1rem, 5vw, 2rem) 3rem;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-hairline);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+
+  .mobile-close:hover {
+    background: var(--surface-2);
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-body-lg);
+    color: var(--text);
+    text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+
+  .mobile-nav-link:hover {
+    background: var(--surface-2);
+  }
+
+  .mobile-nav-link.nav-active {
+    color: var(--color-green);
+    background: color-mix(in srgb, var(--color-green) 8%, transparent);
+  }
+
+  .mobile-nav-sub {
+    list-style: none;
+    margin: 0.25rem 0 0.5rem 1rem;
+    padding: 0 0 0 0.75rem;
+    border-left: 2px solid var(--border-hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .mobile-nav-sub-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+  }
+
+  .mobile-nav-sub-link:hover {
+    color: var(--text);
+    background: var(--surface-2);
+  }
+
+  .mobile-nav-sub-link.nav-active {
+    color: var(--color-green);
+  }
+
+  /* ---- Breakpoints ---- */
+  @media (min-width: 1024px) {
+    .nav-links { display: flex; }
+    .hamburger { display: none; }
+  }
+
+  @media (max-width: 1023px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-inner {
+      padding: 0 1rem;
+    }
+  }
+</style>

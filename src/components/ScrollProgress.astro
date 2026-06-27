@@ -1,0 +1,47 @@
+---
+// ScrollProgress.astro — fixed top progress bar filled with brand gradient
+---
+
+<div id="scroll-progress" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div id="scroll-progress-bar"></div>
+</div>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById("scroll-progress-bar");
+    if (!bar) return;
+
+    function update() {
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+      bar.style.width = pct + "%";
+      var prog = document.getElementById("scroll-progress");
+      if (prog) prog.setAttribute("aria-valuenow", Math.round(pct));
+    }
+
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  })();
+</script>
+
+<style>
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 9999;
+    background: var(--border-hairline);
+    pointer-events: none;
+  }
+
+  #scroll-progress-bar {
+    height: 100%;
+    width: 0%;
+    background-image: var(--gradient-brand);
+    transition: width 80ms linear;
+    will-change: width;
+  }
+</style>
