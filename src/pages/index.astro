@@ -1,8 +1,13 @@
 ---
-// TEMPORARY design-system preview — replaced by the real homepage in a later task.
-// Showcases the locked "Forest & Sky" tokens, type scale, and glass surfaces
-// in both light and dark themes.
+// TerraVision — Design System Preview (Task 1.3: Reusable UI Kit)
+// Showcases: GlassCard, SectionHeader, StatCounter, CTAButton, TopicCard
+// plus the original "Forest & Sky" design-system tokens preview.
 import "../styles/global.css";
+import GlassCard    from "../components/ui/GlassCard.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import StatCounter  from "../components/ui/StatCounter.astro";
+import CTAButton    from "../components/ui/CTAButton.astro";
+import TopicCard    from "../components/ui/TopicCard.astro";
 
 const brandSwatches = [
   { name: "Green",      var: "--color-green",      hex: "#10B981" },
@@ -36,8 +41,8 @@ const typeScale = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forest &amp; Sky — Design System</title>
-    <meta name="description" content="TerraVision design-system preview" />
+    <title>TerraVision — UI Kit Preview</title>
+    <meta name="description" content="TerraVision design-system and UI kit preview" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
@@ -47,7 +52,7 @@ const typeScale = [
     <main class="wrap">
       <header class="head">
         <div>
-          <p class="eyebrow">TerraVision · Design System</p>
+          <p class="eyebrow">TerraVision · Design System &amp; UI Kit</p>
           <h1 class="ds-display text-gradient">Forest &amp; Sky</h1>
           <p class="ds-body-lg lede">
             A calm, glassmorphic system for sustainability education — forest
@@ -58,6 +63,146 @@ const typeScale = [
           <span data-theme-label>Dark mode</span>
         </button>
       </header>
+
+      <!-- ================================================================
+           UI KIT PREVIEW — Task 1.3 components
+           ================================================================ -->
+
+      <!-- 1. SectionHeader ------------------------------------------------ -->
+      <section class="block">
+        <div class="kit-label">Component: SectionHeader</div>
+
+        <SectionHeader
+          eyebrow="Our Mission"
+          title="Education for a Sustainable Planet"
+          subtitle="Empowering students with the science, data, and solutions needed to understand and address climate change."
+          align="center"
+        />
+
+        <SectionHeader
+          eyebrow="Key Topics"
+          title="Explore the Science"
+          subtitle="Dive into the major themes of environmental science, from carbon cycles to ocean acidification."
+          align="left"
+        />
+      </section>
+
+      <!-- 2. GlassCard ---------------------------------------------------- -->
+      <section class="block">
+        <div class="kit-label">Component: GlassCard</div>
+        <div class="card-grid">
+          <GlassCard>
+            <h3 class="ds-h3">Default Glass</h3>
+            <p class="muted">
+              A translucent frosted-glass container. Uses <code>.glass</code> — the
+              standard surface for most content blocks.
+            </p>
+          </GlassCard>
+
+          <GlassCard strong>
+            <h3 class="ds-h3">Strong Glass</h3>
+            <p class="muted">
+              More opaque frosting via <code>.glass-strong</code> — ideal for
+              navigation bars and overlays where text legibility is critical.
+            </p>
+          </GlassCard>
+
+          <GlassCard as="article" class="highlight-card">
+            <h3 class="ds-h3">Custom Element</h3>
+            <p class="muted">
+              Rendered as <code>&lt;article&gt;</code> via the <code>as</code>
+              prop. Accepts any extra classes via the <code>class</code> prop.
+            </p>
+          </GlassCard>
+        </div>
+      </section>
+
+      <!-- 3. StatCounter -------------------------------------------------- -->
+      <section class="block">
+        <div class="kit-label">Component: StatCounter (scroll down to trigger)</div>
+        <GlassCard class="stat-row-card">
+          <div class="stat-row">
+            <StatCounter value={420} suffix="B+" label="Tonnes CO₂ in Atmosphere" />
+            <StatCounter value={1.1} suffix="°C" label="Global Temp Rise Since 1850" decimals={1} />
+            <StatCounter value={8} suffix="M km²" label="Forest Lost Since 2000" />
+          </div>
+        </GlassCard>
+      </section>
+
+      <!-- 4. CTAButton ---------------------------------------------------- -->
+      <section class="block">
+        <div class="kit-label">Component: CTAButton</div>
+        <GlassCard>
+          <div class="btn-showcase">
+            <!-- Primary variant — all sizes -->
+            <div class="btn-row">
+              <span class="btn-row-label">Primary</span>
+              <CTAButton variant="primary" size="sm">Explore Now (sm)</CTAButton>
+              <CTAButton variant="primary" size="md">Learn More (md)</CTAButton>
+              <CTAButton variant="primary" size="lg">Take Action (lg)</CTAButton>
+            </div>
+            <!-- Secondary variant -->
+            <div class="btn-row">
+              <span class="btn-row-label">Secondary</span>
+              <CTAButton variant="secondary" size="sm">View Data (sm)</CTAButton>
+              <CTAButton variant="secondary" size="md">Read Report (md)</CTAButton>
+              <CTAButton variant="secondary" size="lg">Download (lg)</CTAButton>
+            </div>
+            <!-- Ghost variant -->
+            <div class="btn-row">
+              <span class="btn-row-label">Ghost</span>
+              <CTAButton variant="ghost" size="sm">Cancel (sm)</CTAButton>
+              <CTAButton variant="ghost" size="md">Learn more (md)</CTAButton>
+              <CTAButton variant="ghost" size="lg">Skip (lg)</CTAButton>
+            </div>
+            <!-- As link -->
+            <div class="btn-row">
+              <span class="btn-row-label">As &lt;a&gt; link</span>
+              <CTAButton href="#" variant="primary" size="md">Link → Primary</CTAButton>
+              <CTAButton href="#" variant="secondary" size="md">Link → Secondary</CTAButton>
+              <CTAButton href="#" variant="ghost" size="md">Link → Ghost</CTAButton>
+            </div>
+          </div>
+        </GlassCard>
+      </section>
+
+      <!-- 5. TopicCard ---------------------------------------------------- -->
+      <section class="block">
+        <div class="kit-label">Component: TopicCard</div>
+        <div class="topic-grid">
+          <TopicCard
+            title="Carbon Cycle"
+            blurb="How carbon moves between the atmosphere, oceans, and land — and how human activity has disrupted this balance."
+            href="/topics/carbon-cycle"
+            icon="🌿"
+            accent="green"
+          />
+          <TopicCard
+            title="Ocean Acidification"
+            blurb="Rising CO₂ dissolves into seawater forming carbonic acid, threatening coral reefs and marine food chains."
+            href="/topics/ocean-acidification"
+            icon="🌊"
+            accent="blue"
+          />
+          <TopicCard
+            title="Renewable Energy"
+            blurb="Solar, wind, and hydro power are scaling rapidly — learn the science behind each technology."
+            href="/topics/renewable-energy"
+            icon="⚡"
+            accent="green"
+          >
+            <!-- Optional SVG slot example -->
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/>
+              <path d="M20 8v8M20 24v8M8 20h8M24 20h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </TopicCard>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           ORIGINAL DESIGN-SYSTEM PREVIEW (preserved below)
+           ================================================================ -->
 
       <!-- Brand palette -->
       <section class="block">
@@ -84,7 +229,7 @@ const typeScale = [
         </div>
       </section>
 
-      <!-- Base / semantic tokens (re-render in current theme) -->
+      <!-- Base / semantic tokens -->
       <section class="block">
         <h2 class="ds-h2">Base &amp; semantic tokens</h2>
         <p class="muted">These shift between light and dark — toggle to compare.</p>
@@ -116,15 +261,15 @@ const typeScale = [
         </div>
       </section>
 
-      <!-- Glass cards -->
+      <!-- Glass cards (original) -->
       <section class="block">
-        <h2 class="ds-h2">Glass surfaces</h2>
+        <h2 class="ds-h2">Glass surfaces (tokens)</h2>
         <div class="card-grid">
           <article class="glass card">
             <h3 class="ds-h3">.glass</h3>
             <p>
               Translucent surface with backdrop blur, a 1px hairline border, and
-              a soft ambient shadow. The default container for content.
+              a soft ambient shadow.
             </p>
             <button class="btn-ghost border-hairline" type="button">Learn more</button>
           </article>
@@ -142,7 +287,7 @@ const typeScale = [
             <h3 class="ds-h3">.gradient-brand</h3>
             <p>
               The signature green→blue gradient — reserved for the hero and
-              primary calls to action so it stays special.
+              primary calls to action.
             </p>
             <button class="btn-solid" type="button">Take action</button>
           </article>
@@ -182,7 +327,7 @@ const typeScale = [
         z-index: 1;
       }
 
-      /* Ambient atmospheric backdrop (canopy → horizon glow) */
+      /* Ambient atmospheric backdrop */
       .page-aura {
         position: fixed;
         inset: 0;
@@ -220,12 +365,26 @@ const typeScale = [
         color: var(--text);
         cursor: pointer;
         transition: transform var(--dur-fast) var(--ease-out);
+        border: none;
       }
       .toggle:hover { transform: translateY(-1px); }
 
       .block { margin-block: 2.75rem; }
       .block > .ds-h2 { margin-bottom: 0.75rem; }
       .muted { color: var(--text-muted); }
+
+      /* Kit section label */
+      .kit-label {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--text-subtle);
+        margin-bottom: 1rem;
+        padding: 0.35rem 0.75rem;
+        border-left: 2px solid var(--accent);
+      }
 
       /* Swatches */
       .swatch-grid {
@@ -269,7 +428,7 @@ const typeScale = [
       .ds-body { font-family: var(--font-body); font-size: var(--text-body); }
       .ds-sm { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; }
 
-      /* Cards */
+      /* Card grids */
       .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
@@ -281,6 +440,54 @@ const typeScale = [
       .card.on-gradient, .card.on-gradient h3, .card.on-gradient p { color: var(--text-on-gradient); }
       .card.on-gradient p { color: var(--text-on-gradient-muted); }
 
+      /* Topic card grid */
+      .topic-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+      }
+
+      /* Stat counter row */
+      .stat-row-card {
+        margin-top: 1.25rem;
+      }
+      .stat-row {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding: 0.5rem 0;
+      }
+
+      /* Button showcase */
+      .btn-showcase {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .btn-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .btn-row-label {
+        font-family: var(--font-display);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-subtle);
+        min-width: 5.5rem;
+      }
+
+      /* Highlight card extra class example */
+      .highlight-card {
+        border-top: 3px solid var(--accent);
+      }
+
+      /* Legacy token-preview buttons */
       .btn-ghost {
         align-self: flex-start;
         margin-top: auto;

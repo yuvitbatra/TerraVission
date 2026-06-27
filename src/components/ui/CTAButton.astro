@@ -1,0 +1,142 @@
+---
+/**
+ * CTAButton — versatile call-to-action button/link.
+ *
+ * Props
+ *   href?     – if provided, renders as <a>; otherwise <button>
+ *   type?     – button type attribute ('button' | 'submit'), default: 'button'
+ *   variant?  – 'primary' | 'secondary' | 'ghost' (default: 'primary')
+ *   size?     – 'sm' | 'md' | 'lg' (default: 'md')
+ *   class?    – extra utility classes
+ *
+ * Contrast note
+ *   Primary uses .gradient-brand (green→blue). White on green ≈ 2.8:1 alone —
+ *   so primary text is always BOLD and the minimum size is 18.67 px (md) to
+ *   satisfy WCAG 2.1 §1.4.3 large-text exception (18pt / 14pt bold).
+ */
+interface Props {
+  href?: string;
+  type?: "button" | "submit";
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const {
+  href,
+  type = "button",
+  variant = "primary",
+  size = "md",
+  class: className,
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const attrs: Record<string, string> = {};
+if (!href) attrs.type = type;
+---
+
+<Tag
+  {...attrs}
+  href={href}
+  class:list={["cta-btn", `cta-btn--${variant}`, `cta-btn--${size}`, className]}
+>
+  <slot />
+</Tag>
+
+<style>
+  /* ---------- Base ---------- */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border: none;
+    border-radius: var(--radius-full);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      background var(--dur-fast) var(--ease-out);
+    /* ensure focus ring is visible via global :focus-visible rule */
+    position: relative;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .cta-btn:active {
+    transform: translateY(0);
+  }
+
+  /* ---------- Sizes ---------- */
+  .cta-btn--sm {
+    padding: 0.45rem 1rem;
+    font-size: var(--text-sm);
+  }
+
+  /* md is the base — text must be at least 18.67 px for primary contrast rule */
+  .cta-btn--md {
+    padding: 0.65rem 1.5rem;
+    font-size: var(--text-body-lg); /* 1.125 rem = 18 px, bold → large-text WCAG pass */
+  }
+
+  .cta-btn--lg {
+    padding: 0.85rem 2rem;
+    font-size: var(--text-h3);
+  }
+
+  /* ---------- Variants ---------- */
+
+  /* Primary — signature gradient, white bold text */
+  .cta-btn--primary {
+    background-image: var(--gradient-brand);
+    color: var(--text-on-gradient);
+    /* guarantee bold even if consumer resets weight */
+    font-weight: 800;
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--color-green) 30%, transparent),
+                0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  .cta-btn--primary:hover {
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--color-green) 40%, transparent),
+                0 2px 6px rgba(0, 0, 0, 0.14);
+  }
+
+  /* Override focus ring color for primary so it shows on the gradient */
+  .cta-btn--primary:focus-visible {
+    outline: 2px solid var(--text-on-gradient);
+    outline-offset: 3px;
+  }
+
+  /* Secondary — glass surface, accent border */
+  .cta-btn--secondary {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+  }
+
+  .cta-btn--secondary:hover {
+    background: var(--glass-bg-strong);
+    border-color: var(--accent-deep);
+    color: var(--accent-deep);
+  }
+
+  /* Ghost — transparent, subtle border, text colour */
+  .cta-btn--ghost {
+    background: transparent;
+    border: 1.5px solid var(--border-strong);
+    color: var(--text);
+  }
+
+  .cta-btn--ghost:hover {
+    background: var(--surface-2);
+    border-color: var(--border-hairline);
+  }
+</style>

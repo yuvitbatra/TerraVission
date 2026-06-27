@@ -1,0 +1,160 @@
+---
+/**
+ * StatCounter — animated numeric counter that counts up when scrolled into view.
+ *
+ * Props
+ *   value    – final numeric value (required)
+ *   suffix?  – text appended after the number (e.g. "%", "B+")
+ *   prefix?  – text prepended before the number (e.g. "$")
+ *   label    – descriptive label below the number
+ *   decimals? – decimal places to display (default: 0)
+ *
+ * Accessibility
+ *   - Under prefers-reduced-motion the final value is shown immediately.
+ *   - The animated span is aria-live="polite" so screen readers announce the final value.
+ */
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  label: string;
+  decimals?: number;
+}
+
+const { value, suffix = "", prefix = "", label, decimals = 0 } = Astro.props;
+
+// Unique id so each counter's script can find its own DOM node.
+const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="sc" id={uid}>
+  <p class="sc-number" aria-live="polite" aria-atomic="true">
+    <span class="sc-prefix">{prefix}</span><span
+      class="sc-value"
+      data-target={value}
+      data-decimals={decimals}
+    >{prefix}{value.toFixed(decimals)}{suffix}</span><span class="sc-suffix">{suffix}</span>
+  </p>
+  <p class="sc-label">{label}</p>
+</div>
+
+<script define:vars={{ uid, value, suffix, prefix, decimals }}>
+  (function () {
+    const root = document.getElementById(uid);
+    if (!root) return;
+
+    const valueEl = root.querySelector(".sc-value");
+    const prefixEl = root.querySelector(".sc-prefix");
+    const suffixEl = root.querySelector(".sc-suffix");
+
+    // Hide the prefix/suffix from the value el since they're rendered separately
+    // (they were included in the initial SSR text so it renders correctly without JS)
+    // On client, we'll control the value el text only.
+    const final = value;
+
+    function fmt(n) {
+      return n.toFixed(decimals);
+    }
+
+    // Set initial display: show prefix + 0 + suffix (split across spans)
+    // The SSR initial value is the final number (for no-JS / bots)
+    // On the client we reset to 0 and animate up.
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion) {
+      // Show final immediately — spans already show it from SSR, just ensure correctness.
+      valueEl.textContent = fmt(final);
+      prefixEl.textContent = prefix;
+      suffixEl.textContent = suffix;
+      return;
+    }
+
+    // Start from 0
+    valueEl.textContent = fmt(0);
+    prefixEl.textContent = prefix;
+    suffixEl.textContent = suffix;
+
+    let started = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started) {
+            started = true;
+            observer.disconnect();
+            animate();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(root);
+
+    function animate() {
+      const duration = 1800; // ms
+      const startTime = performance.now();
+
+      function easeOutQuart(t) {
+        return 1 - Math.pow(1 - t, 4);
+      }
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = easeOutQuart(progress) * final;
+
+        valueEl.textContent = fmt(current);
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          valueEl.textContent = fmt(final);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+  })();
+</script>
+
+<style>
+  .sc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+
+  .sc-number {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: transparent;
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .sc-value {
+    /* the animating number part */
+  }
+
+  .sc-label {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-display);
+  }
+</style>
