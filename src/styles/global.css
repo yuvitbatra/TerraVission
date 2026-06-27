@@ -95,6 +95,10 @@
   /* Signature gradient (green → blue) — used sparingly */
   --gradient-brand: linear-gradient(120deg, var(--color-green) 0%, var(--color-blue) 100%);
 
+  /* Text on gradient (white surface for contrast on brand gradient) */
+  --text-on-gradient: #ffffff;
+  --text-on-gradient-muted: rgba(255, 255, 255, 0.88);
+
   /* Glass surfaces (light: frosted white) */
   --glass-bg:      rgba(255, 255, 255, 0.55);
   --glass-bg-strong: rgba(255, 255, 255, 0.78);

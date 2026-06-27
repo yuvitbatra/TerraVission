@@ -278,8 +278,8 @@ const typeScale = [
       }
       .card { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
       .card p { color: var(--text-muted); margin: 0; }
-      .card.on-gradient, .card.on-gradient h3, .card.on-gradient p { color: #fff; }
-      .card.on-gradient p { color: rgba(255,255,255,0.88); }
+      .card.on-gradient, .card.on-gradient h3, .card.on-gradient p { color: var(--text-on-gradient); }
+      .card.on-gradient p { color: var(--text-on-gradient-muted); }
 
       .btn-ghost {
         align-self: flex-start;
@@ -301,7 +301,7 @@ const typeScale = [
         padding: 0.55rem 1.15rem;
         border: 0;
         border-radius: var(--radius-full);
-        background: #fff;
+        background: var(--text-on-gradient);
         color: var(--color-blue-deep);
         font-family: var(--font-display);
         font-weight: 700;
