@@ -1,0 +1,760 @@
+---
+/**
+ * /solutions/solar — TerraVision Solar Energy page
+ * Class 8–10 curriculum-accurate content covering:
+ *   • What solar energy is
+ *   • How PV panels work (photovoltaic effect)
+ *   • Advantages
+ *   • Disadvantages
+ *   • Environmental benefits
+ *   • Real-world uses
+ *   • Interactive energy-flow infographic
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import GlassCard from "@/components/ui/GlassCard.astro";
+import CTAButton from "@/components/ui/CTAButton.astro";
+import TopicCard from "@/components/ui/TopicCard.astro";
+import SolarFlow from "@/components/diagrams/SolarFlow.astro";
+import { SITE } from "@/data/site";
+---
+
+<BaseLayout
+  title={`Solar Energy — ${SITE.name}`}
+  description="Learn how solar energy works, how photovoltaic panels convert sunlight to electricity, and why solar power is one of the cleanest energy sources on Earth."
+>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       HERO BAND
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-hero" aria-labelledby="sol-hero-title">
+    <div class="sol-hero-inner">
+      <p class="sol-eyebrow">TerraVision · Solutions</p>
+      <h1 id="sol-hero-title" class="sol-title">
+        <span class="text-gradient">Solar Energy</span>
+      </h1>
+      <p class="sol-tagline">
+        The sun delivers more energy to Earth in one hour than all of humanity uses in an entire year.
+      </p>
+      <div class="sol-hero-ctas">
+        <CTAButton href="#how-it-works" variant="primary" size="md">How It Works</CTAButton>
+        <CTAButton href="#infographic" variant="secondary" size="md">See the Diagram</CTAButton>
+      </div>
+    </div>
+
+    <!-- Decorative sun illustration -->
+    <div class="sol-hero-sun" aria-hidden="true">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="sol-sun-svg">
+        <defs>
+          <radialGradient id="hero-sun-g" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="var(--color-green)" stop-opacity="0.35" />
+            <stop offset="60%" stop-color="var(--color-blue)" stop-opacity="0.18" />
+            <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="96" fill="url(#hero-sun-g)" />
+        <circle cx="100" cy="100" r="56" fill="var(--color-green)" opacity="0.22" />
+        <circle cx="100" cy="100" r="36" fill="var(--color-green)" opacity="0.40" />
+        <!-- Rotating rays -->
+        <g class="sol-hero-rays" stroke="var(--color-green)" stroke-width="3" stroke-linecap="round" opacity="0.55">
+          <line x1="100" y1="8" x2="100" y2="20" />
+          <line x1="163" y1="37" x2="154" y2="46" />
+          <line x1="192" y1="100" x2="180" y2="100" />
+          <line x1="163" y1="163" x2="154" y2="154" />
+          <line x1="100" y1="192" x2="100" y2="180" />
+          <line x1="37" y1="163" x2="46" y2="154" />
+          <line x1="8" y1="100" x2="20" y2="100" />
+          <line x1="37" y1="37" x2="46" y2="46" />
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       WHAT IS SOLAR ENERGY
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section" id="what-is-solar" aria-labelledby="what-is-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="The Basics"
+        title="What Is Solar Energy?"
+        subtitle="Solar energy is radiant light and heat from the Sun that is harnessed using technologies such as photovoltaic cells and solar thermal collectors."
+        align="left"
+      />
+
+      <div class="sol-grid sol-grid--2">
+        <GlassCard>
+          <h3 class="sol-card-title">A Renewable Resource</h3>
+          <p>
+            The Sun has been shining for about 4.6 billion years and will continue for another 5 billion years. Unlike coal or oil — which take millions of years to form and will eventually run out — solar energy is continuously replenished. As long as the Sun exists, we have a free energy source available every day.
+          </p>
+        </GlassCard>
+
+        <GlassCard>
+          <h3 class="sol-card-title">Energy from Electromagnetic Radiation</h3>
+          <p>
+            Sunlight is a form of electromagnetic radiation. It travels from the Sun to Earth in about 8 minutes, covering 150 million kilometres. This radiation carries energy in tiny packets called <strong>photons</strong>. When photons hit certain materials, they can knock electrons loose — the foundation of solar electricity generation.
+          </p>
+        </GlassCard>
+
+        <GlassCard class="sol-card--stat">
+          <span class="sol-stat-num text-gradient">173,000</span>
+          <span class="sol-stat-label">terawatts of solar energy hit Earth's surface continuously</span>
+        </GlassCard>
+
+        <GlassCard class="sol-card--stat">
+          <span class="sol-stat-num text-gradient">1 hour</span>
+          <span class="sol-stat-label">of sunlight equals all of humanity's annual energy needs</span>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       HOW PV PANELS WORK
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section sol-section--alt" id="how-it-works" aria-labelledby="how-it-works-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="The Science"
+        title="How Photovoltaic Panels Work"
+        subtitle="PV panels use the photovoltaic effect — discovered in 1839 by Edmond Becquerel — to convert sunlight directly into electricity."
+        align="left"
+      />
+
+      <!-- Step-by-step process -->
+      <ol class="sol-steps" role="list">
+        <li class="sol-step">
+          <GlassCard strong>
+            <span class="sol-step-num" aria-hidden="true">01</span>
+            <h3 class="sol-card-title">Photons Strike the Solar Cell</h3>
+            <p>
+              A solar cell is made from thin slices of <strong>silicon</strong>, a semiconductor material. When sunlight (photons) hits the silicon, the photons transfer their energy to electrons in the silicon atoms, exciting them and freeing them from their normal positions.
+            </p>
+          </GlassCard>
+        </li>
+
+        <li class="sol-step">
+          <GlassCard strong>
+            <span class="sol-step-num" aria-hidden="true">02</span>
+            <h3 class="sol-card-title">The P–N Junction Creates a Flow</h3>
+            <p>
+              Solar cells have two layers of silicon: a <strong>P-type</strong> (positive, with extra "holes") and an <strong>N-type</strong> (negative, with extra electrons). At the boundary between them — the P–N junction — a built-in electric field forms. This field pushes the freed electrons in one direction, creating a flow of electric current.
+            </p>
+          </GlassCard>
+        </li>
+
+        <li class="sol-step">
+          <GlassCard strong>
+            <span class="sol-step-num" aria-hidden="true">03</span>
+            <h3 class="sol-card-title">DC Electricity Is Generated</h3>
+            <p>
+              The moving electrons form <strong>Direct Current (DC)</strong> electricity — the same kind used in batteries. Metal contacts on the top and bottom of the cell collect this current and pass it through wires.
+            </p>
+          </GlassCard>
+        </li>
+
+        <li class="sol-step">
+          <GlassCard strong>
+            <span class="sol-step-num" aria-hidden="true">04</span>
+            <h3 class="sol-card-title">Inverter Converts DC to AC</h3>
+            <p>
+              Most appliances run on <strong>Alternating Current (AC)</strong>. An inverter converts the DC from the solar panel into AC so it can power your home's lights, fans, and devices — or be exported to the electricity grid.
+            </p>
+          </GlassCard>
+        </li>
+      </ol>
+
+      <!-- Quick facts band -->
+      <div class="sol-facts-band">
+        <div class="sol-fact">
+          <span class="sol-fact-icon" aria-hidden="true">🔬</span>
+          <span>Most panels use <strong>monocrystalline</strong> or <strong>polycrystalline</strong> silicon</span>
+        </div>
+        <div class="sol-fact">
+          <span class="sol-fact-icon" aria-hidden="true">⚡</span>
+          <span>Typical efficiency: <strong>15–22%</strong> for commercial panels</span>
+        </div>
+        <div class="sol-fact">
+          <span class="sol-fact-icon" aria-hidden="true">🔋</span>
+          <span>Excess energy can be stored in <strong>batteries</strong> or fed to the grid</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       INTERACTIVE INFOGRAPHIC
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section" id="infographic" aria-labelledby="infographic-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="Interactive Diagram"
+        title="Energy Flow: Sun to Socket"
+        subtitle="Watch how energy travels from the Sun all the way to your home's power socket — and surplus energy to the grid."
+        align="center"
+      />
+
+      <GlassCard strong class="sol-diagram-card">
+        <SolarFlow />
+      </GlassCard>
+
+      <p class="sol-diagram-note">
+        <em>Animation shows relative energy flow. Dashed path = surplus electricity fed to the national grid. Diagram pauses automatically when "Reduce Motion" is enabled in your system settings.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ADVANTAGES
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section sol-section--alt" id="advantages" aria-labelledby="advantages-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="Advantages"
+        title="Why Solar Power Is Great"
+        align="left"
+      />
+
+      <div class="sol-grid sol-grid--3">
+        <GlassCard>
+          <div class="sol-adv-icon" aria-hidden="true">♾️</div>
+          <h3 class="sol-card-title">Inexhaustible Source</h3>
+          <p>Solar energy will never run out during any human timescale. The Sun fuses about 620 million tonnes of hydrogen every second and will continue for billions of years.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-adv-icon" aria-hidden="true">💰</div>
+          <h3 class="sol-card-title">Reduces Electricity Bills</h3>
+          <p>Once installed, solar panels generate free electricity during daylight hours. Homeowners often see electricity bills drop by 50–90%, and surplus energy can be sold back to the grid.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-adv-icon" aria-hidden="true">🔇</div>
+          <h3 class="sol-card-title">Silent Operation</h3>
+          <p>Unlike diesel generators or wind turbines, solar panels produce no noise. They are ideal for homes, schools, and hospitals where quiet environments matter.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-adv-icon" aria-hidden="true">🔧</div>
+          <h3 class="sol-card-title">Low Maintenance</h3>
+          <p>Solar panels have no moving parts, so they require minimal maintenance. Most manufacturers guarantee performance for 25 years, and panels often last 30+ years with only occasional cleaning.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-adv-icon" aria-hidden="true">🌐</div>
+          <h3 class="sol-card-title">Energy Independence</h3>
+          <p>Countries can reduce reliance on imported fossil fuels by generating their own solar electricity. This improves national energy security and protects against fuel price shocks.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-adv-icon" aria-hidden="true">🏚️</div>
+          <h3 class="sol-card-title">Works in Remote Areas</h3>
+          <p>Solar panels can power villages, clinics, and water pumps far from electricity grid infrastructure — improving quality of life in off-grid rural communities worldwide.</p>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       DISADVANTAGES
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section" id="disadvantages" aria-labelledby="disadvantages-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="Limitations"
+        title="Challenges of Solar Energy"
+        subtitle="Like every technology, solar power has real limitations that engineers and scientists are actively working to solve."
+        align="left"
+      />
+
+      <div class="sol-grid sol-grid--2">
+        <GlassCard>
+          <div class="sol-disadv-icon" aria-hidden="true">🌙</div>
+          <h3 class="sol-card-title">No Power at Night</h3>
+          <p>Solar panels produce no electricity in darkness. Battery storage systems (like lithium-ion home batteries) or grid connections are needed to supply power after sunset.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-disadv-icon" aria-hidden="true">☁️</div>
+          <h3 class="sol-card-title">Reduced Output on Cloudy Days</h3>
+          <p>Cloud cover, rain, and dust all reduce the amount of sunlight reaching panels, lowering energy output. Panels still generate some power in diffuse light but far less than in direct sunshine.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-disadv-icon" aria-hidden="true">💵</div>
+          <h3 class="sol-card-title">High Upfront Cost</h3>
+          <p>Installing a rooftop solar system costs ₹80,000–₹3,00,000 in India (and $10,000–$30,000 in the USA). While prices have fallen 90% since 2010, the initial investment is a barrier for many families.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-disadv-icon" aria-hidden="true">🏞️</div>
+          <h3 class="sol-card-title">Land Use for Solar Farms</h3>
+          <p>Utility-scale solar farms require large areas of land. A 1 MW solar farm needs roughly 2–4 hectares (5–10 acres). Careful planning is needed to avoid competing with agriculture or wildlife habitats.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-disadv-icon" aria-hidden="true">♻️</div>
+          <h3 class="sol-card-title">Panel Disposal</h3>
+          <p>Solar panels contain silicon, glass, and small amounts of metals like lead and cadmium. At end-of-life (after ~30 years), panels need proper recycling to prevent environmental harm.</p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="sol-disadv-icon" aria-hidden="true">🗺️</div>
+          <h3 class="sol-card-title">Dependent on Location</h3>
+          <p>Equatorial and sunny regions (India, Middle East, Africa, Australia) receive far more solar radiation than high-latitude or frequently overcast regions, making solar more effective in some places than others.</p>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ENVIRONMENTAL BENEFITS
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section sol-section--alt" id="environment" aria-labelledby="environment-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="For the Planet"
+        title="Environmental Benefits"
+        subtitle="Solar energy is one of the most effective tools humanity has for reducing pollution and slowing climate change."
+        align="center"
+      />
+
+      <div class="sol-grid sol-grid--2">
+        <GlassCard strong>
+          <h3 class="sol-card-title">Zero Greenhouse Gas Emissions in Operation</h3>
+          <p>
+            Burning coal to generate 1 kWh of electricity releases about <strong>820 grams of CO₂</strong>. A solar panel generating the same 1 kWh releases <strong>zero CO₂</strong> during operation. Over a 30-year lifespan, a typical 5 kW home system prevents approximately <strong>100 tonnes of CO₂</strong> from entering the atmosphere.
+          </p>
+        </GlassCard>
+
+        <GlassCard strong>
+          <h3 class="sol-card-title">No Air Pollution</h3>
+          <p>
+            Fossil fuel power plants emit sulphur dioxide (SO₂), nitrogen oxides (NOₓ), and particulate matter — causing acid rain and respiratory diseases. Solar panels emit <strong>none of these pollutants</strong>, improving local air quality and public health.
+          </p>
+        </GlassCard>
+
+        <GlassCard strong>
+          <h3 class="sol-card-title">Minimal Water Use</h3>
+          <p>
+            Conventional thermal power plants use enormous quantities of water for cooling — up to 2,000 litres per MWh. Solar PV systems use <strong>virtually no water</strong> during operation (only a little for occasional panel cleaning), making them ideal for water-scarce regions.
+          </p>
+        </GlassCard>
+
+        <GlassCard strong>
+          <h3 class="sol-card-title">Energy Payback in Under 4 Years</h3>
+          <p>
+            Manufacturing a solar panel does use energy and creates some emissions. However, a typical panel <strong>pays back its manufacturing energy within 1–4 years</strong> and then produces clean energy for 26+ more years — a net positive energy return of 7–14 times the manufacturing cost.
+          </p>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       REAL-WORLD USES
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section" id="real-world" aria-labelledby="real-world-title">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="In the Real World"
+        title="Where Solar Is Used Today"
+        align="left"
+      />
+
+      <div class="sol-uses-grid">
+
+        <GlassCard class="sol-use-card">
+          <div class="sol-use-visual" aria-hidden="true">🏠</div>
+          <div class="sol-use-body">
+            <h3 class="sol-card-title">Rooftop Solar Panels</h3>
+            <p>Millions of homes and buildings worldwide have panels installed on their roofs. India has a national target of 40 GW of rooftop solar capacity. These systems can power a family's entire electricity needs during sunny hours.</p>
+            <div class="sol-use-fact">India target: <strong>40 GW rooftop solar</strong></div>
+          </div>
+        </GlassCard>
+
+        <GlassCard class="sol-use-card">
+          <div class="sol-use-visual" aria-hidden="true">⚡</div>
+          <div class="sol-use-body">
+            <h3 class="sol-card-title">Utility-Scale Solar Farms</h3>
+            <p>Bhadla Solar Park in Rajasthan, India is the world's largest solar farm at 2,245 MW — enough to power 1.8 million homes. The Sahara Desert alone could theoretically power the entire world if covered with solar panels.</p>
+            <div class="sol-use-fact">Bhadla, Rajasthan: <strong>2,245 MW</strong></div>
+          </div>
+        </GlassCard>
+
+        <GlassCard class="sol-use-card">
+          <div class="sol-use-visual" aria-hidden="true">💧</div>
+          <div class="sol-use-body">
+            <h3 class="sol-card-title">Solar Water Pumps</h3>
+            <p>Solar-powered pumps are transforming agriculture in rural India. Farmers can pump groundwater for irrigation without diesel costs. The PM-KUSUM scheme aims to install 2 million solar pumps for Indian farmers.</p>
+            <div class="sol-use-fact">PM-KUSUM: <strong>2 million solar pumps</strong></div>
+          </div>
+        </GlassCard>
+
+        <GlassCard class="sol-use-card">
+          <div class="sol-use-visual" aria-hidden="true">🔦</div>
+          <div class="sol-use-body">
+            <h3 class="sol-card-title">Solar Street Lights</h3>
+            <p>Cities and villages use solar LED street lights that charge during the day and illuminate roads at night. They eliminate electricity bills for municipalities and work even where grid power is unreliable.</p>
+            <div class="sol-use-fact">Self-sufficient, <strong>zero running cost</strong></div>
+          </div>
+        </GlassCard>
+
+        <GlassCard class="sol-use-card">
+          <div class="sol-use-visual" aria-hidden="true">🧮</div>
+          <div class="sol-use-body">
+            <h3 class="sol-card-title">Consumer Electronics</h3>
+            <p>Solar cells power pocket calculators, wristwatches, garden lights, and phone charging pads. These use tiny, inexpensive amorphous silicon cells and need no batteries at all in bright light.</p>
+            <div class="sol-use-fact">Calculators, watches, <strong>garden sensors</strong></div>
+          </div>
+        </GlassCard>
+
+        <GlassCard class="sol-use-card">
+          <div class="sol-use-visual" aria-hidden="true">🚀</div>
+          <div class="sol-use-body">
+            <h3 class="sol-card-title">Space Satellites</h3>
+            <p>Every satellite — including the International Space Station (ISS) — runs on solar panels. In space, panels receive unfiltered sunlight 24/7 with no atmosphere blocking it, making solar the only practical power source beyond Earth.</p>
+            <div class="sol-use-fact">ISS panels generate <strong>84–120 kW</strong></div>
+          </div>
+        </GlassCard>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       CROSS-LINKS — other solutions
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="sol-section sol-section--alt" aria-label="Explore other sustainability topics">
+    <div class="sol-container">
+      <SectionHeader
+        eyebrow="Explore More"
+        title="Other Sustainability Solutions"
+        align="center"
+      />
+
+      <div class="sol-grid sol-grid--3">
+        <TopicCard
+          title="Wind Energy"
+          blurb="How turbines harness kinetic energy from moving air to generate clean electricity."
+          href="/solutions/wind"
+          icon="🌬️"
+          accent="blue"
+        />
+        <TopicCard
+          title="Rainwater Harvesting"
+          blurb="Collecting and storing rainfall to reduce freshwater demand and recharge aquifers."
+          href="/solutions/rainwater"
+          icon="🌧️"
+          accent="blue"
+        />
+        <TopicCard
+          title="Waste Reduction"
+          blurb="Strategies to minimise landfill waste through reduce, reuse, recycle, and compost."
+          href="/solutions/waste"
+          icon="♻️"
+          accent="green"
+        />
+      </div>
+
+      <div class="sol-cta-row">
+        <CTAButton href="/solutions" variant="ghost" size="md">← All Solutions</CTAButton>
+        <CTAButton href="/calculators" variant="secondary" size="md">Try a Calculator</CTAButton>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Layout containers ─────────────────────────────────────────────────── */
+  .sol-section {
+    padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2.5rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  .sol-section--alt {
+    background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+  }
+
+  .sol-container {
+    max-width: 72rem;
+    margin-inline: auto;
+  }
+
+  /* ── Hero ──────────────────────────────────────────────────────────────── */
+  .sol-hero {
+    min-height: calc(100svh - 4rem);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 4rem);
+    padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem);
+    max-width: 80rem;
+    margin-inline: auto;
+  }
+
+  .sol-hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 44rem;
+  }
+
+  .sol-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .sol-title {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin: 0;
+  }
+
+  .sol-tagline {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 38rem;
+    text-wrap: pretty;
+  }
+
+  .sol-hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Hero sun illustration */
+  .sol-hero-sun {
+    flex-shrink: 0;
+    width: clamp(10rem, 22vw, 18rem);
+    height: clamp(10rem, 22vw, 18rem);
+    opacity: 0.8;
+  }
+
+  .sol-sun-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .sol-hero-rays {
+    transform-origin: 100px 100px;
+    animation: sol-rays-spin 20s linear infinite;
+  }
+
+  @keyframes sol-rays-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sol-hero-rays { animation: none; }
+  }
+
+  /* ── Grids ─────────────────────────────────────────────────────────────── */
+  .sol-grid {
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  .sol-grid--2 {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 28rem), 1fr));
+  }
+
+  .sol-grid--3 {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  }
+
+  /* ── Card elements ─────────────────────────────────────────────────────── */
+  .sol-card-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.6rem;
+  }
+
+  .sol-card--stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.4rem;
+    min-height: 9rem;
+  }
+
+  .sol-stat-num {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .sol-stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    max-width: 18rem;
+    text-wrap: pretty;
+  }
+
+  /* ── Steps list ────────────────────────────────────────────────────────── */
+  .sol-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    counter-reset: steps;
+  }
+
+  .sol-step {
+    position: relative;
+  }
+
+  .sol-step-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Facts band ────────────────────────────────────────────────────────── */
+  .sol-facts-band {
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--color-green) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-green) 20%, transparent);
+    border-radius: var(--radius-lg);
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  .sol-fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    flex: 1 1 18rem;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .sol-fact-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+
+  /* ── Diagram card ──────────────────────────────────────────────────────── */
+  .sol-diagram-card {
+    padding: clamp(1.5rem, 4vw, 2.5rem) !important;
+  }
+
+  .sol-diagram-note {
+    margin-top: 1rem;
+    font-size: var(--text-sm);
+    color: var(--text-subtle);
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  /* ── Advantage / disadvantage icons ───────────────────────────────────── */
+  .sol-adv-icon,
+  .sol-disadv-icon {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* ── Real-world uses ───────────────────────────────────────────────────── */
+  .sol-uses-grid {
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  }
+
+  .sol-use-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem) !important;
+  }
+
+  .sol-use-visual {
+    font-size: 2.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .sol-use-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .sol-use-body .sol-card-title {
+    font-size: var(--text-body-lg);
+    margin-bottom: 0.3rem;
+  }
+
+  .sol-use-body p {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .sol-use-fact {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-size: var(--text-xs);
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── CTA row ───────────────────────────────────────────────────────────── */
+  .sol-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  /* ── Responsive: collapse hero on small screens ──────────────────────── */
+  @media (max-width: 640px) {
+    .sol-hero {
+      grid-template-columns: 1fr;
+    }
+    .sol-hero-sun {
+      display: none;
+    }
+  }
+</style>
