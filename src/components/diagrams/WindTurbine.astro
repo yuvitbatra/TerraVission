@@ -1,0 +1,303 @@
+---
+/**
+ * WindTurbine.astro — Animated SVG diagram of a horizontal-axis wind turbine.
+ *
+ * Labelled parts: Rotor Blades, Hub (Rotor), Nacelle, Generator, Tower.
+ * Animation: CSS keyframe rotation on the blade group; paused under
+ * prefers-reduced-motion (the global rule also collapses it to 0.01 ms,
+ * but we belt-and-suspenders with animation-play-state: paused here).
+ *
+ * Colours: design tokens only — no hardcoded hex values.
+ */
+---
+
+<figure class="turbine-figure">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 500 520"
+    role="img"
+    aria-label="Animated diagram of a horizontal-axis wind turbine showing three rotating rotor blades, nacelle housing the generator, and a tapered tower"
+    class="turbine-svg"
+    aria-describedby="turbine-desc"
+  >
+    <title>Wind Turbine — Labelled Diagram</title>
+    <desc id="turbine-desc">
+      Front-view illustration of a modern wind turbine. Three aerodynamic
+      rotor blades spin around the central hub. The nacelle at the tower
+      top houses the generator that converts rotational energy into
+      electricity. The tapered concrete tower raises the rotor into
+      stronger, unobstructed wind.
+    </desc>
+
+    <!-- ── defs ──────────────────────────────────────────────────────── -->
+    <defs>
+      <!-- Gradient for blades -->
+      <linearGradient id="blade-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" class="blade-stop-a" />
+        <stop offset="100%" class="blade-stop-b" />
+      </linearGradient>
+      <!-- Gradient for tower -->
+      <linearGradient id="tower-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" class="tower-stop-a" />
+        <stop offset="100%" class="tower-stop-b" />
+      </linearGradient>
+      <!-- Soft drop shadow -->
+      <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="2" stdDeviation="4" class="shadow-fe" />
+      </filter>
+    </defs>
+
+    <!-- ── Ground line ────────────────────────────────────────────────── -->
+    <line x1="60" y1="505" x2="440" y2="505" class="ground-line" />
+
+    <!-- ── Tower ─────────────────────────────────────────────────────── -->
+    <!--
+      Trapezoid narrowing from ~36 px wide at the base (y=505)
+      to ~22 px wide at the nacelle base (y=282), centered on x=250.
+    -->
+    <polygon
+      points="232,505 268,505 261,282 239,282"
+      class="tower"
+      fill="url(#tower-grad)"
+    />
+
+    <!-- ── Nacelle ────────────────────────────────────────────────────── -->
+    <!--
+      Horizontal capsule at tower top housing gearbox + generator.
+      Center: x=250, y=265; width 96 px, height 34 px.
+    -->
+    <rect
+      x="202" y="248"
+      width="96" height="34"
+      rx="8"
+      class="nacelle"
+      filter="url(#soft-shadow)"
+    />
+
+    <!-- Generator symbol inside nacelle (stator coil icon) -->
+    <circle cx="275" cy="265" r="9" class="gen-icon" />
+    <path
+      d="M 268,265 a 7,7 0 0 1 14,0"
+      class="gen-coil"
+      fill="none"
+    />
+
+    <!-- ── Rotating blade assembly ────────────────────────────────────── -->
+    <!--
+      Three blades, each defined with hub at (250, 265) as the
+      path start-point. They share a single <g> that CSS rotates
+      around transform-origin: 250px 265px (the hub centre).
+    -->
+    <g class="turbine-blades" aria-hidden="true">
+      <!-- Blade 1 — pointing up -->
+      <path
+        d="M 250,265
+           C 241,225 239,190 246,143
+           L 250,140
+           C 254,143 261,190 259,225
+           Z"
+        class="blade"
+        fill="url(#blade-grad)"
+      />
+      <!-- Blade 2 — 120° clockwise -->
+      <path
+        d="M 250,265
+           C 241,225 239,190 246,143
+           L 250,140
+           C 254,143 261,190 259,225
+           Z"
+        class="blade"
+        fill="url(#blade-grad)"
+        transform="rotate(120 250 265)"
+      />
+      <!-- Blade 3 — 240° clockwise -->
+      <path
+        d="M 250,265
+           C 241,225 239,190 246,143
+           L 250,140
+           C 254,143 261,190 259,225
+           Z"
+        class="blade"
+        fill="url(#blade-grad)"
+        transform="rotate(240 250 265)"
+      />
+    </g>
+
+    <!-- ── Hub (rendered above blades so it's always visible) ─────────── -->
+    <circle cx="250" cy="265" r="15" class="hub" filter="url(#soft-shadow)" />
+    <circle cx="250" cy="265" r="8"  class="hub-inner" />
+
+    <!-- ── Label connector lines ─────────────────────────────────────── -->
+    <!-- Rotor Blades → blade 1 tip area -->
+    <line x1="248" y1="148" x2="148" y2="112" class="label-line" />
+    <circle cx="248" cy="148" r="3" class="label-dot" />
+
+    <!-- Hub → hub circle left edge -->
+    <line x1="235" y1="264" x2="148" y2="300" class="label-line" />
+    <circle cx="235" cy="264" r="3" class="label-dot" />
+
+    <!-- Nacelle → nacelle right edge -->
+    <line x1="298" y1="261" x2="345" y2="248" class="label-line" />
+    <circle cx="298" cy="261" r="3" class="label-dot" />
+
+    <!-- Generator → gen icon -->
+    <line x1="284" y1="265" x2="345" y2="278" class="label-line" />
+    <circle cx="284" cy="265" r="3" class="label-dot" />
+
+    <!-- Tower → tower body -->
+    <line x1="263" y1="390" x2="345" y2="390" class="label-line" />
+    <circle cx="263" cy="390" r="3" class="label-dot" />
+
+    <!-- ── Labels ─────────────────────────────────────────────────────── -->
+    <!-- LEFT side (text-anchor end) -->
+    <text x="142" y="110" class="label-text" text-anchor="end">Rotor Blades</text>
+    <text x="142" y="298" class="label-text" text-anchor="end">Hub (Rotor)</text>
+
+    <!-- RIGHT side (text-anchor start) -->
+    <text x="350" y="246" class="label-text" text-anchor="start">Nacelle</text>
+    <text x="350" y="282" class="label-text" text-anchor="start">Generator</text>
+    <text x="350" y="394" class="label-text" text-anchor="start">Tower</text>
+  </svg>
+
+  <figcaption class="turbine-caption">
+    A horizontal-axis wind turbine converts kinetic wind energy into
+    electrical energy via the rotor, shaft, and generator inside the nacelle.
+  </figcaption>
+</figure>
+
+<style>
+  /* ── Wrapper ───────────────────────────────────────────────────────── */
+  .turbine-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .turbine-svg {
+    width: 100%;
+    max-width: 28rem;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* ── Ground ─────────────────────────────────────────────────────────── */
+  .ground-line {
+    stroke: var(--border-strong);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* ── Tower ──────────────────────────────────────────────────────────── */
+  .tower {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+  }
+
+  .tower-stop-a { stop-color: var(--text-subtle); stop-opacity: 0.28; }
+  .tower-stop-b { stop-color: var(--text-subtle); stop-opacity: 0.45; }
+
+  /* ── Nacelle ─────────────────────────────────────────────────────────── */
+  .nacelle {
+    fill: color-mix(in srgb, var(--color-blue) 18%, var(--surface));
+    stroke: var(--color-blue);
+    stroke-width: 1.5;
+  }
+
+  /* ── Generator icon ──────────────────────────────────────────────────── */
+  .gen-icon {
+    fill: none;
+    stroke: var(--color-blue-deep);
+    stroke-width: 1.5;
+  }
+
+  .gen-coil {
+    stroke: var(--color-blue);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  /* ── Blades ─────────────────────────────────────────────────────────── */
+  .blade {
+    stroke: var(--color-blue-deep);
+    stroke-width: 0.8;
+    opacity: 0.9;
+  }
+
+  .blade-stop-a {
+    stop-color: color-mix(in srgb, var(--color-blue) 30%, var(--surface));
+    stop-opacity: 1;
+  }
+  .blade-stop-b {
+    stop-color: color-mix(in srgb, var(--color-blue) 55%, var(--surface));
+    stop-opacity: 1;
+  }
+
+  /* ── Hub ─────────────────────────────────────────────────────────────── */
+  .hub {
+    fill: var(--color-green);
+    stroke: var(--color-green-deep);
+    stroke-width: 2;
+  }
+
+  .hub-inner {
+    fill: var(--color-green-deep);
+  }
+
+  /* ── Label connectors ────────────────────────────────────────────────── */
+  .label-line {
+    stroke: var(--border-strong);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+    stroke-linecap: round;
+  }
+
+  .label-dot {
+    fill: var(--accent);
+  }
+
+  /* ── Label text ──────────────────────────────────────────────────────── */
+  .label-text {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 700;
+    fill: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Shadow filter ───────────────────────────────────────────────────── */
+  .shadow-fe {
+    flood-color: var(--text);
+    flood-opacity: 0.14;
+  }
+
+  /* ── Caption ─────────────────────────────────────────────────────────── */
+  .turbine-caption {
+    font-size: var(--text-sm);
+    color: var(--text-subtle);
+    text-align: center;
+    max-width: 26rem;
+    line-height: 1.6;
+  }
+
+  /* ── ANIMATION ───────────────────────────────────────────────────────── */
+  @keyframes rotor-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .turbine-blades {
+    transform-origin: 250px 265px; /* hub centre in SVG user units */
+    animation: rotor-spin 6s linear infinite;
+  }
+
+  /* Explicit pause for users who prefer reduced motion.
+     (The global rule collapses duration to 0.01 ms, but this makes
+     intent clear and keeps the blade in the initial position.) */
+  @media (prefers-reduced-motion: reduce) {
+    .turbine-blades {
+      animation-play-state: paused;
+    }
+  }
+</style>
