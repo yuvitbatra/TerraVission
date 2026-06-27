@@ -1,0 +1,70 @@
+---
+/**
+ * SectionHeader — eyebrow / title / subtitle trio.
+ *
+ * Props
+ *   eyebrow?  – small caps label above the title
+ *   title     – main heading (required)
+ *   subtitle? – supporting body text beneath the title
+ *   align?    – 'left' (default) | 'center'
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: "left" | "center";
+}
+
+const { eyebrow, title, subtitle, align = "left" } = Astro.props;
+---
+
+<header class:list={["sh", `sh--${align}`]}>
+  {eyebrow && <p class="sh-eyebrow" aria-hidden="false">{eyebrow}</p>}
+  <h2 class="sh-title ds-h2">{title}</h2>
+  {subtitle && <p class="sh-subtitle">{subtitle}</p>}
+</header>
+
+<style>
+  .sh {
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .sh--center {
+    text-align: center;
+  }
+
+  .sh--left {
+    text-align: left;
+  }
+
+  .sh-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--accent);
+    font-family: var(--font-display);
+    margin: 0 0 0.5rem;
+  }
+
+  .sh-title {
+    margin: 0;
+    color: var(--text);
+  }
+
+  .sh--center .sh-title {
+    /* allow the gradient text utility to be applied via slot classes */
+  }
+
+  .sh-subtitle {
+    margin: 0.75rem 0 0;
+    font-size: var(--text-body-lg);
+    color: var(--text-muted);
+    max-width: 44rem;
+    text-wrap: pretty;
+  }
+
+  .sh--center .sh-subtitle {
+    margin-inline: auto;
+  }
+</style>

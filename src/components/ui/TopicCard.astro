@@ -1,0 +1,193 @@
+---
+/**
+ * TopicCard — full-card link for a sustainability topic.
+ *
+ * Props
+ *   title   – card heading
+ *   blurb   – short supporting description
+ *   href    – link destination (whole card is clickable)
+ *   icon?   – emoji or short text icon displayed in the icon badge
+ *   accent? – 'green' (default) | 'blue'  controls the accent stripe color
+ *
+ * The optional <slot> accepts an inline SVG or decorative image.
+ * Accessibility: the entire card is an <a> with meaningful text content.
+ * Hover lift matches GlassCard style.
+ */
+interface Props {
+  title: string;
+  blurb: string;
+  href: string;
+  icon?: string;
+  accent?: "green" | "blue";
+}
+
+const { title, blurb, href, icon, accent = "green" } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={["tc glass", `tc--${accent}`]}
+  aria-label={title}
+>
+  <div class="tc-accent-bar" aria-hidden="true"></div>
+
+  {
+    icon && (
+      <div class="tc-icon" aria-hidden="true">
+        {icon}
+      </div>
+    )
+  }
+
+  <!-- Optional SVG slot -->
+  <div class="tc-media" aria-hidden="true">
+    <slot />
+  </div>
+
+  <div class="tc-body">
+    <h3 class="tc-title ds-h3">{title}</h3>
+    <p class="tc-blurb">{blurb}</p>
+  </div>
+
+  <!-- Decorative arrow indicator -->
+  <span class="tc-arrow" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M4 10h12M12 6l4 4-4 4"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </span>
+</a>
+
+<style>
+  /* ---------- Card shell ---------- */
+  .tc {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    gap: 0.75rem;
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .tc:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.14),
+      0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ensure focus ring visible against glass bg */
+  .tc:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Accent stripe (top edge) ---------- */
+  .tc-accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .tc--green .tc-accent-bar {
+    background-image: linear-gradient(90deg, var(--color-green), var(--color-green-deep));
+  }
+
+  .tc--blue .tc-accent-bar {
+    background-image: linear-gradient(90deg, var(--color-blue), var(--color-blue-deep));
+  }
+
+  /* ---------- Icon badge ---------- */
+  .tc-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .tc--green .tc-icon {
+    background: color-mix(in srgb, var(--color-green) 14%, transparent);
+    color: var(--color-green-deep);
+  }
+
+  .tc--blue .tc-icon {
+    background: color-mix(in srgb, var(--color-blue) 14%, transparent);
+    color: var(--color-blue-deep);
+  }
+
+  /* ---------- Optional media slot ---------- */
+  .tc-media:empty {
+    display: none;
+  }
+
+  .tc-media {
+    color: var(--text-subtle);
+  }
+
+  /* ---------- Body ---------- */
+  .tc-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tc-title {
+    margin: 0;
+    color: var(--text);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .tc:hover .tc-title {
+    color: var(--accent);
+  }
+
+  .tc--blue:hover .tc-title {
+    color: var(--accent-2);
+  }
+
+  .tc-blurb {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  /* ---------- Arrow ---------- */
+  .tc-arrow {
+    align-self: flex-end;
+    color: var(--text-subtle);
+    transition:
+      color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+    display: flex;
+  }
+
+  .tc:hover .tc-arrow {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .tc--blue:hover .tc-arrow {
+    color: var(--accent-2);
+  }
+</style>
