@@ -1,0 +1,238 @@
+/* ============================================================================
+   TerraVision — "Forest & Sky" Design System
+   Locked tokens for a sustainability education website (glassmorphism).
+   Single source of truth: NEVER hardcode hex in components — use these vars.
+
+   Synthesis note:
+   - ui-ux-pro-max design-system  → three-layer token architecture
+       (primitive @theme  →  semantic :root vars  →  component/utility classes)
+   - frontend-design              → aesthetic direction: a calm, atmospheric
+       "canopy → horizon" feel; one bold signature (the green→blue gradient)
+       held in reserve for hero + CTAs, everything else quiet and disciplined.
+   ============================================================================ */
+
+/* --- Self-hosted fonts (no CDN) ------------------------------------------- */
+/* Sora: display / headings (400 / 600 / 700 / 800) */
+@import "@fontsource/sora/400.css";
+@import "@fontsource/sora/600.css";
+@import "@fontsource/sora/700.css";
+@import "@fontsource/sora/800.css";
+/* Source Sans 3: body (variable weight) */
+@import "@fontsource-variable/source-sans-3/index.css";
+
+/* --- Tailwind v4 (CSS-first) ---------------------------------------------- */
+@import "tailwindcss";
+
+/* Enable class/attribute-driven dark mode via [data-theme="dark"] */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ============================================================================
+   LAYER 1 — PRIMITIVES  (Tailwind @theme → generates utilities + var(--*))
+   ============================================================================ */
+@theme {
+  /* Brand — Forest (green) */
+  --color-green:        #10B981;
+  --color-green-deep:   #047857;
+  /* Brand — Sky (blue) */
+  --color-blue:         #0EA5E9;
+  --color-blue-deep:    #0369A1;
+
+  /* Neutrals — slate family (the locked base bg/surface/text live here) */
+  --color-base-light:      #F8FAFC; /* light bg      */
+  --color-surface-light:   #FFFFFF; /* light surface */
+  --color-text-light:      #1E293B; /* light text    */
+  --color-base-dark:       #020617; /* dark bg       */
+  --color-surface-dark:    #0F172A; /* dark surface  */
+  --color-text-dark:       #E2E8F0; /* dark text     */
+
+  /* Type families */
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "Source Sans 3 Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale (display = Sora, tight; body = Source Sans, comfortable) */
+  --text-display:    clamp(2.75rem, 1.6rem + 5.2vw, 5rem);
+  --text-h1:         clamp(2.25rem, 1.5rem + 3.2vw, 3.5rem);
+  --text-h2:         clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  --text-h3:         clamp(1.375rem, 1.15rem + 1vw, 1.75rem);
+  --text-body-lg:    1.125rem;
+  --text-body:       1rem;
+  --text-sm:         0.875rem;
+  --text-xs:         0.75rem;
+
+  /* Radii */
+  --radius-sm:   0.5rem;
+  --radius-md:   0.875rem;
+  --radius-lg:   1.25rem;
+  --radius-xl:   1.75rem;
+  --radius-full: 9999px;
+}
+
+/* ============================================================================
+   LAYER 2 — SEMANTIC TOKENS  (theme-aware; the names components reference)
+   :root = light (default).  [data-theme="dark"] overrides.
+   ============================================================================ */
+:root {
+  color-scheme: light;
+
+  /* Surfaces & ink */
+  --bg:            var(--color-base-light);
+  --surface:       var(--color-surface-light);
+  --surface-2:     #F1F5F9;                 /* slate-100, subtle raised */
+  --text:          var(--color-text-light);
+  --text-muted:    #64748B;                 /* slate-500 */
+  --text-subtle:   #94A3B8;                 /* slate-400 */
+
+  /* Borders */
+  --border-hairline: rgba(15, 23, 42, 0.10);
+  --border-strong:   rgba(15, 23, 42, 0.16);
+
+  /* Brand aliases (so components say var(--accent), not a hex) */
+  --accent:        var(--color-green);
+  --accent-deep:   var(--color-green-deep);
+  --accent-2:      var(--color-blue);
+  --accent-2-deep: var(--color-blue-deep);
+
+  /* Signature gradient (green → blue) — used sparingly */
+  --gradient-brand: linear-gradient(120deg, var(--color-green) 0%, var(--color-blue) 100%);
+
+  /* Glass surfaces (light: frosted white) */
+  --glass-bg:      rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border:  rgba(255, 255, 255, 0.65);
+  --glass-blur:    16px;
+
+  /* Shadows (soft, ambient) */
+  --shadow-soft:  0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-glass: 0 1px 1px rgba(255, 255, 255, 0.5) inset,
+                  0 10px 30px rgba(15, 23, 42, 0.10);
+
+  /* Focus ring */
+  --ring: var(--color-blue);
+
+  /* Motion */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast:    140ms;
+  --dur-base:    240ms;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg:            var(--color-base-dark);
+  --surface:       var(--color-surface-dark);
+  --surface-2:     #1E293B;                 /* slate-800 */
+  --text:          var(--color-text-dark);
+  --text-muted:    #94A3B8;                 /* slate-400 */
+  --text-subtle:   #64748B;                 /* slate-500 */
+
+  --border-hairline: rgba(226, 232, 240, 0.12);
+  --border-strong:   rgba(226, 232, 240, 0.20);
+
+  /* Glass surfaces (dark: frosted slate) */
+  --glass-bg:        rgba(15, 23, 42, 0.55);
+  --glass-bg-strong: rgba(15, 23, 42, 0.80);
+  --glass-border:    rgba(226, 232, 240, 0.14);
+  --glass-blur:      18px;
+
+  --shadow-soft:  0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glass: 0 1px 1px rgba(226, 232, 240, 0.06) inset,
+                  0 14px 40px rgba(0, 0, 0, 0.55);
+
+  --ring: var(--color-green);
+}
+
+/* ============================================================================
+   BASE ELEMENTS
+   ============================================================================ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color var(--dur-base) var(--ease-out),
+                color var(--dur-base) var(--ease-out);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+
+  /* Visible, on-brand keyboard focus */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-green) 28%, transparent);
+    color: var(--text);
+  }
+}
+
+/* ============================================================================
+   LAYER 3 — COMPONENT / UTILITY CLASSES
+   ============================================================================ */
+@layer utilities {
+  /* Glass card — translucent surface, blur, hairline border, soft shadow */
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Stronger, more opaque glass (for nav / overlays needing legibility) */
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 1.4)) saturate(160%);
+    backdrop-filter: blur(calc(var(--glass-blur) * 1.4)) saturate(160%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--radius-lg);
+  }
+
+  /* Signature brand gradient surface (hero + primary CTAs only) */
+  .gradient-brand {
+    background-image: var(--gradient-brand);
+  }
+
+  /* Gradient text (green → blue) */
+  .text-gradient {
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Hairline border helper */
+  .border-hairline { border: 1px solid var(--border-hairline); }
+}
+
+/* ============================================================================
+   ACCESSIBILITY — honor reduced-motion globally
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
