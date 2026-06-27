@@ -58,5 +58,6 @@ export function fallbackEcoPlan(payload: EcoPlanInput): {
   summary: string;
   actions: string[];
 } {
-  return FALLBACK_PLANS[payload.kind];
+  const plan = FALLBACK_PLANS[payload.kind];
+  return { summary: plan.summary, actions: [...plan.actions] };
 }

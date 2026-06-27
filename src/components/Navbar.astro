@@ -10,9 +10,6 @@ function isActive(href: string): boolean {
   return currentPath.startsWith(href);
 }
 
-// Separate flat nav items from items with children
-const flatItems = NAV.filter((item) => !item.children);
-const dropdownItems = NAV.filter((item) => item.children);
 ---
 
 <header id="site-nav" role="banner">
@@ -27,10 +24,14 @@ const dropdownItems = NAV.filter((item) => item.children);
           />
           <path d="M14 16V24" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.75"/>
           <path d="M14 16C14 16 10 13.5 9 11" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          <style>
+            #navgrad stop:nth-child(1) { stop-color: var(--color-green); }
+            #navgrad stop:nth-child(2) { stop-color: var(--color-blue); }
+          </style>
           <defs>
             <linearGradient id="navgrad" x1="6" y1="4" x2="22" y2="24" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#10B981"/>
-              <stop offset="1" stop-color="#0EA5E9"/>
+              <stop/>
+              <stop offset="1"/>
             </linearGradient>
           </defs>
         </svg>
@@ -133,10 +134,14 @@ const dropdownItems = NAV.filter((item) => item.children);
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
             <path d="M14 4C14 4 6 9.5 6 16C6 20.418 9.582 24 14 24C18.418 24 22 20.418 22 16C22 9.5 14 4 14 4Z" fill="url(#navgrad2)"/>
             <path d="M14 16V24" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.75"/>
+            <style>
+              #navgrad2 stop:nth-child(1) { stop-color: var(--color-green); }
+              #navgrad2 stop:nth-child(2) { stop-color: var(--color-blue); }
+            </style>
             <defs>
               <linearGradient id="navgrad2" x1="6" y1="4" x2="22" y2="24" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#10B981"/>
-                <stop offset="1" stop-color="#0EA5E9"/>
+                <stop/>
+                <stop offset="1"/>
               </linearGradient>
             </defs>
           </svg>

@@ -170,12 +170,36 @@ export async function streamGemini(
   const decoder = new TextDecoder();
 
   // Transform the raw SSE byte stream into plain text chunks.
+  // Buffer accumulates incomplete lines that may span network chunk boundaries.
+  let buffer = "";
   const transform = new TransformStream<Uint8Array, Uint8Array>({
     transform(chunk, controller) {
-      const raw = decoder.decode(chunk, { stream: true });
+      buffer += decoder.decode(chunk, { stream: true });
       // SSE lines look like: data: {"candidates":[{"content":{"parts":[{"text":"..."}],...}},...]}
-      const lines = raw.split("\n");
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
       for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const jsonStr = line.slice(5).trim();
+        if (!jsonStr || jsonStr === "[DONE]") continue;
+        try {
+          const parsed = JSON.parse(jsonStr) as GeminiResponse;
+          const text =
+            parsed?.candidates?.[0]?.content?.parts
+              ?.map((p) => p.text)
+              .join("") ?? "";
+          if (text) {
+            controller.enqueue(encoder.encode(text));
+          }
+        } catch {
+          // Malformed SSE chunk — skip silently
+        }
+      }
+    },
+    flush(controller) {
+      // Finalise the decoder and process any remaining buffered content.
+      buffer += decoder.decode();
+      for (const line of buffer.split("\n")) {
         if (!line.startsWith("data:")) continue;
         const jsonStr = line.slice(5).trim();
         if (!jsonStr || jsonStr === "[DONE]") continue;

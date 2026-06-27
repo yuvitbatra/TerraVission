@@ -23,7 +23,7 @@ const DIET_TONNES: Record<'meat' | 'mixed' | 'veg', number> = {
   veg:   1.0,
 };
 
-/** kWh saved per LED bulb per year replacing incandescent (40 W → < 5 W, ~2 h/day) ~40 kWh */
+/** kWh saved per LED bulb per year. ~26 kWh saved from the bulb's own wattage drop; 40 used as a slightly generous per-bulb estimate that also credits replacing higher-wattage incandescents and typical >2h/day use. */
 const LED_KWH_PER_BULB_YR = 40;
 
 /** kWh saved per AC-hour reduction per year (365 days × ~1.5 kW AC unit) */

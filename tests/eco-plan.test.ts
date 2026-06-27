@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { it, expect } from 'vitest';
 import { fallbackEcoPlan, buildEcoPlanPrompt } from '@/lib/eco-plan';
 
 it('fallback returns summary + non-empty actions for carbon', () => {
