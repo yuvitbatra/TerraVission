@@ -1,0 +1,483 @@
+---
+/**
+ * RainwaterProcess.astro
+ * Animated SVG showing the full rainwater harvesting cycle:
+ * Rain → Roof/Catchment → Gutter → First-Flush/Filter → Storage Tank → Use / Recharge Well
+ *
+ * Accessibility: role="img" + aria-label; reduced-motion safe (all animations collapse to instant).
+ * Design tokens only — no hardcoded hex values.
+ */
+---
+
+<div class="rp-wrapper">
+  <svg
+    viewBox="0 0 900 520"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Animated diagram of a rainwater harvesting system: raindrops fall onto a rooftop catchment area, flow through gutters into a first-flush device and filter, then into a storage tank for household use or groundwater recharge via a recharge well."
+    class="rp-svg"
+    aria-describedby="rp-longdesc"
+  >
+    <title>Rainwater Harvesting Process</title>
+    <desc id="rp-longdesc">
+      Step 1 — Rain: Raindrops fall from clouds above.
+      Step 2 — Roof Catchment: The rain lands on a sloped rooftop that acts as the catchment surface.
+      Step 3 — Gutters: Water drains into gutters along the roof edge and flows down a downpipe.
+      Step 4 — First-Flush &amp; Filter: A first-flush diverter discards the first dirty water; a mesh filter removes debris.
+      Step 5 — Storage Tank: Cleaned water is stored in an underground or above-ground storage tank.
+      Step 6 — Use or Recharge: Water is either pumped for household use (gardening, toilets, cleaning) or directed to a recharge well to replenish groundwater.
+    </desc>
+
+    <!-- ─── DEFS ─────────────────────────────────────────── -->
+    <defs>
+      <!-- Brand gradient (green → blue) using CSS vars as fill/stroke stops -->
+      <linearGradient id="rp-grad-brand" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="var(--color-green)" />
+        <stop offset="100%" stop-color="var(--color-blue)"  />
+      </linearGradient>
+
+      <!-- Water flow gradient (light blue tint) -->
+      <linearGradient id="rp-grad-water" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%"   stop-color="var(--color-blue)"      stop-opacity="0.85" />
+        <stop offset="100%" stop-color="var(--color-green-deep)" stop-opacity="0.75" />
+      </linearGradient>
+
+      <!-- Sky gradient behind clouds -->
+      <linearGradient id="rp-grad-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%"   stop-color="var(--color-blue)"  stop-opacity="0.18" />
+        <stop offset="100%" stop-color="var(--color-blue)"  stop-opacity="0.04" />
+      </linearGradient>
+
+      <!-- Clip path for tank fill animation -->
+      <clipPath id="rp-clip-tank">
+        <rect x="575" y="310" width="90" height="130" rx="4" />
+      </clipPath>
+
+      <!-- Raindrop marker -->
+      <marker id="rp-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+        <path d="M0,0 L0,8 L8,4 z" fill="url(#rp-grad-brand)" />
+      </marker>
+    </defs>
+
+    <!-- ─── BACKGROUND ───────────────────────────────────── -->
+    <rect x="0" y="0" width="900" height="520" fill="url(#rp-grad-sky)" rx="16" />
+
+    <!-- ─── STEP LABELS (background pills) ──────────────── -->
+    <!-- Step 1: Rain/Cloud -->
+    <rect x="58" y="14" width="112" height="22" rx="11" fill="var(--color-blue)" fill-opacity="0.15" />
+    <text x="114" y="30" text-anchor="middle" class="rp-step-label">① Rainfall</text>
+
+    <!-- Step 2: Catchment -->
+    <rect x="200" y="14" width="160" height="22" rx="11" fill="var(--color-green)" fill-opacity="0.12" />
+    <text x="280" y="30" text-anchor="middle" class="rp-step-label">② Roof Catchment</text>
+
+    <!-- Step 3: Gutter + Downpipe -->
+    <rect x="450" y="14" width="130" height="22" rx="11" fill="var(--color-blue)" fill-opacity="0.12" />
+    <text x="515" y="30" text-anchor="middle" class="rp-step-label">③ Gutter</text>
+
+    <!-- Step 4: First-flush -->
+    <rect x="584" y="130" width="150" height="22" rx="11" fill="var(--color-green)" fill-opacity="0.12" />
+    <text x="659" y="146" text-anchor="middle" class="rp-step-label">④ Filter</text>
+
+    <!-- Step 5: Tank -->
+    <rect x="572" y="296" width="100" height="22" rx="11" fill="var(--color-blue)" fill-opacity="0.15" />
+    <text x="622" y="312" text-anchor="middle" class="rp-step-label">⑤ Storage</text>
+
+    <!-- Step 6: Use / Recharge -->
+    <rect x="680" y="410" width="120" height="22" rx="11" fill="var(--color-green)" fill-opacity="0.12" />
+    <text x="740" y="426" text-anchor="middle" class="rp-step-label">⑥ Use / Recharge</text>
+
+    <!-- ─── CLOUD ─────────────────────────────────────────── -->
+    <g class="rp-cloud" aria-hidden="true">
+      <ellipse cx="100" cy="78" rx="44" ry="28" fill="var(--surface)" fill-opacity="0.88" />
+      <ellipse cx="130" cy="70" rx="38" ry="26" fill="var(--surface)" fill-opacity="0.88" />
+      <ellipse cx="70"  cy="75" rx="30" ry="22" fill="var(--surface)" fill-opacity="0.88" />
+      <ellipse cx="115" cy="82" rx="50" ry="20" fill="var(--surface)" fill-opacity="0.88" />
+    </g>
+
+    <!-- ─── ANIMATED RAINDROPS ────────────────────────────── -->
+    <!-- 7 drops at staggered x positions, falling from y≈100 to y≈165 -->
+    <g class="rp-rain" fill="url(#rp-grad-water)" aria-hidden="true">
+      <!-- drop shape: thin vertical ellipse -->
+      <ellipse cx="72"  cy="120" rx="2.5" ry="5" class="rp-drop rp-drop--1" />
+      <ellipse cx="88"  cy="112" rx="2.5" ry="5" class="rp-drop rp-drop--2" />
+      <ellipse cx="104" cy="122" rx="2.5" ry="5" class="rp-drop rp-drop--3" />
+      <ellipse cx="120" cy="108" rx="2.5" ry="5" class="rp-drop rp-drop--4" />
+      <ellipse cx="136" cy="118" rx="2.5" ry="5" class="rp-drop rp-drop--5" />
+      <ellipse cx="152" cy="112" rx="2.5" ry="5" class="rp-drop rp-drop--6" />
+      <ellipse cx="80"  cy="130" rx="2.5" ry="5" class="rp-drop rp-drop--7" />
+    </g>
+
+    <!-- ─── ROOF / CATCHMENT ─────────────────────────────── -->
+    <!-- Sloped roof silhouette (left-peak to right-eave) -->
+    <g aria-hidden="true">
+      <!-- Roof surface -->
+      <polygon
+        points="170,170 460,170 500,200 130,200"
+        fill="var(--color-green-deep)"
+        fill-opacity="0.70"
+        stroke="var(--color-green)"
+        stroke-width="1.5"
+      />
+      <!-- Ridge line (top of slope) -->
+      <line x1="170" y1="170" x2="460" y2="170" stroke="var(--color-green)" stroke-width="2" stroke-dasharray="6 3" opacity="0.6" />
+      <!-- House body (simplified) -->
+      <rect x="180" y="200" width="280" height="100" rx="3"
+            fill="var(--surface-2)" fill-opacity="0.6"
+            stroke="var(--border-strong)" stroke-width="1.2" />
+      <!-- Window left -->
+      <rect x="210" y="220" width="55" height="45" rx="4"
+            fill="var(--color-blue)" fill-opacity="0.22"
+            stroke="var(--border-strong)" stroke-width="1" />
+      <!-- Window right -->
+      <rect x="375" y="220" width="55" height="45" rx="4"
+            fill="var(--color-blue)" fill-opacity="0.22"
+            stroke="var(--border-strong)" stroke-width="1" />
+      <!-- Door -->
+      <rect x="293" y="240" width="54" height="60" rx="4"
+            fill="var(--color-green-deep)" fill-opacity="0.30"
+            stroke="var(--border-strong)" stroke-width="1" />
+    </g>
+
+    <!-- ─── GUTTER + DOWNPIPE ─────────────────────────────── -->
+    <g aria-hidden="true">
+      <!-- Gutter channel along right eave -->
+      <rect x="490" y="200" width="24" height="12" rx="3"
+            fill="url(#rp-grad-brand)" fill-opacity="0.55"
+            stroke="var(--color-green)" stroke-width="1.2" />
+      <!-- Downpipe (vertical) -->
+      <rect x="497" y="212" width="10" height="110" rx="3"
+            fill="url(#rp-grad-water)" fill-opacity="0.50" />
+    </g>
+
+    <!-- Animated flow: water traveling down the downpipe -->
+    <rect x="499" y="212" width="6" height="20" rx="2"
+          fill="var(--color-blue)" fill-opacity="0.80"
+          class="rp-flow-downpipe" aria-hidden="true" />
+
+    <!-- ─── PIPE BEND → FILTER BOX ───────────────────────── -->
+    <!-- Horizontal pipe from downpipe to filter -->
+    <rect x="507" y="317" width="100" height="8" rx="3"
+          fill="url(#rp-grad-water)" fill-opacity="0.45" aria-hidden="true" />
+
+    <!-- Animated water through horizontal pipe -->
+    <rect x="508" y="318" width="20" height="6" rx="2"
+          fill="var(--color-blue)" fill-opacity="0.80"
+          class="rp-flow-horiz" aria-hidden="true" />
+
+    <!-- ─── FIRST-FLUSH + FILTER BOX ─────────────────────── -->
+    <g aria-hidden="true">
+      <!-- Filter housing -->
+      <rect x="607" y="148" width="80" height="180" rx="8"
+            fill="var(--glass-bg-strong)"
+            stroke="url(#rp-grad-brand)" stroke-width="1.8" />
+      <!-- Filter layers labels (small, decorative) -->
+      <!-- Gravel layer -->
+      <rect x="614" y="200" width="66" height="22" rx="3"
+            fill="var(--color-green)" fill-opacity="0.18" />
+      <text x="647" y="215" text-anchor="middle" class="rp-filter-label">Gravel</text>
+      <!-- Sand layer -->
+      <rect x="614" y="226" width="66" height="22" rx="3"
+            fill="var(--color-green)" fill-opacity="0.10" />
+      <text x="647" y="241" text-anchor="middle" class="rp-filter-label">Sand</text>
+      <!-- Charcoal layer -->
+      <rect x="614" y="252" width="66" height="22" rx="3"
+            fill="var(--color-green)" fill-opacity="0.06" />
+      <text x="647" y="267" text-anchor="middle" class="rp-filter-label">Charcoal</text>
+
+      <!-- First-flush diverter pipe (sticks up from top) -->
+      <rect x="640" y="148" width="8" height="28" rx="3"
+            fill="var(--color-blue)" fill-opacity="0.40" />
+      <!-- FF label -->
+      <text x="647" y="180" text-anchor="middle" class="rp-filter-label">First-flush diverter</text>
+
+      <!-- Inlet arrow into filter -->
+      <path d="M607,321 L575,321" stroke="url(#rp-grad-brand)" stroke-width="2"
+            fill="none" marker-end="url(#rp-arrow)" />
+
+      <!-- Outlet pipe from filter bottom to tank -->
+      <rect x="640" y="328" width="8" height="30" rx="3"
+            fill="url(#rp-grad-water)" fill-opacity="0.55" />
+    </g>
+
+    <!-- ─── STORAGE TANK ─────────────────────────────────── -->
+    <g aria-hidden="true">
+      <!-- Tank body -->
+      <rect x="575" y="358" width="90" height="100" rx="10"
+            fill="var(--surface)"
+            stroke="url(#rp-grad-brand)" stroke-width="2" />
+      <!-- Tank top cap -->
+      <ellipse cx="620" cy="358" rx="45" ry="10"
+               fill="var(--color-green-deep)" fill-opacity="0.50"
+               stroke="var(--color-green)" stroke-width="1.5" />
+      <!-- Tank bottom -->
+      <ellipse cx="620" cy="458" rx="45" ry="10"
+               fill="var(--color-green-deep)" fill-opacity="0.35" />
+
+      <!-- Animated water fill inside tank -->
+      <rect x="576" y="408" width="88" height="50" rx="0"
+            fill="url(#rp-grad-water)" fill-opacity="0.55"
+            class="rp-tank-fill"
+            clip-path="url(#rp-clip-tank-inner)" />
+
+      <!-- Gauge line on tank -->
+      <line x1="662" y1="380" x2="662" y2="450"
+            stroke="var(--border-strong)" stroke-width="1" stroke-dasharray="3 3" />
+      <!-- Water level indicator (animated) -->
+      <line x1="658" y1="430" x2="666" y2="430"
+            stroke="var(--color-blue)" stroke-width="2"
+            class="rp-level-line" />
+    </g>
+
+    <!-- Tank clip (inner, for fill animation) -->
+    <defs>
+      <clipPath id="rp-clip-tank-inner">
+        <rect x="576" y="358" width="88" height="100" rx="8" />
+      </clipPath>
+    </defs>
+
+    <!-- ─── DISTRIBUTION PIPES (use + recharge) ──────────── -->
+    <g aria-hidden="true">
+      <!-- Pipe to household use (left from tank bottom) -->
+      <rect x="500" y="450" width="75" height="7" rx="3"
+            fill="url(#rp-grad-water)" fill-opacity="0.50" />
+      <!-- Tap / use node -->
+      <circle cx="496" cy="453" r="10"
+              fill="var(--color-green)" fill-opacity="0.80"
+              stroke="var(--color-green-deep)" stroke-width="1.5" />
+      <text x="496" y="457" text-anchor="middle" fill="var(--text-on-gradient)"
+            font-size="10" font-weight="700">🚿</text>
+
+      <!-- Pipe to recharge well (right from tank bottom) -->
+      <rect x="665" y="450" width="75" height="7" rx="3"
+            fill="url(#rp-grad-water)" fill-opacity="0.50" />
+      <!-- Recharge well -->
+      <ellipse cx="760" cy="475" rx="28" ry="10"
+               fill="var(--color-blue)" fill-opacity="0.22"
+               stroke="var(--color-blue)" stroke-width="1.5" />
+      <rect x="732" y="470" width="56" height="35" rx="4"
+            fill="var(--color-blue)" fill-opacity="0.12"
+            stroke="var(--color-blue)" stroke-width="1.2" />
+      <ellipse cx="760" cy="505" rx="28" ry="10"
+               fill="var(--color-blue-deep)" fill-opacity="0.30" />
+      <!-- Recharge arrows (downward, into ground) -->
+      <line x1="750" y1="482" x2="750" y2="498" stroke="var(--color-blue)" stroke-width="2"
+            marker-end="url(#rp-arrow)" class="rp-recharge-arrow" />
+      <line x1="760" y1="482" x2="760" y2="498" stroke="var(--color-blue)" stroke-width="2"
+            marker-end="url(#rp-arrow)" class="rp-recharge-arrow" />
+      <line x1="770" y1="482" x2="770" y2="498" stroke="var(--color-blue)" stroke-width="2"
+            marker-end="url(#rp-arrow)" class="rp-recharge-arrow" />
+    </g>
+
+    <!-- Flow: water from filter into tank -->
+    <ellipse cx="644" cy="360" rx="6" ry="6"
+             fill="var(--color-blue)" fill-opacity="0.70"
+             class="rp-drop-to-tank" aria-hidden="true" />
+
+    <!-- ─── LABELS (final, prominent) ───────────────────────── -->
+    <!-- Cloud label -->
+    <text x="114" y="98" text-anchor="middle" class="rp-node-label">Rain Cloud</text>
+
+    <!-- Roof label -->
+    <text x="315" y="186" text-anchor="middle" class="rp-node-label">Catchment Roof</text>
+
+    <!-- Gutter label -->
+    <text x="504" y="196" text-anchor="middle" class="rp-node-label">Gutter</text>
+
+    <!-- Filter label -->
+    <text x="647" y="165" text-anchor="middle" class="rp-node-label">Filter</text>
+
+    <!-- Tank label -->
+    <text x="620" y="415" text-anchor="middle" class="rp-node-label rp-node-label--light">Storage Tank</text>
+
+    <!-- Household use label -->
+    <text x="440" y="472" text-anchor="middle" class="rp-node-label">Household Use</text>
+
+    <!-- Recharge well label -->
+    <text x="760" y="450" text-anchor="middle" class="rp-node-label">Recharge Well</text>
+  </svg>
+
+  <!-- Fallback text description for screen readers that skip SVG internals -->
+  <p class="rp-sr-only" id="rp-fallback-desc">
+    Rainwater harvesting process: (1) Raindrops fall from a cloud. (2) Rain lands on a sloped roof catchment area. (3) Water flows via gutters and downpipes. (4) A first-flush diverter and a gravel-sand-charcoal filter clean the water. (5) Filtered water is stored in a tank. (6) Water is used for household needs or recharged into the ground via a recharge well.
+  </p>
+</div>
+
+<style>
+  /* ── Wrapper ── */
+  .rp-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+
+  .rp-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* ── Typography inside SVG ── */
+  .rp-step-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    fill: var(--text);
+    letter-spacing: 0.03em;
+  }
+
+  .rp-node-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--text-muted);
+    letter-spacing: -0.01em;
+  }
+
+  .rp-node-label--light {
+    fill: var(--text-on-gradient);
+  }
+
+  .rp-filter-label {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
+    fill: var(--text);
+    opacity: 0.75;
+  }
+
+  /* ── Cloud pulse ── */
+  .rp-cloud {
+    animation: rp-cloud-drift 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes rp-cloud-drift {
+    from { transform: translateX(0px); }
+    to   { transform: translateX(8px); }
+  }
+
+  /* ── Raindrops (each has its own delay) ── */
+  .rp-drop {
+    animation: rp-rain-fall 1.4s linear infinite;
+    transform-box: fill-box;
+  }
+
+  @keyframes rp-rain-fall {
+    0%   { transform: translateY(0);    opacity: 0;   }
+    15%  {                               opacity: 1;   }
+    85%  {                               opacity: 1;   }
+    100% { transform: translateY(56px); opacity: 0;   }
+  }
+
+  .rp-drop--1 { animation-delay: 0s;     }
+  .rp-drop--2 { animation-delay: 0.20s;  }
+  .rp-drop--3 { animation-delay: 0.40s;  }
+  .rp-drop--4 { animation-delay: 0.60s;  }
+  .rp-drop--5 { animation-delay: 0.80s;  }
+  .rp-drop--6 { animation-delay: 1.00s;  }
+  .rp-drop--7 { animation-delay: 0.30s;  }
+
+  /* ── Water down downpipe ── */
+  .rp-flow-downpipe {
+    animation: rp-down-pipe 1.8s linear infinite;
+    transform-box: fill-box;
+  }
+
+  @keyframes rp-down-pipe {
+    0%   { transform: translateY(0px);   opacity: 0;   }
+    10%  {                                opacity: 0.9; }
+    90%  {                                opacity: 0.9; }
+    100% { transform: translateY(100px); opacity: 0;   }
+  }
+
+  /* ── Water in horizontal pipe ── */
+  .rp-flow-horiz {
+    animation: rp-horiz-flow 1.6s linear infinite;
+    transform-box: fill-box;
+  }
+
+  @keyframes rp-horiz-flow {
+    0%   { transform: translateX(0px);   opacity: 0;   }
+    10%  {                                opacity: 0.9; }
+    90%  {                                opacity: 0.9; }
+    100% { transform: translateX(80px);  opacity: 0;   }
+  }
+
+  /* ── Drop falling into tank ── */
+  .rp-drop-to-tank {
+    animation: rp-drop-tank 2s ease-in infinite;
+    transform-box: fill-box;
+  }
+
+  @keyframes rp-drop-tank {
+    0%   { transform: translateY(0px);   opacity: 0;   }
+    20%  {                                opacity: 0.8; }
+    80%  {                                opacity: 0.8; }
+    100% { transform: translateY(30px);  opacity: 0;   }
+  }
+
+  /* ── Tank water fill (oscillating level) ── */
+  .rp-tank-fill {
+    animation: rp-tank-wave 3s ease-in-out infinite alternate;
+    transform-box: fill-box;
+    transform-origin: center bottom;
+  }
+
+  @keyframes rp-tank-wave {
+    0%   { transform: scaleY(0.6); }
+    100% { transform: scaleY(1.0); }
+  }
+
+  /* ── Water level indicator line ── */
+  .rp-level-line {
+    animation: rp-level-move 3s ease-in-out infinite alternate;
+    transform-box: fill-box;
+  }
+
+  @keyframes rp-level-move {
+    0%   { transform: translateY(0);    }
+    100% { transform: translateY(-20px); }
+  }
+
+  /* ── Recharge arrows pulse ── */
+  .rp-recharge-arrow {
+    animation: rp-recharge-pulse 1.2s ease-in-out infinite;
+    transform-box: fill-box;
+  }
+
+  .rp-recharge-arrow:nth-child(2) { animation-delay: 0.2s; }
+  .rp-recharge-arrow:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes rp-recharge-pulse {
+    0%, 100% { opacity: 0.4; transform: translateY(0);   }
+    50%       { opacity: 1;   transform: translateY(4px); }
+  }
+
+  /* ── Reduced-motion override ── */
+  @media (prefers-reduced-motion: reduce) {
+    .rp-cloud,
+    .rp-drop,
+    .rp-flow-downpipe,
+    .rp-flow-horiz,
+    .rp-drop-to-tank,
+    .rp-tank-fill,
+    .rp-level-line,
+    .rp-recharge-arrow {
+      animation: none !important;
+      opacity: 1;
+    }
+  }
+
+  /* ── SR-only ── */
+  .rp-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
