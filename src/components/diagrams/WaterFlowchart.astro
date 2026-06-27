@@ -1,0 +1,307 @@
+---
+/**
+ * WaterFlowchart.astro
+ * Animated SVG flowchart: Raw Source → Screening → Coagulation/Sedimentation
+ *                          → Filtration → Disinfection → Safe Drinking Water
+ *
+ * Accessibility: role="img" + aria-labelledby + <title> + <desc>
+ * Motion: all keyframe animations respect prefers-reduced-motion (global rule
+ *         in global.css collapses durations to 0.01 ms)
+ * Colours: design tokens only — no hardcoded hex
+ */
+---
+
+<figure class="wf-wrap">
+  <svg
+    class="wf-svg"
+    viewBox="0 0 895 170"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-labelledby="wf-title wf-desc"
+    focusable="false"
+  >
+    <title id="wf-title">Water Treatment Process — 6 Purification Stages</title>
+    <desc id="wf-desc">
+      An animated flowchart of the six-stage water purification process:
+      (1) Raw Water Source — rivers, lakes, or groundwater;
+      (2) Screening — coarse filters remove large debris;
+      (3) Coagulation &amp; Sedimentation — chemical treatment causes particles to
+      clump and settle;
+      (4) Filtration — sand and activated-carbon layers remove fine particles;
+      (5) Disinfection — chlorination or UV light destroys pathogens;
+      (6) Safe Drinking Water — treated water stored and distributed.
+    </desc>
+
+    <!-- ═══════════════════════════════════════════════════════════ DEFS ═══ -->
+    <defs>
+      <!-- Arrow-head marker for connectors -->
+      <marker
+        id="wf-arrow"
+        markerWidth="8"
+        markerHeight="8"
+        refX="7"
+        refY="4"
+        orient="auto"
+        markerUnits="userSpaceOnUse"
+      >
+        <path d="M0,1 L0,7 L8,4 z" class="wf-arrowhead" />
+      </marker>
+
+      <!-- Base gradient fill for steps 1–5 -->
+      <linearGradient id="wf-grad-base" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--color-green);stop-opacity:0.10" />
+        <stop offset="100%" style="stop-color:var(--color-blue);stop-opacity:0.07" />
+      </linearGradient>
+
+      <!-- Richer gradient for final "safe water" step -->
+      <linearGradient id="wf-grad-final" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:var(--color-green);stop-opacity:0.28" />
+        <stop offset="100%" style="stop-color:var(--color-blue);stop-opacity:0.18" />
+      </linearGradient>
+
+      <!-- Glow colour used for animated overlay rects -->
+      <!-- steps 1–5 pulse blue-tinted; step 6 pulses green -->
+    </defs>
+
+    <!-- ═══════════════════════════════════════════════ STEP 1 — Raw Source ═══ -->
+    <g class="wf-step" role="presentation">
+      <!-- animated glow overlay -->
+      <rect x="10" y="30" width="125" height="110" rx="10" class="wf-glow wf-glow-1" aria-hidden="true" />
+      <!-- box -->
+      <rect x="10" y="30" width="125" height="110" rx="10" class="wf-box" />
+      <!-- step number badge -->
+      <circle cx="30" cy="52" r="13" class="wf-badge" />
+      <text x="30" y="52" class="wf-badge-num" dominant-baseline="central" text-anchor="middle">1</text>
+      <!-- labels -->
+      <text x="72" y="87" class="wf-label" text-anchor="middle">Raw Water</text>
+      <text x="72" y="104" class="wf-sublabel" text-anchor="middle">Source</text>
+    </g>
+
+    <!-- ─── connector 1 → 2 ─── -->
+    <line class="wf-connector" x1="136" y1="85" x2="157" y2="85" marker-end="url(#wf-arrow)" />
+
+    <!-- ═══════════════════════════════════════════════ STEP 2 — Screening ═══ -->
+    <g class="wf-step" role="presentation">
+      <rect x="160" y="30" width="125" height="110" rx="10" class="wf-glow wf-glow-2" aria-hidden="true" />
+      <rect x="160" y="30" width="125" height="110" rx="10" class="wf-box" />
+      <circle cx="180" cy="52" r="13" class="wf-badge" />
+      <text x="180" y="52" class="wf-badge-num" dominant-baseline="central" text-anchor="middle">2</text>
+      <text x="222" y="87" class="wf-label" text-anchor="middle">Screening</text>
+      <text x="222" y="104" class="wf-sublabel" text-anchor="middle">Removes debris</text>
+    </g>
+
+    <!-- ─── connector 2 → 3 ─── -->
+    <line class="wf-connector wf-conn-b" x1="286" y1="85" x2="307" y2="85" marker-end="url(#wf-arrow)" />
+
+    <!-- ══════════════════════════════════ STEP 3 — Coagulation/Sedimentation ═══ -->
+    <g class="wf-step" role="presentation">
+      <rect x="310" y="30" width="125" height="110" rx="10" class="wf-glow wf-glow-3" aria-hidden="true" />
+      <rect x="310" y="30" width="125" height="110" rx="10" class="wf-box" />
+      <circle cx="330" cy="52" r="13" class="wf-badge" />
+      <text x="330" y="52" class="wf-badge-num" dominant-baseline="central" text-anchor="middle">3</text>
+      <text x="372" y="80" class="wf-label" text-anchor="middle">Coagulation</text>
+      <text x="372" y="96" class="wf-sublabel" text-anchor="middle">&amp;</text>
+      <text x="372" y="111" class="wf-sublabel" text-anchor="middle">Sedimentation</text>
+    </g>
+
+    <!-- ─── connector 3 → 4 ─── -->
+    <line class="wf-connector wf-conn-c" x1="436" y1="85" x2="457" y2="85" marker-end="url(#wf-arrow)" />
+
+    <!-- ══════════════════════════════════════════ STEP 4 — Filtration ═══ -->
+    <g class="wf-step" role="presentation">
+      <rect x="460" y="30" width="125" height="110" rx="10" class="wf-glow wf-glow-4" aria-hidden="true" />
+      <rect x="460" y="30" width="125" height="110" rx="10" class="wf-box" />
+      <circle cx="480" cy="52" r="13" class="wf-badge" />
+      <text x="480" y="52" class="wf-badge-num" dominant-baseline="central" text-anchor="middle">4</text>
+      <text x="522" y="87" class="wf-label" text-anchor="middle">Filtration</text>
+      <text x="522" y="104" class="wf-sublabel" text-anchor="middle">Sand &amp; Carbon</text>
+    </g>
+
+    <!-- ─── connector 4 → 5 ─── -->
+    <line class="wf-connector wf-conn-d" x1="586" y1="85" x2="607" y2="85" marker-end="url(#wf-arrow)" />
+
+    <!-- ══════════════════════════════════════════ STEP 5 — Disinfection ═══ -->
+    <g class="wf-step" role="presentation">
+      <rect x="610" y="30" width="125" height="110" rx="10" class="wf-glow wf-glow-5" aria-hidden="true" />
+      <rect x="610" y="30" width="125" height="110" rx="10" class="wf-box" />
+      <circle cx="630" cy="52" r="13" class="wf-badge" />
+      <text x="630" y="52" class="wf-badge-num" dominant-baseline="central" text-anchor="middle">5</text>
+      <text x="672" y="87" class="wf-label" text-anchor="middle">Disinfection</text>
+      <text x="672" y="104" class="wf-sublabel" text-anchor="middle">Cl&#x2082; / UV Light</text>
+    </g>
+
+    <!-- ─── connector 5 → 6 ─── -->
+    <line class="wf-connector wf-conn-e" x1="736" y1="85" x2="757" y2="85" marker-end="url(#wf-arrow)" />
+
+    <!-- ══════════════════════════════════════ STEP 6 — Safe Drinking Water ═══ -->
+    <g class="wf-step" role="presentation">
+      <rect x="760" y="30" width="125" height="110" rx="10" class="wf-glow wf-glow-6" aria-hidden="true" />
+      <rect x="760" y="30" width="125" height="110" rx="10" class="wf-box wf-box-final" />
+      <circle cx="780" cy="52" r="13" class="wf-badge wf-badge-final" />
+      <text x="780" y="52" class="wf-badge-num" dominant-baseline="central" text-anchor="middle">6</text>
+      <text x="822" y="87" class="wf-label wf-label-final" text-anchor="middle">Safe</text>
+      <text x="822" y="104" class="wf-sublabel wf-sublabel-final" text-anchor="middle">Drinking Water</text>
+    </g>
+
+    <!-- Stage labels beneath the diagram -->
+    <text x="447" y="158" class="wf-caption" text-anchor="middle">
+      Water purification removes physical, chemical, and biological contaminants in 6 stages
+    </text>
+  </svg>
+
+  <!-- Screen-reader linear description (visually hidden) -->
+  <figcaption class="wf-sr-caption">
+    Six-stage water purification: Raw Water Source → Screening → Coagulation &amp;
+    Sedimentation → Filtration → Disinfection → Safe Drinking Water
+  </figcaption>
+</figure>
+
+<style>
+  /* ── Wrapper ──────────────────────────────────────────────────────────── */
+  .wf-wrap {
+    margin: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg);
+  }
+
+  .wf-svg {
+    display: block;
+    width: 100%;
+    min-width: 560px; /* scrollable on narrow screens */
+    height: auto;
+  }
+
+  /* ── Node boxes ───────────────────────────────────────────────────────── */
+  .wf-box {
+    fill: url(#wf-grad-base);
+    stroke: var(--border-strong);
+    stroke-width: 1.5;
+    transition: stroke var(--dur-base);
+  }
+
+  .wf-box-final {
+    fill: url(#wf-grad-final);
+    stroke: var(--color-green);
+    stroke-width: 2;
+  }
+
+  /* ── Animated glow overlays (one per step) ────────────────────────────── */
+  .wf-glow {
+    fill: var(--color-blue);
+    opacity: 0;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .wf-glow-6 {
+    fill: var(--color-green);
+  }
+
+  /*
+   * Sequential glow: each step pulses for ~13 % of the 9 s cycle.
+   * Delays offset each step by 9/6 = 1.5 s.
+   */
+  @keyframes step-glow {
+    0%,  13%, 98%, 100% { opacity: 0; }
+    4%,  9%             { opacity: 0.20; }
+  }
+
+  .wf-glow-1 { animation: step-glow 9s 0.0s  infinite; }
+  .wf-glow-2 { animation: step-glow 9s 1.5s  infinite; }
+  .wf-glow-3 { animation: step-glow 9s 3.0s  infinite; }
+  .wf-glow-4 { animation: step-glow 9s 4.5s  infinite; }
+  .wf-glow-5 { animation: step-glow 9s 6.0s  infinite; }
+  .wf-glow-6 { animation: step-glow 9s 7.5s  infinite; }
+
+  /* ── Step number badges ───────────────────────────────────────────────── */
+  .wf-badge {
+    fill: var(--color-green);
+  }
+
+  .wf-badge-final {
+    fill: var(--color-green-deep);
+  }
+
+  .wf-badge-num {
+    fill: white;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  /* ── Labels ───────────────────────────────────────────────────────────── */
+  .wf-label {
+    fill: var(--text);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .wf-sublabel {
+    fill: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 9.5px;
+  }
+
+  .wf-label-final {
+    fill: var(--color-green-deep);
+  }
+
+  .wf-sublabel-final {
+    fill: var(--color-green);
+    font-weight: 600;
+  }
+
+  .wf-caption {
+    fill: var(--text-subtle);
+    font-family: var(--font-body);
+    font-size: 8.5px;
+    font-style: italic;
+  }
+
+  /* ── Connector lines (animated flowing dashes) ────────────────────────── */
+  .wf-connector {
+    stroke: var(--color-green);
+    stroke-width: 2;
+    stroke-dasharray: 5 3;
+    animation: flow-dash 1.4s linear infinite;
+  }
+
+  /* Stagger each connector so the flow looks sequential */
+  .wf-conn-b { animation-delay: 0.23s; }
+  .wf-conn-c { animation-delay: 0.46s; }
+  .wf-conn-d { animation-delay: 0.69s; }
+  .wf-conn-e { animation-delay: 0.92s; }
+
+  @keyframes flow-dash {
+    from { stroke-dashoffset: 16; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .wf-arrowhead {
+    fill: var(--color-green);
+  }
+
+  /* ── Screen-reader caption ───────────────────────────────────────────── */
+  .wf-sr-caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── Reduced-motion: glow stays visible at rest; dashes don't move ────── */
+  /* (global.css already collapses animation-duration to 0.01ms globally;
+     add an explicit static fallback for maximum safety) */
+  @media (prefers-reduced-motion: reduce) {
+    .wf-glow { opacity: 0.12 !important; animation: none !important; }
+    .wf-connector { animation: none !important; stroke-dasharray: none; }
+  }
+</style>

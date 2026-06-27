@@ -1,0 +1,942 @@
+---
+/**
+ * /solutions/water — Water Purification
+ * Sections: importance of clean water · treatment process (animated flowchart) ·
+ *           filtration methods · purification technologies ·
+ *           safe-drinking-water solutions (household + community)
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GlassCard from "@/components/ui/GlassCard.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import CTAButton from "@/components/ui/CTAButton.astro";
+import WaterFlowchart from "@/components/diagrams/WaterFlowchart.astro";
+---
+
+<BaseLayout
+  title="Water Purification — TerraVision"
+  description="How water is made safe to drink: 6-stage treatment process, filtration methods (boiling, sand, activated carbon, RO, UV), purification technologies, and household and community solutions."
+>
+
+  <!-- ═══════════════════════════════════════════════════════ HERO ════════ -->
+  <section class="wp-hero" aria-labelledby="wp-hero-heading">
+    <div class="wp-container">
+      <p class="wp-eyebrow">TerraVision Solutions</p>
+      <h1 id="wp-hero-heading" class="wp-hero-title">
+        <span class="text-gradient">Water Purification</span>
+      </h1>
+      <p class="wp-hero-desc">
+        Clean water is the most essential resource on Earth, yet billions of people
+        still lack access to it. Discover how six stages of treatment transform
+        polluted rivers and murky groundwater into safe, life-giving drinking water —
+        and what each of us can do at home and in our communities.
+      </p>
+
+      <!-- Key statistics -->
+      <div class="wp-hero-stats" role="list" aria-label="Key water statistics">
+        <div class="wp-stat" role="listitem">
+          <span class="wp-stat-num text-gradient">2.2 B</span>
+          <span class="wp-stat-label">people lack safely managed drinking water</span>
+        </div>
+        <div class="wp-stat" role="listitem">
+          <span class="wp-stat-num text-gradient">3.5 M</span>
+          <span class="wp-stat-label">deaths per year from water-related diseases</span>
+        </div>
+        <div class="wp-stat" role="listitem">
+          <span class="wp-stat-num text-gradient">6</span>
+          <span class="wp-stat-label">treatment stages to make water safe</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════════ WHY CLEAN WATER MATTERS ════════ -->
+  <section class="wp-section" aria-labelledby="wp-why-heading">
+    <div class="wp-container">
+      <SectionHeader
+        eyebrow="The Challenge"
+        title="Why Clean Water Matters"
+        subtitle="Water is the foundation of all life and every human activity. When it is contaminated, the consequences reach far beyond thirst."
+      />
+
+      <div class="wp-grid-3">
+        <GlassCard>
+          <div class="wp-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/>
+              <line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </div>
+          <h3 class="wp-card-heading">Health Impact</h3>
+          <p class="wp-card-text">
+            Contaminated water spreads cholera, typhoid, dysentery, and hepatitis A.
+            The WHO estimates that 80 % of diseases in low-income countries are
+            water-related. Children under five are most at risk: diarrhoeal disease
+            alone kills around 360,000 children globally each year — more than
+            malaria, measles, and HIV/AIDS combined.
+          </p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="wp-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3 class="wp-card-heading">Economic Cost</h3>
+          <p class="wp-card-text">
+            Unsafe water costs the global economy over $260 billion each year in
+            healthcare expenses and lost productivity. Women and girls in rural
+            areas spend up to six hours daily collecting water from distant sources,
+            time that could be used for school or income-generating work. Access to
+            clean water is directly linked to poverty reduction.
+          </p>
+        </GlassCard>
+
+        <GlassCard>
+          <div class="wp-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22c6-3 10-8 10-12a10 10 0 1 0-20 0c0 4 4 9 10 12z"/>
+            </svg>
+          </div>
+          <h3 class="wp-card-heading">Environmental Threat</h3>
+          <p class="wp-card-text">
+            Industrial discharge, agricultural runoff (fertilisers and pesticides),
+            and untreated sewage contaminate rivers, lakes, and aquifers.
+            Climate change intensifies this crisis by shrinking glaciers, disrupting
+            monsoon patterns, and causing droughts — reducing available freshwater
+            for billions of people while making floods spread pollution further.
+          </p>
+        </GlassCard>
+      </div>
+
+      <!-- Contamination fact box -->
+      <div class="wp-fact-bar glass">
+        <p class="wp-fact-text">
+          <strong>Key fact:</strong> Only 2.5 % of Earth's water is freshwater,
+          and less than 1 % of that is easily accessible in rivers and lakes.
+          Treatment and conservation are not optional — they are survival.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ TREATMENT PROCESS ════════════ -->
+  <section class="wp-section wp-section-alt" aria-labelledby="wp-process-heading">
+    <div class="wp-container">
+      <SectionHeader
+        eyebrow="Treatment Process"
+        title="How Water Is Made Safe"
+        subtitle="Municipal water treatment plants follow a six-stage process to remove suspended solids, chemical pollutants, and biological pathogens."
+        align="center"
+      />
+
+      <!-- Animated flowchart component -->
+      <div class="wp-flowchart-wrap">
+        <WaterFlowchart />
+      </div>
+
+      <!-- Stage detail cards -->
+      <div class="wp-stages">
+        <div class="wp-stage glass">
+          <span class="wp-stage-num">1</span>
+          <div>
+            <h3 class="wp-stage-title">Raw Water Source</h3>
+            <p class="wp-stage-desc">
+              Water is drawn from surface sources (rivers, lakes, reservoirs) or
+              underground aquifers via pumps. Source water quality varies enormously
+              and determines how intensive the subsequent treatment must be.
+            </p>
+          </div>
+        </div>
+
+        <div class="wp-stage glass">
+          <span class="wp-stage-num">2</span>
+          <div>
+            <h3 class="wp-stage-title">Screening</h3>
+            <p class="wp-stage-desc">
+              Coarse metal screens and bar racks remove large debris — branches,
+              leaves, plastic, and fish — before the water enters the treatment
+              plant. This protects downstream equipment and prevents clogging.
+            </p>
+          </div>
+        </div>
+
+        <div class="wp-stage glass">
+          <span class="wp-stage-num">3</span>
+          <div>
+            <h3 class="wp-stage-title">Coagulation &amp; Sedimentation</h3>
+            <p class="wp-stage-desc">
+              Chemical coagulants such as aluminium sulfate (alum) or ferric chloride
+              are added to water. They react with dissolved and suspended particles,
+              causing them to stick together and form larger clumps called "floc."
+              The water then flows into sedimentation tanks where gravity pulls the
+              heavy floc to the bottom, leaving clearer water above.
+            </p>
+          </div>
+        </div>
+
+        <div class="wp-stage glass">
+          <span class="wp-stage-num">4</span>
+          <div>
+            <h3 class="wp-stage-title">Filtration</h3>
+            <p class="wp-stage-desc">
+              The clarified water passes through multi-layer filters: a top layer of
+              coarse sand removes remaining suspended particles, followed by finer
+              sand, and then a layer of activated carbon (charcoal) that adsorbs
+              organic chemicals, chlorine by-products, and odours. Some plants use
+              additional membrane filters for further polishing.
+            </p>
+          </div>
+        </div>
+
+        <div class="wp-stage glass">
+          <span class="wp-stage-num">5</span>
+          <div>
+            <h3 class="wp-stage-title">Disinfection</h3>
+            <p class="wp-stage-desc">
+              Even after filtration, microscopic pathogens may remain. Chlorine gas
+              or sodium hypochlorite (bleach solution) is added to kill bacteria,
+              viruses, and protozoans. Some plants also use ozonation or ultraviolet
+              (UV) light as complementary or alternative disinfection methods.
+              A small residual chlorine level is maintained to keep water safe
+              during distribution in pipes.
+            </p>
+          </div>
+        </div>
+
+        <div class="wp-stage glass wp-stage-final">
+          <span class="wp-stage-num wp-stage-num-final">6</span>
+          <div>
+            <h3 class="wp-stage-title">Safe Drinking Water</h3>
+            <p class="wp-stage-desc">
+              Treated water is stored in covered, sealed reservoirs and distributed
+              through a pressurised pipe network. Continuous monitoring checks pH,
+              turbidity, residual chlorine, and microbial indicators to ensure water
+              meets WHO or national drinking-water quality standards before it
+              reaches household taps.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ FILTRATION METHODS ════════════ -->
+  <section class="wp-section" aria-labelledby="wp-filtration-heading">
+    <div class="wp-container">
+      <SectionHeader
+        eyebrow="Filtration Methods"
+        title="Ways to Purify Water"
+        subtitle="From the simplest household technique to advanced industrial systems, these methods target different contaminants and serve different needs."
+        id="wp-filtration-heading"
+      />
+
+      <div class="wp-grid-2">
+        <!-- Boiling -->
+        <GlassCard>
+          <div class="wp-method-header">
+            <span class="wp-method-badge wp-method-badge-1">Thermal</span>
+            <h3 class="wp-method-title">Boiling</h3>
+          </div>
+          <p class="wp-card-text">
+            Boiling water at 100 °C (212 °F) for at least one minute — or three
+            minutes above 2,000 m altitude — kills all biological pathogens including
+            bacteria, viruses, and protozoans such as <em>Cryptosporidium</em> and
+            <em>Giardia</em>. It is the oldest, most universally accessible
+            purification method, requiring no chemicals or specialist equipment.
+          </p>
+          <ul class="wp-method-points">
+            <li><strong>Kills:</strong> bacteria, viruses, protozoans</li>
+            <li><strong>Does not remove:</strong> chemical or heavy-metal pollutants</li>
+            <li><strong>Best for:</strong> emergency or household use in areas with
+            reliable fuel</li>
+          </ul>
+        </GlassCard>
+
+        <!-- Sand / Activated Carbon -->
+        <GlassCard>
+          <div class="wp-method-header">
+            <span class="wp-method-badge wp-method-badge-2">Physical</span>
+            <h3 class="wp-method-title">Sand &amp; Activated-Carbon Filtration</h3>
+          </div>
+          <p class="wp-card-text">
+            Water passes through layers of graded sand and gravel that trap suspended
+            particles by mechanical straining. Activated carbon (charcoal heated to
+            800–1,000 °C in the absence of oxygen) has a huge surface area that
+            adsorbs organic chemicals, chlorine, pesticide traces, and compounds
+            causing bad taste or odour. Biosand filters — a slow-sand variant — also
+            cultivate a bio-layer of beneficial bacteria at the surface that digests
+            pathogens.
+          </p>
+          <ul class="wp-method-points">
+            <li><strong>Removes:</strong> turbidity, sediment, organics, odours</li>
+            <li><strong>Does not remove:</strong> viruses, dissolved salts</li>
+            <li><strong>Best for:</strong> municipal treatment, household point-of-use</li>
+          </ul>
+        </GlassCard>
+
+        <!-- Reverse Osmosis -->
+        <GlassCard>
+          <div class="wp-method-header">
+            <span class="wp-method-badge wp-method-badge-3">Membrane</span>
+            <h3 class="wp-method-title">Reverse Osmosis (RO)</h3>
+          </div>
+          <p class="wp-card-text">
+            Pressurised water is forced through a semi-permeable membrane with pores
+            as small as 0.0001 microns — far smaller than any bacterium or virus.
+            The membrane rejects dissolved salts, heavy metals (arsenic, lead,
+            fluoride), nitrates, and microplastics, producing highly purified water.
+            RO is used in household under-sink units, bottled water plants, and large
+            desalination facilities that convert seawater into drinking water.
+          </p>
+          <ul class="wp-method-points">
+            <li><strong>Removes:</strong> salts, heavy metals, viruses, bacteria,
+            microplastics</li>
+            <li><strong>Limitation:</strong> produces wastewater (reject stream);
+            requires electrical pressure</li>
+            <li><strong>Best for:</strong> hard water, brackish water, contaminated
+            groundwater</li>
+          </ul>
+        </GlassCard>
+
+        <!-- UV Disinfection -->
+        <GlassCard>
+          <div class="wp-method-header">
+            <span class="wp-method-badge wp-method-badge-4">Radiation</span>
+            <h3 class="wp-method-title">UV Disinfection</h3>
+          </div>
+          <p class="wp-card-text">
+            Ultraviolet light at 254 nm wavelength damages the DNA of bacteria,
+            viruses, and protozoan cysts, preventing them from reproducing and
+            rendering them harmless. UV treatment is chemical-free, produces no
+            harmful by-products, and works within seconds. However, water must be
+            clear (low turbidity) for UV to penetrate effectively, so it is usually
+            a final polishing step after filtration. Solar UV (SODIS — Solar
+            Disinfection) is a low-cost alternative: filling clear PET bottles and
+            leaving them in sunlight for 6–48 hours can make water safe.
+          </p>
+          <ul class="wp-method-points">
+            <li><strong>Kills:</strong> bacteria, viruses, <em>Cryptosporidium</em></li>
+            <li><strong>Does not remove:</strong> chemical pollutants or turbidity</li>
+            <li><strong>Best for:</strong> final polishing step; SODIS for
+            resource-limited settings</li>
+          </ul>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ PURIFICATION TECHNOLOGIES ════════════ -->
+  <section class="wp-section wp-section-alt" aria-labelledby="wp-tech-heading">
+    <div class="wp-container">
+      <SectionHeader
+        eyebrow="Emerging Technologies"
+        title="Advanced Purification Technologies"
+        subtitle="Beyond conventional treatment, cutting-edge innovations are making water purification more efficient, affordable, and accessible."
+        id="wp-tech-heading"
+      />
+
+      <div class="wp-tech-grid">
+        <GlassCard class="wp-tech-card">
+          <h3 class="wp-tech-title">Nanofiltration &amp; Ultrafiltration</h3>
+          <p class="wp-card-text">
+            Membrane technologies with pore sizes between RO and microfiltration.
+            Ultrafiltration (0.01–0.1 microns) removes bacteria, protozoa, and large
+            viruses while retaining beneficial minerals. Nanofiltration softens
+            water by selectively removing calcium and magnesium ions. Both are used
+            in advanced drinking-water plants and are becoming more cost-effective.
+          </p>
+        </GlassCard>
+
+        <GlassCard class="wp-tech-card">
+          <h3 class="wp-tech-title">Electrocoagulation</h3>
+          <p class="wp-card-text">
+            An electric current is passed through water between sacrificial metal
+            electrodes, releasing iron or aluminium ions that act as coagulants.
+            This removes heavy metals, emulsified oils, and suspended solids without
+            adding chemicals. Compact units can treat industrial wastewater or
+            brackish groundwater on-site with renewable electricity.
+          </p>
+        </GlassCard>
+
+        <GlassCard class="wp-tech-card">
+          <h3 class="wp-tech-title">Solar-Powered Desalination</h3>
+          <p class="wp-card-text">
+            Small-scale solar stills evaporate saline or contaminated water using
+            sunlight and condense the vapour into pure water. Larger systems combine
+            solar photovoltaic panels with RO membranes to desalinate seawater in
+            remote coastal communities. As solar costs fall, these systems become
+            viable alternatives to diesel-powered desalination.
+          </p>
+        </GlassCard>
+
+        <GlassCard class="wp-tech-card">
+          <h3 class="wp-tech-title">Photocatalytic Purification</h3>
+          <p class="wp-card-text">
+            Titanium dioxide (TiO₂) coated on surfaces generates reactive oxygen
+            species when exposed to UV or sunlight, breaking down organic pollutants,
+            pharmaceuticals, and pathogens. Research into graphene-oxide and carbon
+            nanotube filters promises extremely high-flux, low-energy purification
+            that could eventually bring clean water to the most remote areas.
+          </p>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ SAFE WATER SOLUTIONS ════════════════ -->
+  <section class="wp-section" aria-labelledby="wp-solutions-heading">
+    <div class="wp-container">
+      <SectionHeader
+        eyebrow="Practical Solutions"
+        title="Safe Drinking Water at Every Scale"
+        subtitle="Clean water solutions range from simple household practices to large community infrastructure — every level matters."
+        id="wp-solutions-heading"
+      />
+
+      <div class="wp-solutions-cols">
+        <!-- Household solutions -->
+        <div>
+          <h3 class="wp-solutions-cat">Household Level</h3>
+          <div class="wp-solutions-list">
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">🔥</span>
+              <div>
+                <strong class="wp-solution-name">Boiling</strong>
+                <p class="wp-solution-desc">
+                  The simplest and most effective emergency treatment. Kills all pathogens.
+                  Use a covered container to reduce fuel use and prevent
+                  re-contamination.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">💧</span>
+              <div>
+                <strong class="wp-solution-name">Chlorination</strong>
+                <p class="wp-solution-desc">
+                  Adding 2 drops of household bleach (5 % sodium hypochlorite) per
+                  litre of clear water and waiting 30 minutes disinfects effectively.
+                  Widely used in emergency kits and disaster relief.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">🫙</span>
+              <div>
+                <strong class="wp-solution-name">Biosand Filters</strong>
+                <p class="wp-solution-desc">
+                  A concrete or plastic container filled with layered sand and gravel.
+                  A bio-layer of beneficial microorganisms at the surface removes
+                  pathogens. Effective, long-lasting, and requires no replacement
+                  cartridges or electricity.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">☀️</span>
+              <div>
+                <strong class="wp-solution-name">SODIS (Solar Disinfection)</strong>
+                <p class="wp-solution-desc">
+                  Clear PET bottles filled with pre-filtered water placed in full
+                  sunlight for 6 hours (or 2 days if cloudy) kill most pathogens.
+                  Free, simple, and proven in field trials across Africa and Asia.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">🔬</span>
+              <div>
+                <strong class="wp-solution-name">Point-of-Use RO/UV Purifiers</strong>
+                <p class="wp-solution-desc">
+                  Under-sink or counter-top systems combining pre-filters, an RO
+                  membrane, and a UV lamp provide tap-safe water in areas with
+                  chemical or heavy-metal contamination (e.g. arsenic-affected
+                  groundwater in parts of India and Bangladesh).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Community solutions -->
+        <div>
+          <h3 class="wp-solutions-cat">Community &amp; Infrastructure Level</h3>
+          <div class="wp-solutions-list">
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">🏭</span>
+              <div>
+                <strong class="wp-solution-name">Municipal Water Treatment Plants</strong>
+                <p class="wp-solution-desc">
+                  Large-scale plants using the six-stage process (screening →
+                  coagulation → sedimentation → filtration → disinfection → storage)
+                  serve millions. Continuous water quality monitoring ensures
+                  compliance with safety standards.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">🌊</span>
+              <div>
+                <strong class="wp-solution-name">Community Borehole &amp; Hand Pumps</strong>
+                <p class="wp-solution-desc">
+                  Deep boreholes reach protected groundwater aquifers that are naturally
+                  filtered through rock and soil. Hand pumps or solar-powered submersible
+                  pumps bring this water to surface. Proper well-head sealing prevents
+                  surface contamination.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">⚡</span>
+              <div>
+                <strong class="wp-solution-name">Solar-Powered Purification Kiosks</strong>
+                <p class="wp-solution-desc">
+                  Compact kiosks combining solar panels, RO, and UV serve rural
+                  communities without grid electricity. Households collect water for
+                  a small fee, making operations self-sustaining while paying for
+                  maintenance and filter replacement.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">♻️</span>
+              <div>
+                <strong class="wp-solution-name">Wastewater Recycling &amp; Reuse</strong>
+                <p class="wp-solution-desc">
+                  Advanced wastewater treatment plants can reclaim treated sewage for
+                  irrigation, industrial cooling, or even indirect potable reuse (sending
+                  treated water to reservoirs or aquifers). Singapore's NEWater programme
+                  recycles 40 % of the nation's water supply this way.
+                </p>
+              </div>
+            </div>
+
+            <div class="wp-solution-item glass">
+              <span class="wp-solution-icon" aria-hidden="true">🏞️</span>
+              <div>
+                <strong class="wp-solution-name">Catchment Area Protection</strong>
+                <p class="wp-solution-desc">
+                  Protecting the forests and wetlands around reservoirs reduces the
+                  amount of treatment needed. Trees filter rainfall, stabilise soils,
+                  and reduce runoff of agricultural chemicals — making source water
+                  cleaner before it even reaches a treatment plant.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ WHAT YOU CAN DO ════════════ -->
+  <section class="wp-section wp-section-cta gradient-brand" aria-labelledby="wp-action-heading">
+    <div class="wp-container">
+      <div class="wp-cta-inner">
+        <h2 id="wp-action-heading" class="wp-cta-title">Take Action for Clean Water</h2>
+        <p class="wp-cta-desc">
+          Individual choices add up. Reduce water pollution, conserve water, and
+          support organisations that bring clean water infrastructure to communities
+          that need it most.
+        </p>
+        <ul class="wp-cta-tips" role="list">
+          <li>Never pour chemicals, medicines, or paint down the drain — they contaminate waterways</li>
+          <li>Use phosphate-free detergents to prevent algal blooms in lakes and rivers</li>
+          <li>Fix dripping taps — a slow drip wastes up to 20,000 litres per year</li>
+          <li>Support rainwater harvesting — reduces demand on treatment systems</li>
+          <li>Plant trees near water bodies to reduce erosion and chemical runoff</li>
+        </ul>
+        <div class="wp-cta-actions">
+          <CTAButton href="/solutions/rainwater" variant="secondary">
+            Rainwater Harvesting
+          </CTAButton>
+          <CTAButton href="/calculators" variant="secondary">
+            Water Calculators
+          </CTAButton>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Shared layout helpers ─────────────────────────────────────────────── */
+  .wp-container {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 5vw, 2.5rem);
+  }
+
+  .wp-section {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .wp-section-alt {
+    background: var(--surface-2);
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────────────── */
+  .wp-hero {
+    padding-block: clamp(5rem, 12vw, 9rem) clamp(3rem, 8vw, 5rem);
+    position: relative;
+  }
+
+  .wp-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin: 0 0 0.75rem;
+  }
+
+  .wp-hero-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 1.25rem;
+    max-width: 18ch;
+  }
+
+  .wp-hero-desc {
+    font-size: var(--text-body-lg);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 44rem;
+    margin: 0 0 2.5rem;
+    text-wrap: pretty;
+  }
+
+  /* Hero statistics strip */
+  .wp-hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 3.5rem;
+  }
+
+  .wp-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .wp-stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .wp-stat-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    max-width: 14rem;
+    line-height: 1.35;
+  }
+
+  /* ── Cards — 3-col ──────────────────────────────────────────────────────── */
+  .wp-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .wp-card-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .wp-card-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .wp-card-heading {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    margin: 0 0 0.65rem;
+    color: var(--text);
+  }
+
+  .wp-card-text {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* Fact bar */
+  .wp-fact-bar {
+    padding: 1rem 1.5rem;
+  }
+
+  .wp-fact-text {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* ── Flowchart section ──────────────────────────────────────────────────── */
+  .wp-flowchart-wrap {
+    margin-bottom: 2.5rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Stage detail list */
+  .wp-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  .wp-stage {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.1rem 1.5rem;
+  }
+
+  .wp-stage-num {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-full);
+    background: var(--color-green);
+    color: white;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+  }
+
+  .wp-stage-final {
+    border-color: var(--color-green);
+  }
+
+  .wp-stage-num-final {
+    background: var(--color-green-deep);
+  }
+
+  .wp-stage-title {
+    font-family: var(--font-display);
+    font-size: var(--text-body-lg);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.35rem;
+  }
+
+  .wp-stage-desc {
+    font-size: var(--text-body);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  /* ── Filtration methods — 2-col grid ────────────────────────────────────── */
+  .wp-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  .wp-method-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .wp-method-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .wp-method-badge-1 { background: color-mix(in srgb, #EF4444 15%, transparent); color: #B91C1C; }
+  .wp-method-badge-2 { background: color-mix(in srgb, var(--color-green) 15%, transparent); color: var(--color-green-deep); }
+  .wp-method-badge-3 { background: color-mix(in srgb, var(--color-blue) 15%, transparent); color: var(--color-blue-deep); }
+  .wp-method-badge-4 { background: color-mix(in srgb, #8B5CF6 15%, transparent); color: #6D28D9; }
+
+  .wp-method-title {
+    font-family: var(--font-display);
+    font-size: var(--text-body-lg);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wp-method-points {
+    margin: 0.85rem 0 0;
+    padding-left: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .wp-method-points li {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* ── Technologies ─────────────────────────────────────────────────────── */
+  .wp-tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  .wp-tech-title {
+    font-family: var(--font-display);
+    font-size: var(--text-body-lg);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.65rem;
+  }
+
+  /* ── Solutions two-column ────────────────────────────────────────────── */
+  .wp-solutions-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    gap: 2rem 3rem;
+  }
+
+  .wp-solutions-cat {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .wp-solutions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .wp-solution-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    padding: 0.875rem 1.1rem;
+  }
+
+  .wp-solution-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+    line-height: 1;
+  }
+
+  .wp-solution-name {
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 700;
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .wp-solution-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  /* ── CTA banner ──────────────────────────────────────────────────────── */
+  .wp-section-cta {
+    padding-block: clamp(3.5rem, 8vw, 5.5rem);
+  }
+
+  .wp-cta-inner {
+    max-width: 52rem;
+  }
+
+  .wp-cta-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-on-gradient);
+    margin: 0 0 0.75rem;
+  }
+
+  .wp-cta-desc {
+    font-size: var(--text-body-lg);
+    color: var(--text-on-gradient-muted);
+    margin: 0 0 1.5rem;
+    line-height: 1.65;
+  }
+
+  .wp-cta-tips {
+    margin: 0 0 2rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .wp-cta-tips li {
+    font-size: var(--text-body);
+    color: var(--text-on-gradient-muted);
+    line-height: 1.55;
+  }
+
+  .wp-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Override secondary button colours on gradient background */
+  .wp-section-cta :global(.cta-btn--secondary) {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+  }
+
+  .wp-section-cta :global(.cta-btn--secondary:hover) {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.85);
+    color: #ffffff;
+  }
+</style>
