@@ -1,0 +1,1234 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GlassCard from "@/components/ui/GlassCard.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import CTAButton from "@/components/ui/CTAButton.astro";
+import RecyclingCycle from "@/components/diagrams/RecyclingCycle.astro";
+---
+
+<BaseLayout
+  title="Waste Management — TerraVision"
+  description="Learn how to reduce, reuse, and recycle waste through composting, segregation, and smart waste systems. An interactive guide for Class 8–10 students."
+>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="wm-hero">
+    <div class="wm-hero-inner">
+      <p class="wm-eyebrow">Solutions · Waste Management</p>
+      <h1 class="wm-hero-title">
+        Rethink <span class="text-gradient">Waste</span>
+      </h1>
+      <p class="wm-hero-desc">
+        Every year, the world generates over <strong>2.01 billion tonnes</strong> of municipal solid waste.
+        But waste is not a dead-end — it's a misplaced resource. Discover how smart choices at home and
+        school can close the loop.
+      </p>
+      <div class="wm-hero-actions">
+        <CTAButton href="#segregation" variant="primary">Segregation Guide</CTAButton>
+        <CTAButton href="#3rs" variant="ghost">The 3 R's</CTAButton>
+      </div>
+    </div>
+    <div class="wm-hero-badge glass" aria-hidden="true">
+      <span class="wm-badge-icon">♻️</span>
+      <span class="wm-badge-stat">2 billion+</span>
+      <span class="wm-badge-label">tonnes of waste per year globally</span>
+    </div>
+  </section>
+
+  <!-- ── Types of Waste ────────────────────────────────────── -->
+  <section class="wm-section" id="types">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="Classification"
+        title="Types of Waste"
+        subtitle="Understanding what we throw away is the first step to managing it better. Waste falls into four main categories."
+        align="center"
+      />
+
+      <div class="wm-types-grid">
+        <!-- Organic / Wet -->
+        <GlassCard class="wm-type-card wm-type--organic">
+          <div class="wm-type-icon-wrap" style="--type-color: var(--wm-organic);">
+            <span class="wm-type-icon">🌿</span>
+          </div>
+          <h3 class="wm-type-name">Organic / Wet Waste</h3>
+          <p class="wm-type-desc">
+            Food scraps, vegetable peels, fruit waste, cooked food, garden cuttings, and
+            biodegradable materials. Roughly <strong>50–60%</strong> of household waste in India
+            is organic.
+          </p>
+          <ul class="wm-type-list">
+            <li>Decomposes naturally in days to weeks</li>
+            <li>Can be composted into rich garden fertiliser</li>
+            <li>Produces methane in landfills if not segregated</li>
+          </ul>
+          <div class="wm-type-bin" style="--type-color: var(--wm-organic);">
+            <span class="wm-bin-dot"></span> Green Bin
+          </div>
+        </GlassCard>
+
+        <!-- Dry / Recyclable -->
+        <GlassCard class="wm-type-card wm-type--dry">
+          <div class="wm-type-icon-wrap" style="--type-color: var(--wm-dry);">
+            <span class="wm-type-icon">📦</span>
+          </div>
+          <h3 class="wm-type-name">Dry / Recyclable Waste</h3>
+          <p class="wm-type-desc">
+            Paper, cardboard, glass, metals (cans, foil), and clean plastic packaging.
+            These materials can be collected, sorted, and sent to recycling facilities.
+          </p>
+          <ul class="wm-type-list">
+            <li>Paper can be recycled up to 7 times</li>
+            <li>Aluminium recycling saves 95% of the energy vs. new production</li>
+            <li>Must be dry and clean — rinsed containers recycle better</li>
+          </ul>
+          <div class="wm-type-bin" style="--type-color: var(--wm-dry);">
+            <span class="wm-bin-dot"></span> Blue Bin
+          </div>
+        </GlassCard>
+
+        <!-- Hazardous -->
+        <GlassCard class="wm-type-card wm-type--hazardous">
+          <div class="wm-type-icon-wrap" style="--type-color: var(--wm-hazardous);">
+            <span class="wm-type-icon">⚠️</span>
+          </div>
+          <h3 class="wm-type-name">Hazardous Waste</h3>
+          <p class="wm-type-desc">
+            Batteries, paints, solvents, pesticides, medicines, fluorescent bulbs, and
+            cleaning chemicals. These contain toxins that can leach into soil and water.
+          </p>
+          <ul class="wm-type-list">
+            <li>Never mix with regular household waste</li>
+            <li>Drop at authorised collection points or pharmacies</li>
+            <li>Improper disposal can contaminate groundwater for decades</li>
+          </ul>
+          <div class="wm-type-bin" style="--type-color: var(--wm-hazardous);">
+            <span class="wm-bin-dot"></span> Red Bin
+          </div>
+        </GlassCard>
+
+        <!-- E-Waste -->
+        <GlassCard class="wm-type-card wm-type--ewaste">
+          <div class="wm-type-icon-wrap" style="--type-color: var(--wm-ewaste);">
+            <span class="wm-type-icon">💻</span>
+          </div>
+          <h3 class="wm-type-name">E-Waste</h3>
+          <p class="wm-type-desc">
+            Old phones, laptops, televisions, chargers, and electronic appliances. India is
+            the third-largest generator of e-waste globally, producing over <strong>3.2 million
+            tonnes</strong> per year.
+          </p>
+          <ul class="wm-type-list">
+            <li>Contains gold, silver, copper — valuable if recovered properly</li>
+            <li>Also contains lead, mercury, cadmium — toxic if burnt informally</li>
+            <li>Return to certified e-waste recyclers or brand take-back programmes</li>
+          </ul>
+          <div class="wm-type-bin" style="--type-color: var(--wm-ewaste);">
+            <span class="wm-bin-dot"></span> Authorised E-Waste Centre
+          </div>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3 R's Hierarchy ───────────────────────────────────── -->
+  <section class="wm-section wm-section--alt" id="3rs">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="Waste Hierarchy"
+        title="Reduce · Reuse · Recycle"
+        subtitle="The 3 R's are arranged as a hierarchy — Reduce is the most powerful action, Recycle the last resort. Acting at the top of the pyramid prevents waste from ever being created."
+        align="center"
+      />
+
+      <div class="wm-pyramid">
+        <div class="wm-pyramid-row wm-pyr--reduce">
+          <GlassCard strong class="wm-pyr-card">
+            <div class="wm-pyr-header">
+              <span class="wm-pyr-rank">1</span>
+              <h3 class="wm-pyr-title">♻ Reduce</h3>
+              <span class="wm-pyr-badge">Most Effective</span>
+            </div>
+            <p class="wm-pyr-desc">
+              Buy only what you need. Choose products with minimal packaging. Opt for
+              digital receipts. Bring reusable bags. Refuse single-use plastics.
+              Reducing at source means less energy, fewer resources, and zero disposal cost.
+            </p>
+            <div class="wm-pyr-examples">
+              <span>Cloth bags</span><span>Bulk buying</span><span>Digital docs</span><span>Minimal packaging</span>
+            </div>
+          </GlassCard>
+        </div>
+
+        <div class="wm-pyramid-row wm-pyr--reuse">
+          <GlassCard class="wm-pyr-card">
+            <div class="wm-pyr-header">
+              <span class="wm-pyr-rank">2</span>
+              <h3 class="wm-pyr-title">🔄 Reuse</h3>
+              <span class="wm-pyr-badge">High Impact</span>
+            </div>
+            <p class="wm-pyr-desc">
+              Give items a second life before discarding them. Donate clothes, repair
+              electronics, refill water bottles, repurpose glass jars as storage, and use
+              both sides of paper. Reuse extends product life and keeps materials in
+              circulation without additional energy.
+            </p>
+            <div class="wm-pyr-examples">
+              <span>Repair & donate</span><span>Refillable bottles</span><span>Repurpose containers</span>
+            </div>
+          </GlassCard>
+        </div>
+
+        <div class="wm-pyramid-row wm-pyr--recycle">
+          <GlassCard class="wm-pyr-card">
+            <div class="wm-pyr-header">
+              <span class="wm-pyr-rank">3</span>
+              <h3 class="wm-pyr-title">♼ Recycle</h3>
+              <span class="wm-pyr-badge">Still Valuable</span>
+            </div>
+            <p class="wm-pyr-desc">
+              When reduction and reuse aren't possible, recycling converts waste into raw
+              materials for new products. Proper segregation is key — contaminated recyclables
+              go to landfill. Clean paper, metals, glass, and rigid plastics (PET, HDPE) are
+              most recyclable.
+            </p>
+            <div class="wm-pyr-examples">
+              <span>Clean paper</span><span>Metal cans</span><span>Glass bottles</span><span>PET plastic</span>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Recycling Cycle Diagram ───────────────────────────── -->
+  <section class="wm-section" id="cycle">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="How It Works"
+        title="The Recycling Lifecycle"
+        subtitle="Recycled materials travel through a five-stage loop before becoming new products. Each stage adds value and keeps resources out of landfills."
+        align="center"
+      />
+
+      <div class="wm-cycle-layout">
+        <div class="wm-cycle-diagram glass">
+          <RecyclingCycle />
+        </div>
+
+        <div class="wm-cycle-steps">
+          {[
+            { step: "01", icon: "🗑️", name: "Collect", desc: "Waste is collected from homes, schools, and businesses through door-to-door collection or drop-off centres, ideally already segregated at source." },
+            { step: "02", icon: "♻️", name: "Sort", desc: "At material recovery facilities (MRFs), waste is sorted by type — paper, glass, plastics, metals — manually and with magnetic/optical sensors." },
+            { step: "03", icon: "⚙️", name: "Process", desc: "Sorted materials are cleaned, shredded, melted, or pulped to break them down into secondary raw materials ready for manufacturing." },
+            { step: "04", icon: "🏭", name: "Manufacture", desc: "Secondary raw materials are used to make new products — recycled PET becomes polyester fibre; old newspapers become egg boxes; scrap metal becomes rebar." },
+            { step: "05", icon: "🔄", name: "Reuse", desc: "New products reach consumers, completing the loop. The cycle restarts when those products are eventually discarded and properly segregated again." },
+          ].map(({ step, icon, name, desc }) => (
+            <div class="wm-cycle-step">
+              <div class="wm-cs-num">{step}</div>
+              <div class="wm-cs-body">
+                <h4 class="wm-cs-title">{icon} {name}</h4>
+                <p class="wm-cs-desc">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Composting ────────────────────────────────────────── -->
+  <section class="wm-section wm-section--alt" id="composting">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="Organic Waste Solution"
+        title="Composting at Home"
+        subtitle="Composting turns kitchen and garden waste into nutrient-rich soil amendment — diverting up to 30% of household waste from landfill."
+        align="left"
+      />
+
+      <div class="wm-compost-grid">
+        <GlassCard class="wm-compost-main">
+          <h3 class="wm-sub-h">How Composting Works</h3>
+          <p>
+            Micro-organisms (bacteria, fungi) and macro-organisms (worms) break down organic
+            matter in the presence of air, moisture, and the right carbon-to-nitrogen ratio.
+            The result is humus — dark, crumbly material that improves soil structure,
+            water retention, and plant nutrition.
+          </p>
+          <h4 class="wm-sub-h4 mt-4">What to Compost</h4>
+          <div class="wm-compost-cols">
+            <div class="wm-compost-yes">
+              <p class="wm-compost-head wm-compost-head--yes">✅ Add These (Greens &amp; Browns)</p>
+              <ul>
+                <li>Vegetable and fruit peels</li>
+                <li>Tea bags and coffee grounds</li>
+                <li>Eggshells (ground up)</li>
+                <li>Dry leaves, straw, cardboard pieces</li>
+                <li>Garden trimmings</li>
+                <li>Newspaper (shredded)</li>
+              </ul>
+            </div>
+            <div class="wm-compost-no">
+              <p class="wm-compost-head wm-compost-head--no">❌ Avoid These</p>
+              <ul>
+                <li>Meat, fish, dairy products</li>
+                <li>Oily or greasy food</li>
+                <li>Diseased plants</li>
+                <li>Pet waste</li>
+                <li>Glossy paper or plastics</li>
+              </ul>
+            </div>
+          </div>
+        </GlassCard>
+
+        <div class="wm-compost-tips">
+          <GlassCard class="wm-tip-card">
+            <span class="wm-tip-icon">💧</span>
+            <h4>Keep It Moist</h4>
+            <p>The compost pile should feel like a wrung-out sponge — damp but not soggy. Add water if it dries out; add dry leaves if it gets too wet.</p>
+          </GlassCard>
+          <GlassCard class="wm-tip-card">
+            <span class="wm-tip-icon">🌬️</span>
+            <h4>Turn Regularly</h4>
+            <p>Aerate your pile by turning it every 1–2 weeks. Oxygen is essential for aerobic decomposition and prevents foul odours.</p>
+          </GlassCard>
+          <GlassCard class="wm-tip-card">
+            <span class="wm-tip-icon">⚖️</span>
+            <h4>Balance Greens &amp; Browns</h4>
+            <p>Aim for roughly 1 part nitrogen-rich "greens" (food scraps) to 2–3 parts carbon-rich "browns" (dry leaves, cardboard). This optimises microbial activity.</p>
+          </GlassCard>
+          <GlassCard class="wm-tip-card">
+            <span class="wm-tip-icon">🪱</span>
+            <h4>Try Vermicomposting</h4>
+            <p>Add red wriggler worms to speed decomposition dramatically. Worm castings (vermicompost) are 5× richer in nutrients than ordinary compost.</p>
+          </GlassCard>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Plastic Reduction ─────────────────────────────────── -->
+  <section class="wm-section" id="plastic">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="Plastic Pollution"
+        title="Cutting Plastic Waste"
+        subtitle="Only 9% of all plastic ever produced has been recycled. The rest ends up in landfills, waterways, or the environment — including the ocean."
+        align="center"
+      />
+
+      <div class="wm-plastic-grid">
+        <GlassCard strong class="wm-plastic-stat">
+          <span class="wm-big-num text-gradient">9%</span>
+          <p>of all plastic ever produced has been recycled</p>
+        </GlassCard>
+        <GlassCard strong class="wm-plastic-stat">
+          <span class="wm-big-num text-gradient">12%</span>
+          <p>has been incinerated (releasing toxic gases)</p>
+        </GlassCard>
+        <GlassCard strong class="wm-plastic-stat">
+          <span class="wm-big-num text-gradient">79%</span>
+          <p>has accumulated in landfills or the environment</p>
+        </GlassCard>
+
+        <GlassCard class="wm-plastic-actions">
+          <h3 class="wm-sub-h">Practical Plastic Swaps</h3>
+          <ul class="wm-swap-list">
+            <li><span class="wm-swap-x">❌ Plastic bags</span> → <span class="wm-swap-y">Cloth / jute tote bags</span></li>
+            <li><span class="wm-swap-x">❌ Plastic bottles</span> → <span class="wm-swap-y">Stainless steel / glass bottle</span></li>
+            <li><span class="wm-swap-x">❌ Plastic straws</span> → <span class="wm-swap-y">Bamboo / steel / paper straws</span></li>
+            <li><span class="wm-swap-x">❌ Cling wrap</span> → <span class="wm-swap-y">Beeswax wraps or reusable lids</span></li>
+            <li><span class="wm-swap-x">❌ Plastic cutlery</span> → <span class="wm-swap-y">Bamboo / metal cutlery sets</span></li>
+            <li><span class="wm-swap-x">❌ Microwave plastic containers</span> → <span class="wm-swap-y">Glass or ceramic containers</span></li>
+            <li><span class="wm-swap-x">❌ Plastic toothbrush</span> → <span class="wm-swap-y">Bamboo toothbrush</span></li>
+          </ul>
+        </GlassCard>
+
+        <GlassCard class="wm-plastic-know">
+          <h3 class="wm-sub-h">Know Your Plastic Codes</h3>
+          <p class="wm-sub-note">The resin identification code (number in triangle) tells you how recyclable a plastic is.</p>
+          <div class="wm-resin-list">
+            {[
+              { code: "1", name: "PET", recycle: true, ex: "Water bottles, food jars" },
+              { code: "2", name: "HDPE", recycle: true, ex: "Milk jugs, shampoo bottles" },
+              { code: "3", name: "PVC", recycle: false, ex: "Pipes, flooring — toxic if burned" },
+              { code: "4", name: "LDPE", recycle: true, ex: "Bread bags, squeezable bottles" },
+              { code: "5", name: "PP", recycle: true, ex: "Yoghurt tubs, bottle caps" },
+              { code: "6", name: "PS", recycle: false, ex: "Styrofoam — difficult to recycle" },
+              { code: "7", name: "Other", recycle: false, ex: "Mixed — check locally" },
+            ].map(({ code, name, recycle, ex }) => (
+              <div class:list={["wm-resin-row", recycle ? "wm-resin--ok" : "wm-resin--no"]}>
+                <span class="wm-resin-code">▲{code}</span>
+                <span class="wm-resin-name">{name}</span>
+                <span class="wm-resin-status">{recycle ? "✅ Recyclable" : "⛔ Avoid"}</span>
+                <span class="wm-resin-ex">{ex}</span>
+              </div>
+            ))}
+          </div>
+        </GlassCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Smart Waste Systems ───────────────────────────────── -->
+  <section class="wm-section wm-section--alt" id="smart">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="Technology &amp; Innovation"
+        title="Smart Waste Systems"
+        subtitle="Cities are deploying technology to make waste collection more efficient, reduce overflow, and improve recycling rates."
+        align="center"
+      />
+
+      <div class="wm-smart-grid">
+        {[
+          {
+            icon: "📡",
+            title: "IoT Fill-Level Sensors",
+            desc: "Ultrasonic sensors inside bins transmit fill levels in real time. Collection trucks are dispatched only when bins are nearly full, cutting fuel use by up to 40% and reducing unnecessary truck runs.",
+          },
+          {
+            icon: "🤖",
+            title: "AI Sorting Robots",
+            desc: "Computer-vision robotic arms at sorting facilities identify and pick recyclables at 60–80 items per minute — 5× faster than manual sorting — with >95% accuracy for metals, paper, and PET plastic.",
+          },
+          {
+            icon: "📱",
+            title: "Citizen Reporting Apps",
+            desc: "Mobile apps (e.g., Swachh Bharat app, local municipality portals) let residents report overflowing bins, illegal dumping, and missed collections, enabling rapid municipal response.",
+          },
+          {
+            icon: "⚡",
+            title: "Waste-to-Energy Plants",
+            desc: "Large volumes of non-recyclable waste are combusted in controlled, scrubbed incinerators to generate electricity. One tonne of waste yields roughly 500–600 kWh of power — but this is a last resort, after reduce/reuse/recycle.",
+          },
+          {
+            icon: "🧪",
+            title: "Chemical Recycling",
+            desc: "Pyrolysis and solvolysis break complex mixed plastics back into oils and monomers that conventional mechanical recycling cannot handle, expanding what can be recovered from the waste stream.",
+          },
+          {
+            icon: "📊",
+            title: "Waste Audit Analytics",
+            desc: "Weighing bins at source and analysing material composition gives schools, offices, and cities precise data on their waste profile — enabling targeted campaigns that cut disposal costs measurably.",
+          },
+        ].map(({ icon, title, desc }) => (
+          <GlassCard class="wm-smart-card">
+            <span class="wm-smart-icon">{icon}</span>
+            <h3 class="wm-smart-title">{title}</h3>
+            <p class="wm-smart-desc">{desc}</p>
+          </GlassCard>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Segregation Guide ─────────────────────────────────── -->
+  <section class="wm-section" id="segregation">
+    <div class="wm-container">
+      <SectionHeader
+        eyebrow="Quick Reference"
+        title="Bin Segregation Guide"
+        subtitle="Correct segregation at source is the single highest-leverage action you can take. Use this reference to sort common items correctly."
+        align="center"
+      />
+
+      <div class="wm-seg-bins">
+        <!-- Green bin -->
+        <GlassCard class="wm-seg-bin wm-seg--green">
+          <div class="wm-seg-bin-header" style="--seg-color: var(--wm-seg-green);">
+            <span class="wm-seg-bin-icon">🟢</span>
+            <h3>Green Bin</h3>
+            <p class="wm-seg-bin-type">Wet / Organic</p>
+          </div>
+          <ul class="wm-seg-items">
+            <li>Vegetable &amp; fruit peels</li>
+            <li>Leftover cooked food</li>
+            <li>Tea leaves &amp; coffee grounds</li>
+            <li>Eggshells</li>
+            <li>Flower petals &amp; leaves</li>
+            <li>Biodegradable paper napkins</li>
+            <li>Grass clippings</li>
+          </ul>
+        </GlassCard>
+
+        <!-- Blue bin -->
+        <GlassCard class="wm-seg-bin wm-seg--blue">
+          <div class="wm-seg-bin-header" style="--seg-color: var(--wm-seg-blue);">
+            <span class="wm-seg-bin-icon">🔵</span>
+            <h3>Blue Bin</h3>
+            <p class="wm-seg-bin-type">Dry / Recyclable</p>
+          </div>
+          <ul class="wm-seg-items">
+            <li>Clean paper &amp; cardboard</li>
+            <li>Glass bottles &amp; jars (rinsed)</li>
+            <li>Metal cans &amp; foil (rinsed)</li>
+            <li>Rigid plastic (PET, HDPE, PP)</li>
+            <li>Tetra Pak cartons (rinsed)</li>
+            <li>Magazines &amp; newspapers</li>
+            <li>Plastic bags (clean)</li>
+          </ul>
+        </GlassCard>
+
+        <!-- Red / hazardous bin -->
+        <GlassCard class="wm-seg-bin wm-seg--red">
+          <div class="wm-seg-bin-header" style="--seg-color: var(--wm-seg-red);">
+            <span class="wm-seg-bin-icon">🔴</span>
+            <h3>Red Bin</h3>
+            <p class="wm-seg-bin-type">Hazardous Waste</p>
+          </div>
+          <ul class="wm-seg-items">
+            <li>Batteries (all types)</li>
+            <li>Paint tins &amp; solvents</li>
+            <li>Pesticides &amp; herbicides</li>
+            <li>Expired medicines</li>
+            <li>Fluorescent &amp; CFL bulbs</li>
+            <li>Motor oil &amp; fuel containers</li>
+            <li>Cleaning chemicals</li>
+          </ul>
+        </GlassCard>
+
+        <!-- E-waste -->
+        <GlassCard class="wm-seg-bin wm-seg--ewaste">
+          <div class="wm-seg-bin-header" style="--seg-color: var(--wm-seg-ewaste);">
+            <span class="wm-seg-bin-icon">🟣</span>
+            <h3>E-Waste Centre</h3>
+            <p class="wm-seg-bin-type">Electronic Waste</p>
+          </div>
+          <ul class="wm-seg-items">
+            <li>Mobile phones &amp; chargers</li>
+            <li>Laptops &amp; tablets</li>
+            <li>TVs &amp; monitors</li>
+            <li>Keyboards &amp; mice</li>
+            <li>Printers &amp; scanners</li>
+            <li>Cables &amp; adaptors</li>
+            <li>Refrigerators &amp; ACs</li>
+          </ul>
+        </GlassCard>
+      </div>
+
+      <!-- Quick don't-mix callout -->
+      <GlassCard strong class="wm-seg-callout">
+        <span class="wm-callout-icon">⚡</span>
+        <div>
+          <h4 class="wm-callout-title">The #1 Rule: Don't Mix Wet with Dry</h4>
+          <p class="wm-callout-body">
+            A single food-contaminated item in a recycling bin can make the entire batch unrecyclable.
+            Always rinse containers, shake out liquid, and keep wet and dry waste in separate bags
+            before placing them in the correct bin. This one habit can double your household's
+            recycling rate.
+          </p>
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────────────────────── -->
+  <section class="wm-section wm-section--cta">
+    <div class="wm-container wm-cta-inner">
+      <h2 class="wm-cta-title">Ready to Close the Loop?</h2>
+      <p class="wm-cta-sub">
+        Start with one change this week — a compost bin, a reusable bottle, or a bin audit at school.
+        Small, consistent habits compound into large, measurable impact.
+      </p>
+      <div class="wm-cta-btns">
+        <CTAButton href="/calculators" variant="primary" size="lg">Calculate Your Waste Impact</CTAButton>
+        <CTAButton href="/tips" variant="ghost" size="lg">Daily Eco-Tips</CTAButton>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Page-scoped category colour vars (token-derived, not raw hex) ── */
+  :root, [data-theme="dark"] {
+    --wm-organic:    var(--color-green);
+    --wm-dry:        var(--color-blue);
+    --wm-hazardous:  #EF4444; /* red-500 — only needed for hazardous warning */
+    --wm-ewaste:     #8B5CF6; /* violet-500 — e-waste purple */
+
+    --wm-seg-green:  var(--color-green);
+    --wm-seg-blue:   var(--color-blue);
+    --wm-seg-red:    #EF4444;
+    --wm-seg-ewaste: #8B5CF6;
+  }
+
+  /* ── Layout ── */
+  .wm-container {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
+  }
+
+  .wm-section {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .wm-section--alt {
+    background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+  }
+
+  /* ── Hero ── */
+  .wm-hero {
+    padding: clamp(5rem, 12vw, 9rem) clamp(1rem, 4vw, 2.5rem) clamp(3.5rem, 8vw, 6rem);
+    max-width: 72rem;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (max-width: 44rem) {
+    .wm-hero { grid-template-columns: 1fr; }
+    .wm-hero-badge { display: none; }
+  }
+
+  .wm-eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin: 0 0 0.75rem;
+  }
+
+  .wm-hero-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 1rem;
+  }
+
+  .wm-hero-desc {
+    font-size: var(--text-body-lg);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 38rem;
+    margin: 0 0 1.75rem;
+    text-wrap: pretty;
+  }
+
+  .wm-hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .wm-hero-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    min-width: 9rem;
+  }
+
+  .wm-badge-icon { font-size: 2.25rem; }
+
+  .wm-badge-stat {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 800;
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1;
+  }
+
+  .wm-badge-label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    max-width: 8rem;
+    line-height: 1.4;
+  }
+
+  /* ── Waste Types Grid ── */
+  .wm-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  .wm-type-card { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .wm-type-icon-wrap {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--type-color) 15%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wm-type-icon { font-size: 1.5rem; }
+
+  .wm-type-name {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wm-type-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    text-wrap: pretty;
+    flex: 1;
+  }
+
+  .wm-type-list {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    padding-left: 1.2rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .wm-type-bin {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--type-color);
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-hairline);
+  }
+
+  .wm-bin-dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: var(--type-color);
+    flex-shrink: 0;
+  }
+
+  /* ── 3 R's Pyramid ── */
+  .wm-pyramid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 52rem;
+    margin-inline: auto;
+  }
+
+  .wm-pyramid-row { width: 100%; }
+
+  .wm-pyr--reduce .wm-pyr-card { border-left: 4px solid var(--color-green); }
+  .wm-pyr--reuse  .wm-pyr-card { border-left: 4px solid var(--color-blue); }
+  .wm-pyr--recycle .wm-pyr-card { border-left: 4px solid var(--color-green-deep); }
+
+  .wm-pyr-card { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .wm-pyr-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .wm-pyr-rank {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-image: var(--gradient-brand);
+    color: var(--text-on-gradient);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .wm-pyr-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wm-pyr-badge {
+    font-size: var(--text-xs);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: var(--accent-deep);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    margin-left: auto;
+  }
+
+  .wm-pyr-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .wm-pyr-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .wm-pyr-examples span {
+    font-size: var(--text-xs);
+    font-family: var(--font-display);
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border: 1px solid var(--border-hairline);
+  }
+
+  /* ── Recycling Cycle section ── */
+  .wm-cycle-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  @media (max-width: 52rem) {
+    .wm-cycle-layout { grid-template-columns: 1fr; }
+  }
+
+  .wm-cycle-diagram {
+    padding: clamp(1rem, 3vw, 2rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wm-cycle-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .wm-cycle-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .wm-cs-num {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    border-radius: var(--radius-full);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .wm-cs-body { display: flex; flex-direction: column; gap: 0.25rem; }
+
+  .wm-cs-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wm-cs-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  /* ── Composting ── */
+  .wm-compost-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1rem, 2.5vw, 2rem);
+  }
+
+  @media (max-width: 52rem) {
+    .wm-compost-grid { grid-template-columns: 1fr; }
+  }
+
+  .wm-compost-main { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .wm-sub-h {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--text);
+  }
+
+  .wm-sub-h4 {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .mt-4 { margin-top: 1rem; }
+
+  .wm-compost-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 36rem) {
+    .wm-compost-cols { grid-template-columns: 1fr; }
+  }
+
+  .wm-compost-yes ul, .wm-compost-no ul {
+    padding-left: 1.1rem;
+    margin: 0.4rem 0 0;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .wm-compost-head {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+  }
+
+  .wm-compost-head--yes { color: var(--color-green); }
+  .wm-compost-head--no  { color: var(--wm-hazardous); }
+
+  .wm-compost-tips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  @media (max-width: 36rem) {
+    .wm-compost-tips { grid-template-columns: 1fr; }
+  }
+
+  .wm-tip-card { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .wm-tip-icon { font-size: 1.75rem; }
+
+  .wm-tip-card h4 {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wm-tip-card p {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── Plastic ── */
+  .wm-plastic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 52rem) {
+    .wm-plastic-grid { grid-template-columns: 1fr; }
+  }
+
+  .wm-plastic-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .wm-plastic-stat p {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 12rem;
+  }
+
+  .wm-big-num {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .wm-plastic-actions {
+    grid-column: 1 / -1;
+  }
+
+  .wm-plastic-know {
+    grid-column: 1 / -1;
+  }
+
+  .wm-swap-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .wm-swap-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    flex-wrap: wrap;
+  }
+
+  .wm-swap-x { color: var(--text-subtle); text-decoration: line-through; }
+  .wm-swap-y { color: var(--color-green); font-weight: 600; }
+
+  .wm-sub-note {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .wm-resin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  .wm-resin-row {
+    display: grid;
+    grid-template-columns: 2.5rem 3.5rem 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: var(--text-sm);
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .wm-resin--ok { background: color-mix(in srgb, var(--color-green) 8%, transparent); }
+  .wm-resin--no { background: color-mix(in srgb, var(--wm-hazardous) 8%, transparent); }
+
+  .wm-resin-code {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-xs);
+    color: var(--text);
+  }
+
+  .wm-resin-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .wm-resin-status { font-weight: 600; color: var(--text-muted); }
+  .wm-resin-ex { color: var(--text-subtle); font-size: var(--text-xs); }
+
+  @media (max-width: 40rem) {
+    .wm-resin-row { grid-template-columns: 2.5rem 3rem 1fr; }
+    .wm-resin-ex { display: none; }
+  }
+
+  /* ── Smart Waste ── */
+  .wm-smart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
+  .wm-smart-card { display: flex; flex-direction: column; gap: 0.6rem; }
+  .wm-smart-icon { font-size: 1.75rem; }
+
+  .wm-smart-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wm-smart-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  /* ── Segregation Bins ── */
+  .wm-seg-bins {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .wm-seg-bin { display: flex; flex-direction: column; gap: 0; padding: 0; overflow: hidden; }
+
+  .wm-seg-bin-header {
+    padding: 1.25rem 1.5rem 1rem;
+    border-bottom: 2px solid color-mix(in srgb, var(--seg-color) 30%, transparent);
+    background: color-mix(in srgb, var(--seg-color) 8%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .wm-seg-bin-header h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    margin: 0;
+    color: var(--text);
+  }
+
+  .wm-seg-bin-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+
+  .wm-seg-bin-type {
+    font-size: var(--text-xs);
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--seg-color);
+    margin: 0;
+  }
+
+  .wm-seg-items {
+    list-style: none;
+    padding: 1rem 1.5rem 1.25rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .wm-seg-items li {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .wm-seg-items li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: var(--text-subtle);
+    font-size: 1rem;
+  }
+
+  .wm-seg-callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    border-left: 4px solid var(--accent);
+  }
+
+  .wm-callout-icon { font-size: 1.75rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  .wm-callout-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 800;
+    margin: 0 0 0.4rem;
+    color: var(--text);
+  }
+
+  .wm-callout-body {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  /* ── CTA ── */
+  .wm-section--cta {
+    background-image: var(--gradient-brand);
+  }
+
+  .wm-cta-inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .wm-cta-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--text-on-gradient);
+    margin: 0;
+    letter-spacing: -0.03em;
+  }
+
+  .wm-cta-sub {
+    font-size: var(--text-body-lg);
+    color: var(--text-on-gradient-muted);
+    max-width: 38rem;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .wm-cta-btns {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+</style>
