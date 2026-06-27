@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+import { resolveSeo } from "@/lib/seo";
+import { SITE } from "@/data/site";
+import type { SeoProps } from "@/lib/seo";
+
+type Props = SeoProps;
+
+const seo = resolveSeo(Astro.props);
+const canonicalUrl = seo.canonical || Astro.url.href;
+const ogImage = seo.image.startsWith("http") ? seo.image : `${SITE.url}${seo.image}`;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Primary -->
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+{seo.noindex && <meta name="robots" content="noindex, nofollow" />}
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={seo.title} />
+<meta property="og:description" content={seo.description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:url" content={canonicalUrl} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={seo.title} />
+<meta name="twitter:description" content={seo.description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- No-flash theme script: runs before paint -->
+<script is:inline>
+  (function () {
+    try {
+      var stored = localStorage.getItem("theme");
+      var theme =
+        stored === "dark" || stored === "light"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      document.documentElement.dataset.theme = theme;
+    } catch (_) {
+      // localStorage may be unavailable (private browsing, etc.) — default to light
+      document.documentElement.dataset.theme = "light";
+    }
+  })();
+</script>
