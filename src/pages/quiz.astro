@@ -1,0 +1,45 @@
+---
+/**
+ * Quiz — TerraVision
+ * 10-question sustainability quiz (React island) with feedback + score logging.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import Quiz from "@/components/islands/Quiz.tsx";
+import { SITE } from "@/data/site";
+
+const pageTitle = `Sustainability Quiz — ${SITE.name}`;
+const pageDescription =
+  "Test your knowledge of sustainability, renewable energy and the environment with this 10-question quiz — instant scoring and an explanation for every answer.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="qz-hero" aria-labelledby="qz-heading">
+    <div class="container hero-inner">
+      <p class="eyebrow" aria-hidden="true">Test Yourself</p>
+      <h1 id="qz-heading" class="hero-title ds-h1">Sustainability <span class="text-gradient">Quiz</span></h1>
+      <p class="hero-subtitle">
+        Ten questions on clean energy, water, waste and climate. You'll get your
+        score and learn the reason behind every answer.
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="qz-play">
+    <div class="container narrow">
+      <SectionHeader eyebrow="10 Questions" title="How Much Do You Know?" align="center" />
+      <Quiz client:visible />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .container { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  .container.narrow { max-width: 46rem; }
+  .page-section { padding-block: clamp(2rem, 6vw, 4rem); }
+  .qz-hero { padding: clamp(4rem, 10vw, 6.5rem) 0 clamp(1.5rem, 4vw, 2.5rem); text-align: center; }
+  .hero-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+  .eyebrow { font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-green); margin: 0; }
+  .hero-title { font-family: var(--font-display); font-size: var(--text-h1); font-weight: 800; letter-spacing: -0.03em; margin: 0; }
+  .hero-subtitle { font-size: var(--text-body-lg); color: var(--text-muted); line-height: 1.7; max-width: 42rem; margin: 0; }
+</style>

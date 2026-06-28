@@ -1,0 +1,51 @@
+---
+/**
+ * Calculators — TerraVision
+ * Carbon / Water / Energy calculators (React island) with eco-action plans.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import Calculators from "@/components/islands/Calculators.tsx";
+import { SITE } from "@/data/site";
+
+const pageTitle = `Eco Calculators — ${SITE.name}`;
+const pageDescription =
+  "Estimate your carbon footprint and how much water and energy you could save — then get a personalised eco-action plan. Real formulas, instant results.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="ca-hero" aria-labelledby="ca-heading">
+    <div class="container hero-inner">
+      <p class="eyebrow" aria-hidden="true">Measure Your Impact</p>
+      <h1 id="ca-heading" class="hero-title ds-h1">Eco <span class="text-gradient">Calculators</span></h1>
+      <p class="hero-subtitle">
+        Enter a few details to estimate your carbon footprint, water savings and
+        energy savings. Results update instantly — then get a personalised
+        action plan to do even better.
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="calc-heading">
+    <div class="container narrow">
+      <SectionHeader
+        eyebrow="Try It"
+        title="Crunch the Numbers"
+        subtitle="Estimates use standard emission and consumption factors (e.g. ~0.7 kg CO₂ per kWh, ~9 litres per shower-minute). They're guides for learning, not exact bills."
+        align="center"
+      />
+      <Calculators client:visible />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .container { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  .container.narrow { max-width: 52rem; }
+  .page-section { padding-block: clamp(2rem, 6vw, 4rem); }
+  .ca-hero { padding: clamp(4rem, 10vw, 6.5rem) 0 clamp(1.5rem, 4vw, 2.5rem); text-align: center; }
+  .hero-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+  .eyebrow { font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-green); margin: 0; }
+  .hero-title { font-family: var(--font-display); font-size: var(--text-h1); font-weight: 800; letter-spacing: -0.03em; margin: 0; }
+  .hero-subtitle { font-size: var(--text-body-lg); color: var(--text-muted); line-height: 1.7; max-width: 42rem; margin: 0; }
+</style>
