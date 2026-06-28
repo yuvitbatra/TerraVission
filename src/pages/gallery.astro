@@ -1,0 +1,183 @@
+---
+/**
+ * Gallery — TerraVision
+ * Glass grid of original CSS/SVG illustrations (no external images, zero
+ * licensing risk) showing key sustainability technologies, each with a caption.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GlassCard from "@/components/ui/GlassCard.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import { SITE } from "@/data/site";
+
+const pageTitle = `Gallery — ${SITE.name}`;
+const pageDescription =
+  "A visual gallery of sustainability in action — solar panels, wind turbines, rainwater harvesting, recycling and clean-water projects, drawn as original illustrations.";
+
+const items = [
+  { key: "solar", title: "Solar Panel Array", caption: "Rows of photovoltaic panels tilt toward the sun, turning daylight directly into clean electricity." },
+  { key: "wind", title: "Wind Turbines", caption: "Tall turbines capture moving air, spinning generators that produce power day and night." },
+  { key: "rain", title: "Rainwater Harvesting", caption: "Rooftop rain is channelled through filters into storage tanks and groundwater recharge wells." },
+  { key: "recycle", title: "Recycling Plant", caption: "Sorted materials are processed and remade into new products, keeping waste in a closed loop." },
+  { key: "water", title: "Clean-Water Project", caption: "Filtration and disinfection make natural water safe to drink for communities." },
+  { key: "tree", title: "Reforestation", caption: "Planting native trees restores habitats, cools cities and locks away carbon dioxide." },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="gl-hero" aria-labelledby="gl-heading">
+    <div class="container hero-inner">
+      <p class="eyebrow" aria-hidden="true">Sustainability in Pictures</p>
+      <h1 id="gl-heading" class="hero-title ds-h1">Project <span class="text-gradient">Gallery</span></h1>
+      <p class="hero-subtitle">
+        Original illustrations of the technologies and projects building a
+        greener world — from solar farms to clean-water systems.
+      </p>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="grid-heading">
+    <div class="container">
+      <SectionHeader eyebrow="Explore" title="Green Technology in Action" align="center" />
+      <ul class="gallery-grid" role="list">
+        {
+          items.map((it) => (
+            <li>
+              <GlassCard class="gl-card">
+                <div class="gl-art" role="img" aria-label={it.title}>
+                  <svg viewBox="0 0 120 80" class="gl-svg" aria-hidden="true">
+                    {it.key === "solar" && (
+                      <g>
+                        <circle cx="95" cy="20" r="10" class="sun" />
+                        <rect x="12" y="42" width="38" height="24" rx="2" class="stroke fill-soft" />
+                        <line x1="12" y1="50" x2="50" y2="50" class="stroke" />
+                        <line x1="12" y1="58" x2="50" y2="58" class="stroke" />
+                        <line x1="25" y1="42" x2="25" y2="66" class="stroke" />
+                        <line x1="38" y1="42" x2="38" y2="66" class="stroke" />
+                        <rect x="60" y="46" width="38" height="20" rx="2" class="stroke fill-soft" />
+                        <line x1="60" y1="56" x2="98" y2="56" class="stroke" />
+                        <line x1="79" y1="46" x2="79" y2="66" class="stroke" />
+                        <line x1="31" y1="66" x2="31" y2="72" class="stroke" />
+                        <line x1="79" y1="66" x2="79" y2="72" class="stroke" />
+                      </g>
+                    )}
+                    {it.key === "wind" && (
+                      <g>
+                        <circle cx="92" cy="18" r="8" class="sun" />
+                        <line x1="35" y1="72" x2="35" y2="34" class="stroke" />
+                        <g class="blades" style="transform-origin:35px 32px">
+                          <line x1="35" y1="32" x2="35" y2="14" class="stroke" />
+                          <line x1="35" y1="32" x2="51" y2="42" class="stroke" />
+                          <line x1="35" y1="32" x2="19" y2="42" class="stroke" />
+                        </g>
+                        <circle cx="35" cy="32" r="2.5" class="fill" />
+                        <line x1="78" y1="72" x2="78" y2="44" class="stroke dim" />
+                        <g class="blades" style="transform-origin:78px 42px;animation-duration:5s">
+                          <line x1="78" y1="42" x2="78" y2="28" class="stroke dim" />
+                          <line x1="78" y1="42" x2="90" y2="50" class="stroke dim" />
+                          <line x1="78" y1="42" x2="66" y2="50" class="stroke dim" />
+                        </g>
+                        <line x1="6" y1="72" x2="114" y2="72" class="stroke" />
+                      </g>
+                    )}
+                    {it.key === "rain" && (
+                      <g>
+                        <path d="M20 70 V40 l22 -14 22 14 V70 Z" class="stroke fill-soft" />
+                        <path d="M40 26 L42 26" class="stroke" />
+                        <line class="drop" x1="70" y1="14" x2="70" y2="22" />
+                        <line class="drop" x1="80" y1="10" x2="80" y2="18" style="animation-delay:.4s" />
+                        <line class="drop" x1="90" y1="16" x2="90" y2="24" style="animation-delay:.8s" />
+                        <rect x="74" y="46" width="22" height="24" rx="2" class="stroke fill" />
+                        <path d="M64 40 q5 6 10 6" class="stroke" />
+                      </g>
+                    )}
+                    {it.key === "recycle" && (
+                      <g class="spin" style="transform-origin:60px 40px">
+                        <path d="M60 18 l8 14 h-16 z" class="fill" />
+                        <path d="M86 54 l-16 0 8 14 z" class="fill" />
+                        <path d="M34 54 l16 0 -8 14 z" class="fill" />
+                        <path d="M60 26 A14 14 0 0 1 73 47" class="stroke" />
+                        <path d="M73 49 A14 14 0 0 1 47 49" class="stroke" />
+                        <path d="M47 47 A14 14 0 0 1 60 26" class="stroke" />
+                      </g>
+                    )}
+                    {it.key === "water" && (
+                      <g>
+                        <path d="M60 12 C44 36 40 48 60 48 C80 48 76 36 60 12 Z" class="stroke fill-soft" />
+                        <path d="M50 36 q10 8 20 0" class="stroke" />
+                        <rect x="44" y="56" width="32" height="16" rx="2" class="stroke" />
+                        <path d="M52 64 h16" class="stroke" />
+                        <circle cx="56" cy="40" r="1.5" class="fill" />
+                        <circle cx="64" cy="34" r="1.5" class="fill" />
+                      </g>
+                    )}
+                    {it.key === "tree" && (
+                      <g>
+                        <line x1="40" y1="72" x2="40" y2="50" class="stroke" />
+                        <circle cx="40" cy="40" r="14" class="stroke fill-soft" />
+                        <line x1="78" y1="72" x2="78" y2="56" class="stroke dim" />
+                        <circle cx="78" cy="48" r="10" class="stroke dim" />
+                        <line x1="6" y1="72" x2="114" y2="72" class="stroke" />
+                      </g>
+                    )}
+                  </svg>
+                </div>
+                <h3 class="gl-title">{it.title}</h3>
+                <p class="gl-caption">{it.caption}</p>
+              </GlassCard>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .container { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  .page-section { padding-block: clamp(2.5rem, 7vw, 4.5rem); }
+
+  .gl-hero { padding: clamp(4rem, 10vw, 6.5rem) 0 clamp(1.5rem, 4vw, 2.5rem); text-align: center; }
+  .hero-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+  .eyebrow { font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-green); margin: 0; }
+  .hero-title { font-family: var(--font-display); font-size: var(--text-h1); font-weight: 800; letter-spacing: -0.03em; margin: 0; }
+  .hero-subtitle { font-size: var(--text-body-lg); color: var(--text-muted); line-height: 1.7; max-width: 42rem; margin: 0; }
+
+  .gallery-grid {
+    list-style: none; padding: 0; margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 1.25rem;
+  }
+  .gl-card { display: flex; flex-direction: column; gap: 0.6rem; height: 100%; }
+  .gl-art {
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--color-blue) 8%, var(--surface-2));
+    border: 1px solid var(--border-hairline);
+    aspect-ratio: 3 / 2;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .gl-svg { width: 90%; height: 90%; }
+  .gl-title { font-family: var(--font-display); font-size: var(--text-body-lg); font-weight: 700; color: var(--text); margin: 0; }
+  .gl-caption { margin: 0; font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; }
+
+  /* SVG illustration styling via tokens */
+  .stroke { stroke: var(--color-green-deep); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .stroke.dim { stroke: var(--color-blue-deep); opacity: 0.6; }
+  .fill { fill: var(--color-green); stroke: none; }
+  .fill-soft { fill: color-mix(in srgb, var(--color-green) 18%, transparent); }
+  .sun { fill: color-mix(in srgb, var(--color-green) 35%, var(--color-blue)); }
+  [data-theme="dark"] .stroke { stroke: var(--color-green); }
+  [data-theme="dark"] .stroke.dim { stroke: var(--color-blue); }
+
+  .blades { animation: spin 4s linear infinite; }
+  .spin { animation: spin 9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .drop { stroke: var(--color-blue); stroke-width: 3; stroke-linecap: round; animation: drip 1.4s ease-in infinite; }
+  @keyframes drip { 0% { opacity: 0; transform: translateY(-4px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blades, .spin { animation: none; }
+    .drop { animation: none; opacity: 0.8; }
+  }
+</style>

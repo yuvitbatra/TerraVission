@@ -1,0 +1,215 @@
+---
+/**
+ * Compare — TerraVision
+ * Comparison dashboard: Solar vs Wind; Traditional vs Sustainable;
+ * Environmental Impact; Cost Efficiency — as glass comparison cards.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import GlassCard from "@/components/ui/GlassCard.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import CTAButton from "@/components/ui/CTAButton.astro";
+import { SITE } from "@/data/site";
+
+const pageTitle = `Comparison Dashboard — ${SITE.name}`;
+const pageDescription =
+  "Compare solar vs wind energy, traditional vs sustainable systems, their environmental impact and cost efficiency — clear, accurate side-by-side comparisons.";
+
+// Solar vs Wind — head to head metrics
+const solarVsWind = [
+  { metric: "Energy source", solar: "Sunlight (photovoltaic)", wind: "Moving air (kinetic)" },
+  { metric: "Best location", solar: "Sunny rooftops & open land", wind: "Coasts, plains, offshore" },
+  { metric: "Generates when", solar: "Daytime only", wind: "Day & night, when windy" },
+  { metric: "Typical capacity factor", solar: "~15–25%", wind: "~25–45%" },
+  { metric: "Land footprint", solar: "Can share rooftops", wind: "Spreads out; land reusable for farming" },
+  { metric: "Emissions in use", solar: "Zero", wind: "Zero" },
+];
+
+// Traditional vs Sustainable
+const tradVsSus = [
+  { metric: "Fuel", trad: "Coal, oil, gas (finite)", sus: "Sun, wind, water (limitless)" },
+  { metric: "Greenhouse gases", trad: "High CO₂ emissions", sus: "Near zero in operation" },
+  { metric: "Air pollution", trad: "Smog, particulates, acid rain", sus: "Clean" },
+  { metric: "Fuel cost over time", trad: "Volatile, rising", sus: "Free fuel; falling tech cost" },
+  { metric: "Long-term outlook", trad: "Runs out, worsens climate", sus: "Renewable & climate-safe" },
+];
+
+const impactCards = [
+  { icon: "🌍", title: "Carbon Emissions", body: "A coal plant emits roughly 820 g of CO₂ per kWh; solar and wind emit close to zero in operation (and only a small amount across their whole life cycle). Switching the grid to renewables is the single biggest lever on emissions." },
+  { icon: "🫁", title: "Air & Health", body: "Burning fossil fuels causes the air pollution linked to around 7 million premature deaths a year worldwide. Renewables produce no smoke, soot or smog, directly improving public health." },
+  { icon: "💧", title: "Water Use", body: "Coal and nuclear plants withdraw huge amounts of water for cooling. Solar PV and wind use almost none — a major advantage in water-scarce regions." },
+  { icon: "♻️", title: "Resource Footprint", body: "Fossil fuels are extracted and burned once, forever. Renewable hardware uses materials that can largely be recycled, and the 'fuel' is never used up." },
+];
+
+const costCards = [
+  { icon: "📉", title: "Falling Costs", body: "The cost of solar electricity fell by about 90% and wind by about 70% over the 2010s. New solar and wind are now the cheapest sources of new electricity in most countries." },
+  { icon: "💸", title: "No Fuel Bills", body: "Once built, sun and wind are free. Traditional plants must keep buying fuel whose price can swing wildly with global markets." },
+  { icon: "🔧", title: "Maintenance", body: "Solar panels have no moving parts and need little upkeep. Wind turbines need more maintenance but still far less spending than running a fuel-burning plant." },
+  { icon: "🏠", title: "Payback", body: "A home solar system often pays back its cost in roughly 4–7 years through saved bills, then provides cheap power for decades more." },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <section class="cmp-hero" aria-labelledby="cmp-heading">
+    <div class="container hero-inner">
+      <p class="eyebrow" aria-hidden="true">Side by Side</p>
+      <h1 id="cmp-heading" class="hero-title ds-h1">
+        Comparison <span class="text-gradient">Dashboard</span>
+      </h1>
+      <p class="hero-subtitle">
+        How do the options really stack up? These clear comparisons help you see
+        why sustainable choices win on the environment, health and — increasingly —
+        on cost.
+      </p>
+    </div>
+  </section>
+
+  <!-- Solar vs Wind -->
+  <section class="page-section" aria-labelledby="svw-heading">
+    <div class="container">
+      <SectionHeader eyebrow="Renewable vs Renewable" title="Solar vs Wind" align="center" />
+      <GlassCard class="cmp-table-card" strong>
+        <div class="cmp-table" role="table" aria-label="Solar versus wind comparison">
+          <div class="cmp-row cmp-row--head" role="row">
+            <span role="columnheader">Metric</span>
+            <span role="columnheader"><span aria-hidden="true">☀️</span> Solar</span>
+            <span role="columnheader"><span aria-hidden="true">💨</span> Wind</span>
+          </div>
+          {
+            solarVsWind.map((r) => (
+              <div class="cmp-row" role="row">
+                <span class="cmp-metric" role="cell">{r.metric}</span>
+                <span role="cell">{r.solar}</span>
+                <span role="cell">{r.wind}</span>
+              </div>
+            ))
+          }
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+
+  <!-- Traditional vs Sustainable -->
+  <section class="page-section page-section--alt" aria-labelledby="tvs-heading">
+    <div class="container">
+      <SectionHeader eyebrow="Old vs New" title="Traditional vs Sustainable Energy" align="center" />
+      <GlassCard class="cmp-table-card" strong>
+        <div class="cmp-table" role="table" aria-label="Traditional versus sustainable comparison">
+          <div class="cmp-row cmp-row--head" role="row">
+            <span role="columnheader">Metric</span>
+            <span role="columnheader"><span aria-hidden="true">🏭</span> Traditional</span>
+            <span role="columnheader"><span aria-hidden="true">🌱</span> Sustainable</span>
+          </div>
+          {
+            tradVsSus.map((r) => (
+              <div class="cmp-row" role="row">
+                <span class="cmp-metric" role="cell">{r.metric}</span>
+                <span role="cell">{r.trad}</span>
+                <span class="cmp-good" role="cell">{r.sus}</span>
+              </div>
+            ))
+          }
+        </div>
+      </GlassCard>
+    </div>
+  </section>
+
+  <!-- Environmental impact -->
+  <section class="page-section" aria-labelledby="impact-heading">
+    <div class="container">
+      <SectionHeader eyebrow="The Planet" title="Environmental Impact" align="center" />
+      <div class="cmp-grid" role="list">
+        {
+          impactCards.map((c) => (
+            <GlassCard class="cmp-card" role="listitem">
+              <div class="cmp-icon" aria-hidden="true">{c.icon}</div>
+              <h3 class="cmp-card-title">{c.title}</h3>
+              <p class="cmp-card-body">{c.body}</p>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Cost efficiency -->
+  <section class="page-section page-section--alt" aria-labelledby="cost-heading">
+    <div class="container">
+      <SectionHeader eyebrow="The Money" title="Cost Efficiency" align="center" />
+      <div class="cmp-grid" role="list">
+        {
+          costCards.map((c) => (
+            <GlassCard class="cmp-card" role="listitem">
+              <div class="cmp-icon" aria-hidden="true">{c.icon}</div>
+              <h3 class="cmp-card-title">{c.title}</h3>
+              <p class="cmp-card-body">{c.body}</p>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section page-section--cta" aria-labelledby="cmp-cta">
+    <div class="container cta-inner">
+      <h2 id="cmp-cta" class="cta-heading text-gradient">Dive Into Each Solution</h2>
+      <p class="cta-body">Explore how solar, wind, rainwater, waste and water solutions actually work.</p>
+      <div class="cta-actions">
+        <CTAButton href="/solutions/solar" size="lg">Explore Solar</CTAButton>
+        <CTAButton href="/solutions/wind" variant="secondary" size="lg">Explore Wind</CTAButton>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .container { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  .page-section { padding-block: clamp(2.5rem, 7vw, 4.5rem); }
+  .page-section--alt { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+
+  .cmp-hero { padding: clamp(4rem, 10vw, 6.5rem) 0 clamp(1.5rem, 4vw, 2.5rem); text-align: center; }
+  .hero-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+  .eyebrow { font-family: var(--font-display); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; color: var(--color-green); margin: 0; }
+  .hero-title { font-family: var(--font-display); font-size: var(--text-h1); font-weight: 800; letter-spacing: -0.03em; margin: 0; }
+  .hero-subtitle { font-size: var(--text-body-lg); color: var(--text-muted); line-height: 1.7; max-width: 42rem; margin: 0; text-wrap: pretty; }
+
+  .cmp-table-card { padding: 0; overflow: hidden; }
+  .cmp-table { display: flex; flex-direction: column; }
+  .cmp-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    gap: 0.75rem;
+    padding: 0.85rem clamp(0.85rem, 3vw, 1.4rem);
+    border-bottom: 1px solid var(--border-hairline);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    align-items: center;
+  }
+  .cmp-row:last-child { border-bottom: none; }
+  .cmp-row--head {
+    background: color-mix(in srgb, var(--color-green) 10%, transparent);
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text);
+  }
+  .cmp-metric { font-weight: 600; color: var(--text); }
+  .cmp-good { color: var(--color-green-deep); font-weight: 600; }
+  [data-theme="dark"] .cmp-good { color: var(--color-green); }
+
+  .cmp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1.25rem; }
+  .cmp-card { display: flex; flex-direction: column; gap: 0.6rem; }
+  .cmp-icon { font-size: 2rem; line-height: 1; }
+  .cmp-card-title { font-family: var(--font-display); font-size: var(--text-body-lg); font-weight: 700; color: var(--text); margin: 0; }
+  .cmp-card-body { margin: 0; font-size: var(--text-sm); color: var(--text-muted); line-height: 1.7; }
+
+  .page-section--cta { text-align: center; }
+  .cta-inner { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+  .cta-heading { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 800; letter-spacing: -0.03em; margin: 0; }
+  .cta-body { font-size: var(--text-body-lg); color: var(--text-muted); line-height: 1.7; max-width: 36rem; margin: 0; }
+  .cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+  @media (max-width: 36rem) {
+    .cmp-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .cmp-row--head { display: none; }
+    .cmp-metric { color: var(--accent); }
+  }
+</style>
