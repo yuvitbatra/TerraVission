@@ -33,6 +33,7 @@ export const NAV: {
   { label: "Quiz", href: "/quiz" },
   { label: "Timeline", href: "/timeline" },
   { label: "Resources", href: "/resources" },
+  { label: "Conclusion", href: "/conclusion" },
   { label: "Team", href: "/team" },
 ];
 
