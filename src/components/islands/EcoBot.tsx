@@ -60,10 +60,13 @@ export default function EcoBot() {
         const lines = buffer.split("\n");
         buffer = lines.pop() ?? "";
         for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed.startsWith("data:")) continue;
-          const payload = trimmed.slice(5).trim();
-          if (payload === "[DONE]") continue;
+          // Only the "data:" prefix and a single following space are SSE framing;
+          // everything after must be preserved verbatim (do NOT trim — that would
+          // strip the spaces between streamed word-tokens and mash the text together).
+          if (!line.startsWith("data:")) continue;
+          let payload = line.slice(5);
+          if (payload.startsWith(" ")) payload = payload.slice(1);
+          if (payload === "[DONE]" || payload === "") continue;
           acc += payload;
           const snapshot = acc;
           setMessages((prev) => {
