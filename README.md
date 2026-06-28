@@ -68,7 +68,12 @@ cp .env.example .env
 | `GEMINI_MODEL` | _(optional)_ override the model | defaults to `gemini-flash-lite-latest` |
 | `SHEETS_WEBAPP_URL` | Logs quiz name + score to a Google Sheet | See "Quiz logging" below |
 
-After editing `.env`, restart `npm run dev`.
+After editing `.env`, **restart `npm run dev`** (env changes are only read on startup).
+
+> **EcoBot only gives generic/canned answers?** Your key works but the chosen model has no
+> quota. On the free tier, `gemini-2.0-flash` often returns HTTP 429 (`limit: 0`). Use a
+> model with free quota instead — set `GEMINI_MODEL=gemini-2.5-flash-lite` (recommended) or
+> `gemini-flash-lite-latest`, then restart the dev server.
 
 ### Quiz logging to a Google Sheet (optional)
 1. Create a Google Sheet.
