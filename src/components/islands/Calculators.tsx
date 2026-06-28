@@ -258,7 +258,7 @@ export default function Calculators() {
         .calc-tab.is-active { color: var(--text-on-gradient); background-image: var(--gradient-brand); border-color: transparent; }
         .calc-tab:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
         .calc-panel { padding: clamp(1.1rem, 4vw, 1.75rem); display: flex; flex-direction: column; gap: 1.25rem; }
-        .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 1rem; }
+        .calc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: 1rem; }
         .calc-result { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.25rem; padding-top: 0.5rem; }
         .calc-big { font-family: var(--font-display); font-weight: 800; font-size: var(--text-h1); line-height: 1;
           color: transparent; background-image: var(--gradient-brand); -webkit-background-clip: text; background-clip: text; }
