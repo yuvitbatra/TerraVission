@@ -46,7 +46,7 @@ export const TEAM: { name: string }[] = [
 ];
 
 export const PLACEHOLDERS = {
-  class: "[Class — TODO]",
-  school: "[School Name — TODO]",
-  teacher: "[Teacher Name — TODO]",
+  class: "8-D",
+  school: "Amity International School, Noida",
+  teacher: "Ruchi Sethi",
 } as const;
